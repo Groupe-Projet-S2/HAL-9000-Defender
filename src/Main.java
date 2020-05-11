@@ -8,9 +8,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("../views/sample.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        Parent root = FXMLLoader.load(getClass().getResource("/views/sample.fxml"));
+        primaryStage.setTitle("HAL 9000 Defender");
+        primaryStage.setScene(new Scene(root, 1200, 1024));
         primaryStage.show();
     }
 

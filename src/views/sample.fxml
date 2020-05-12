@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 
+<?import javafx.scene.layout.Pane?>
 <BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MapController">
    <center>
-      <GridPane fx:id="grid" prefHeight="1024.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
-      </GridPane>
+      <Pane fx:id="world" BorderPane.alignment="CENTER">
+         <GridPane fx:id="grid" prefHeight="1024.0" prefWidth="1024.0" alignment="CENTER">
+         </GridPane>
+      </Pane>
    </center>
 </BorderPane>

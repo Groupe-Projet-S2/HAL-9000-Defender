@@ -17,23 +17,26 @@ public class TileMap {
         this.tiles = new ArrayList<>();
     }
 
+    /**
+     * getTile
+     * Returns the Tile that matches given coordinates.
+     * @param x column
+     * @param y row
+     * @return a Tile
+     */
     public Tile getTile(int x, int y) {
         Location loc = new Location(x, y);
-        return tiles.stream().filter(t -> t.getPos().match(loc)).findFirst().get();
+        for (Tile tile : tiles)
+            if (tile.getPos().match(loc))
+                return tile;
+        return null;
     }
 
-    public int getCols() {
-        return cols;
-    }
-
-    public int getRows() {
-        return rows;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
+    /**
+     * compose
+     * Creates the TileSet based on the given CSV map.
+     * Each value is a number used to determine what sprite will be rendered for the created Tile.
+     */
     public void compose() {
         try {
             BufferedReader csvReader = new BufferedReader(new FileReader("src/utils/mapFlat.csv"));

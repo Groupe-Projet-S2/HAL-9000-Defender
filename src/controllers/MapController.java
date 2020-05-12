@@ -2,17 +2,18 @@ package controllers;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.TilePane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import models.SpriteSheet;
 import models.Tile;
 import models.TileMap;
 
+import static javafx.scene.layout.BackgroundPosition.DEFAULT;
+import static javafx.scene.layout.BackgroundRepeat.NO_REPEAT;
+
 public class MapController {
 
-    private final int COLS = 31;
-    private final int ROWS = 31;
+    private final int SIZE = 32;
 
     @FXML
     private GridPane grid;
@@ -23,78 +24,37 @@ public class MapController {
 
     @FXML void initialize() {
         grid.setAlignment(Pos.CENTER);
-        tileMap = new TileMap(COLS, ROWS, COLS * ROWS);
+        tileMap = new TileMap(SIZE, SIZE, SIZE * SIZE);
         tileMap.compose();
-        tileSet = new SpriteSheet();
+        tileSet = new SpriteSheet("src/utils/tileset.png", SIZE);
         draw();
     }
 
+    /**
+     * draw method
+     *
+     * Draws the map.
+     * It iterates over the rows and columns of the tile set to add TilePanes to the GridPane.
+     * One tile is 32x32.
+     * Every tile gets its corresponding sprite as a background.
+     */
     private void draw() {
-        int setCol, setRow;
-        for (int i = 0; i < ROWS; i++)
-            for (int j = 0; j < COLS; j++) {
-                setCol = 0;
-                setRow = 0;
+        for (int i = 0; i < SIZE; i++)
+            for (int j = 0; j < SIZE; j++) {
 
                 TilePane tilePane = new TilePane();
+                tilePane.setAlignment(Pos.CENTER);
                 tilePane.setPrefWidth(32);
                 tilePane.setPrefHeight(32);
                 Tile tile = tileMap.getTile(i, j);
-                int ID = tile.getID();
+                int ID = tile.getType();
+                tilePane.setId("" + ID);
 
-                switch (ID) {
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                        setCol = ID;
-                        break;
-                    case 5:
-                        setRow = 1;
-                        setCol = 0;
-                        break;
-                    case 6:
-                        setRow = 1;
-                        setCol = 1;
-                        break;
-                    case 7:
-                        setRow = 1;
-                        setCol = 2;
-                        break;
-                    case 8:
-                        setRow = 1;
-                        setCol = 3;
-                        break;
-                    case 9:
-                        setRow = 1;
-                        setCol = 4;
-                        break;
-                    case 10:
-                        setRow = 2;
-                        break;
-                    case 11:
-                        setRow = 2;
-                        setCol = 1;
-                        break;
-                    case 12:
-                        setRow = 2;
-                        setCol = 2;
-                        break;
-                    case 13:
-                        setRow = 2;
-                        setCol = 3;
-                        break;
-                    case 14:
-                        setRow = 2;
-                        setCol = 4;
-                        break;
-                }
+                Image image = tileSet.getSprite(ID).getImage();
 
-                System.out.println(setRow + " - " + setCol + " - " + ID);
+                Background bg = new Background(new BackgroundImage(image,NO_REPEAT, NO_REPEAT, DEFAULT, BackgroundSize.DEFAULT));
+                tilePane.setBackground(bg);
 
-                ImageView image = tileSet.crop(setCol, setRow, 32, 32);
-
-                tilePane.getChildren().add(image);
                 grid.add(tilePane, j, i);
             }
     }

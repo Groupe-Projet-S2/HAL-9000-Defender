@@ -29,6 +29,7 @@ public class MapController {
 
     private TileMap tileMap;
 
+    @FXML
     private Pane world;
 
     @FXML void initialize() {

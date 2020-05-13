@@ -25,12 +25,14 @@ public class MapController {
     @FXML
     private GridPane grid;
 
+    @FXML
+    private Pane world;
+
     private SpriteSheet tileSet;
 
     private TileMap tileMap;
 
-    @FXML
-    private Pane world;
+    Circle dummy;
 
     @FXML void initialize() {
         grid.setAlignment(Pos.CENTER);
@@ -38,6 +40,9 @@ public class MapController {
         tileMap.compose();
         tileSet = new SpriteSheet("src/utils/tileset.png", SIZE);
         draw();
+
+        dummy = new Circle(16, 16 * 32, 8, Color.RED);
+        world.getChildren().add(dummy);
 
         // Starts the loop
         initLoop();
@@ -72,15 +77,16 @@ public class MapController {
                 grid.add(tilePane, j, i);
             }
     }
+
     /*
     Tick method
-
     This is where we code what will happen during a tick. It will happen at a certain number of times per framerate (ideally 60).
-
-    private void tick() {
-        environnement.nextRound();
-    }
     */
+    private void tick() {
+        double x = dummy.getCenterX();
+        if (x + dummy.getRadius() < world.getWidth()) x++;
+        dummy.setCenterX(x);
+    }
 
     /**
      *  initLoop
@@ -92,8 +98,8 @@ public class MapController {
 
         KeyFrame kf = new KeyFrame(
                 Duration.seconds(0.017), // FPS Number
-                (event -> {//tick();
-                    System.out.println("A tick has been run");
+                (event -> {tick();
+                    //System.out.println("A tick has been run");
                 })
         );
         gameloop.getKeyFrames().add(kf);

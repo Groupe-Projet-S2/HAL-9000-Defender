@@ -1,14 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.GridPane?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.layout.Pane?>
-<BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MapController">
+<BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MapController">
    <center>
-      <Pane fx:id="world" maxWidth="1024" BorderPane.alignment="CENTER">
-         <GridPane fx:id="grid" prefHeight="1024.0" prefWidth="1024.0" alignment="CENTER">
+      <Pane fx:id="world" maxWidth="1024" onMouseClicked="#createTower" BorderPane.alignment="CENTER">
+         <GridPane fx:id="grid" alignment="CENTER" prefHeight="1024.0" prefWidth="1024.0">
          </GridPane>
       </Pane>
    </center>
+   <right>
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="500.0" prefWidth="150.0" style="-fx-border-color: #6666ff; -fx-border-radius: 40; -fx-border-width: 3;" BorderPane.alignment="CENTER">
+         <children>
+            <VBox alignment="CENTER" prefHeight="333.0" prefWidth="208.0" style="-fx-border-color: #b6dcee; -fx-border-width: 4; -fx-border-radius: 40;">
+               <children>
+                  <Label alignment="TOP_CENTER" prefHeight="22.0" prefWidth="61.0" text="Towers" textAlignment="CENTER" textFill="#6666ff">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="50.0" />
+                     </VBox.margin></Label>
+                  <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fx:id="imageAfast" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#setTowerOnAfast" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../utils/towerAfast.png" />
+                                 </image>
+                              </ImageView>
+                              <Label maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="39.0" prefWidth="151.0" text="Avast                          100 €">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" />
+                           </padding>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fx:id="imageGb" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#setTowerOnGb" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../utils/towerGoodwarebytes.jpg" />
+                                 </image>
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" left="10.0" />
+                                 </HBox.margin></ImageView>
+                              <Label prefHeight="30.0" prefWidth="154.0" text="Goodwarebytes          250 €">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fx:id="imageIVG" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#setTowerOnIVG" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../utils/towerIVG.jpg" />
+                                 </image>
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" left="10.0" />
+                                 </HBox.margin></ImageView>
+                              <Label prefHeight="30.0" prefWidth="151.0" text="IVG                             500 €">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fx:id="imageKbd" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#setTowerOnKbd" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../utils/towerKilobitDefender.jpg" />
+                                 </image>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin></ImageView>
+                              <Label prefHeight="35.0" prefWidth="152.0" text="KilobitDefender         1000€">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </VBox>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </right>
 </BorderPane>

@@ -2,9 +2,12 @@ package controllers;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -12,6 +15,9 @@ import javafx.util.Duration;
 import models.SpriteSheet;
 import models.Tile;
 import models.TileMap;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.input.MouseEvent;
 
 import static javafx.scene.layout.BackgroundPosition.DEFAULT;
 import static javafx.scene.layout.BackgroundRepeat.NO_REPEAT;
@@ -19,8 +25,24 @@ import static javafx.scene.layout.BackgroundRepeat.NO_REPEAT;
 public class MapController {
 
     private Timeline gameloop;
+    private ImageView imageTower;
 
     private final int SIZE = 32;
+
+    @FXML
+    private ImageView imageAfast;
+
+    @FXML
+    private ImageView imageGb;
+
+    @FXML
+    private ImageView imageKbd;
+
+    @FXML
+    private BorderPane pane;
+
+    @FXML
+    private ImageView imageIVG;
 
     @FXML
     private GridPane grid;
@@ -88,6 +110,15 @@ public class MapController {
         dummy.setCenterX(x);
     }
 
+    /*@FXML
+    void createTower(ActionEvent event) {
+        world.setOnMouseClicked(e -> System.out.println("test"));
+        Color color= Color.WHITE;
+        Circle c = new Circle(5, 2, 3, color);
+        world.getChildren().add(c);
+        System.out.println("test");
+    }*/
+
     /**
      *  initLoop
      *  Create the event that will happen a certain number of time per seconds.
@@ -104,6 +135,43 @@ public class MapController {
         );
         gameloop.getKeyFrames().add(kf);
     }
+
+    /**
+     * onMouseClicked part
+     * Manages the creation of towers on the map
+     */
+
+    @FXML
+    public void createTower(MouseEvent event) {
+        ImageView test = new ImageView();
+        test.setX(event.getX());
+        test.setY(event.getY());
+        test.setFitHeight(imageTower.getFitHeight());
+        test.setFitWidth(imageTower.getFitWidth());
+        test.setImage(imageTower.getImage());
+        world.getChildren().add(test);
+    }
+
+    @FXML
+    void setTowerOnAfast(MouseEvent event) {
+        imageTower = imageAfast;
+    }
+
+    @FXML
+    void setTowerOnGb(MouseEvent event) {
+        imageTower = imageGb;
+    }
+
+    @FXML
+    void setTowerOnIVG(MouseEvent event) {
+        imageTower = imageIVG;
+    }
+
+    @FXML
+    void setTowerOnKbd(MouseEvent event) {
+        imageTower = imageKbd;
+    }
+
 
     /*
     public void createSprite(Entity ent){

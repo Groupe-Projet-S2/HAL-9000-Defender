@@ -8,10 +8,9 @@ public class Entity {
     private String id;
     public static int count = 0;
 
-    public Entity(int range, Location location, Location target) {
+    public Entity(int range, Location location) {
         this.range=range;
         this.location=location;
-        this.target=target;
         this.id="E"+count;
         count++;
     }

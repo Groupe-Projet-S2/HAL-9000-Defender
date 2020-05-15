@@ -1,11 +1,28 @@
 package models;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class World {
 
-    private ObservableList<Entity> Nodes;
-    private ObservableList<Entity> Virus;
+    private ObservableList<Node> Nodes;
+    private ObservableList<Virus> Virus;
+
+    public World() {
+        this.Nodes = FXCollections.observableArrayList();
+        this.Virus = FXCollections.observableArrayList();
+    }
+
+    public void addToList(Entity e) {
+        if(e instanceof Virus)
+            this.Virus.add((Virus) e);
+        if (e instanceof Node)
+            this.Nodes.add((Node) e);
+    }
+
+    public ObservableList<Node> getNodeList(){
+        return this.Nodes;
+    }
 
 /*    Entity spawnEntity(Entity entity, Location location) {
 

@@ -11,8 +11,8 @@ public class Node extends Entity {
     private Entity target;
     private ArrayList<Virus> inRangeVirus;
 
-    public Node(int range, Location location, Location target, int upgradePrice, int maxCons, int consumption) {
-        super(range, location, target);
+    public Node(int range, Location location, int upgradePrice, int maxCons, int consumption) {
+        super(range, location);
         this.upgradePrice = upgradePrice;
         this.maxCons = maxCons;
         this.consumption = consumption;

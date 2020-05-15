@@ -12,9 +12,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
-import models.SpriteSheet;
-import models.Tile;
-import models.TileMap;
+import models.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.input.MouseEvent;
@@ -55,6 +53,7 @@ public class MapController {
     private TileMap tileMap;
 
     Circle dummy;
+    World env;
 
     @FXML void initialize() {
         grid.setAlignment(Pos.CENTER);
@@ -65,6 +64,8 @@ public class MapController {
 
         dummy = new Circle(16, 16 * 32, 8, Color.RED);
         world.getChildren().add(dummy);
+
+        env = new World();
 
         // Starts the loop
         initLoop();
@@ -149,7 +150,11 @@ public class MapController {
         test.setFitHeight(imageTower.getFitHeight());
         test.setFitWidth(imageTower.getFitWidth());
         test.setImage(imageTower.getImage());
+        Node tower = new Node(50,new Location((int)event.getX(),(int)event.getY()),150,150,150);
+        env.addToList(tower);
+        test.setId(tower.getId());
         world.getChildren().add(test);
+        System.out.println(env.getNodeList());
     }
 
     @FXML

@@ -2,27 +2,18 @@ package controllers;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import models.*;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.input.MouseEvent;
 import views.MapView;
-
-import static javafx.scene.layout.BackgroundPosition.DEFAULT;
-import static javafx.scene.layout.BackgroundRepeat.NO_REPEAT;
 
 public class MapController {
 
@@ -30,7 +21,7 @@ public class MapController {
     private ImageView imageTower;
     private Node tower;
 
-    private final int SIZE = 32; // tile's size
+    private final static int SIZE = 32; // tile's size
     private final int COLS = 25; // columns
     private final int ROWS = 25; // rows
 
@@ -60,6 +51,7 @@ public class MapController {
     private TileMap tileMap;
 
     World env;
+    Virus virus;
 
     @FXML void initialize() {
         grid.setAlignment(Pos.CENTER);
@@ -74,6 +66,16 @@ public class MapController {
 
         env = new World();
 
+        virus = new Virus(5,new Location(6 * SIZE + SIZE / 2 ,SIZE / 2));
+        env.addToList(virus);
+        Rectangle r = new Rectangle();
+        r.setHeight(virus.getSizeH());
+        r.setWidth(virus.getSizeW());
+        r.setFill(Color.RED);
+        r.yProperty().bind(virus.getCenter().getRowProperty());
+        r.xProperty().bind(virus.getCenter().getColProperty());
+        world.getChildren().add(r);
+
         // Starts the loop
         initLoop();
         gameloop.play();
@@ -84,6 +86,12 @@ public class MapController {
     This is where we code what will happen during a tick. It will happen at a certain number of times per framerate (ideally 60).
     */
     private void tick() {
+        virus.move(tileMap.getTile(virus.getLocation().getRow(),virus.getLocation().getCol()));
+        if(!env.getNodeList().isEmpty()){
+            if (env.getNodeList().get(0).isInRange(virus)){
+                System.out.println("SPOTTED");
+            }
+        }
     }
 
     /**
@@ -161,8 +169,8 @@ public class MapController {
         Rectangle r = new Rectangle();
         r.setWidth(ent.getSizeW());
         r.setHeight(ent.getSizeH());
-        r.translateXProperty().bind(ent.getLocation().getXProperty());
-        r.translateYProperty().bind(ent.getLocation().getYProperty());
+        r.translateXProperty().bind(ent.getLocation().getColProperty());
+        r.translateYProperty().bind(ent.getLocation().getRowProperty());
         r.setFill(Color.web("#000000"));
         r.setId(ent.getId());
         world.getChildren().add(r);

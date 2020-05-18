@@ -18,7 +18,6 @@ public class Entity {
     public Location getLocation() {
         return this.location;
     }
-
     void setLocation(int x, int y) {
         this.location.setCol(x);
         this.location.setRow(y);

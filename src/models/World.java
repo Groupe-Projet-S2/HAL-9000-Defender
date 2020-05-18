@@ -20,8 +20,8 @@ public class World {
             this.Virus.add((Virus) e);
         if (e instanceof Node)
             this.Nodes.add((Node) e);
-        if(e instanceof Projectile)
-            this.Projectile.add((Projectile) e);
+        /*if(e instanceof Projectile)
+            this.Projectile.add((Projectile) e);*/
     }
 
     public ObservableList<Node> getNodeList(){

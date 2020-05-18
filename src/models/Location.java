@@ -27,11 +27,11 @@ public class Location {
         return this.col.getValue();
     }
 
-    public IntegerProperty getXProperty() {
+    public IntegerProperty getRowProperty() {
         return row;
     }
 
-    public IntegerProperty getYProperty() {
+    public IntegerProperty getColProperty() {
         return col;
     }
 

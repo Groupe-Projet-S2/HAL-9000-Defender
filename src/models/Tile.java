@@ -8,6 +8,7 @@ public class Tile {
     private boolean isAvailable;
 
     private static int count = 0;
+    final static int SIZE = 32; // tile's size
 
     public Tile(int row, int col, int type) {
         this.pos = new Location(row, col);

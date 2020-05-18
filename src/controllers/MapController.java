@@ -5,12 +5,15 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import models.*;
 import javafx.scene.layout.GridPane;
@@ -24,6 +27,7 @@ public class MapController {
 
     private Timeline gameloop;
     private ImageView imageTower;
+    private Node tower;
 
     private final int SIZE = 32;
 
@@ -52,7 +56,6 @@ public class MapController {
 
     private TileMap tileMap;
 
-    Circle dummy;
     World env;
 
     @FXML void initialize() {
@@ -61,9 +64,6 @@ public class MapController {
         tileMap.compose();
         tileSet = new SpriteSheet("src/utils/tileset.png", SIZE);
         draw();
-
-        dummy = new Circle(16, 16 * 32, 8, Color.RED);
-        world.getChildren().add(dummy);
 
         env = new World();
 
@@ -106,9 +106,6 @@ public class MapController {
     This is where we code what will happen during a tick. It will happen at a certain number of times per framerate (ideally 60).
     */
     private void tick() {
-        double x = dummy.getCenterX();
-        if (x + dummy.getRadius() < world.getWidth()) x++;
-        dummy.setCenterX(x);
     }
 
     /*@FXML
@@ -144,16 +141,28 @@ public class MapController {
 
     @FXML
     public void createTower(MouseEvent event) {
+        tower = new Node(50,new Location((int)event.getX(),(int)event.getY()),150,150,150);
+        env.addToList(tower);
+
+        Circle range = new Circle(tower.getRange());
+        range.setStroke(Color.web("#000000"));
+        range.setFill(Color.rgb(0,0,0,0.25));
+        range.setCenterX(tower.getLocation().getX());
+        range.setCenterY(tower.getLocation().getY());
+        range.setId("R"+tower.getId());
+        world.getChildren().add(range);
+
         ImageView test = new ImageView();
-        test.setX(event.getX());
-        test.setY(event.getY());
+        int x = (int)(event.getX() - imageTower.getFitWidth()/2);
+        int y = (int)(event.getY() - imageTower.getFitHeight()/2);
+        test.setX(x);
+        test.setY(y);
         test.setFitHeight(imageTower.getFitHeight());
         test.setFitWidth(imageTower.getFitWidth());
         test.setImage(imageTower.getImage());
-        Node tower = new Node(50,new Location((int)event.getX(),(int)event.getY()),150,150,150);
-        env.addToList(tower);
         test.setId(tower.getId());
         world.getChildren().add(test);
+
         System.out.println(env.getNodeList());
     }
 
@@ -178,15 +187,15 @@ public class MapController {
     }
 
 
-    /*
-    public void createSprite(Entity ent){
-        Circle r = new Circle(3);
-        r.translateXProperty().bind(ent.getLocationX());
-        r.translateYProperty().bind(ent.getLocationY());
-        r.setFill(Color.web("#ffffff"));
+
+    public void createSprite(Virus ent){
+        Rectangle r = new Rectangle();
+        r.setWidth(ent.getSizeW());
+        r.setHeight(ent.getSizeH());
+        r.translateXProperty().bind(ent.getLocation().getXProperty());
+        r.translateYProperty().bind(ent.getLocation().getYProperty());
+        r.setFill(Color.web("#000000"));
         r.setId(ent.getId());
         world.getChildren().add(r);
     }
-    */
-
 }

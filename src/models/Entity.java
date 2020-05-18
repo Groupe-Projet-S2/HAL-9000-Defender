@@ -15,7 +15,7 @@ public class Entity {
         count++;
     }
 
-    Location getLocation() {
+    public Location getLocation() {
         return this.location;
     }
 

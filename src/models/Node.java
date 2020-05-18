@@ -64,8 +64,13 @@ public class Node extends Entity {
     }
 
     public boolean isInRange(Virus virus){
-        return ((super.getLocation().getY()-super.getRange()<= virus.getLocation().getY() && virus.getLocation().getY()<=super.getLocation().getY()+super.getRange()) &&
-            (super.getLocation().getX()-super.getRange()<= virus.getLocation().getX() && virus.getLocation().getX()<=super.getLocation().getX()+super.getRange()));
+        int nearestX = Math.max(virus.getLocation().getX(), Math.min(this.getLocation().getX(),virus.getLocation().getX()+virus.getSizeW()));
+        int nearestY = Math.max(virus.getLocation().getY(), Math.min(this.getLocation().getY(),virus.getLocation().getY()+virus.getSizeH()));
+
+        int deltaX = this.getLocation().getX() - Math.max(virus.getLocation().getX(), Math.min(this.getLocation().getX(),virus.getLocation().getX()+virus.getSizeW()));
+        int deltaY = this.getLocation().getY() - Math.max(virus.getLocation().getY(), Math.min(this.getLocation().getY(),virus.getLocation().getY()+virus.getSizeH()));
+
+        return (Math.pow(deltaX,2) + Math.pow(deltaY,2)) < Math.pow(this.getRange(),2);
     }
 
     public void addRangedVirus(Virus virus){

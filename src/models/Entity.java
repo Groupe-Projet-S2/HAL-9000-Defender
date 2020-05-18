@@ -20,8 +20,8 @@ public class Entity {
     }
 
     void setLocation(int x, int y) {
-        this.location.setX(x);
-        this.location.setY(y);
+        this.location.setCol(x);
+        this.location.setRow(y);
     }
 
     public String getId(){

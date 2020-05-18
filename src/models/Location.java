@@ -4,38 +4,42 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Location {
-    private IntegerProperty x, y;
+    private IntegerProperty row, col;
 
-    public Location(int x, int y) {
-        this.x = new SimpleIntegerProperty(x);
-        this.y = new SimpleIntegerProperty(y);
+    public Location(int row, int col) {
+        this.row = new SimpleIntegerProperty(row);
+        this.col = new SimpleIntegerProperty(col);
     }
 
-    public void setX(int x) {
-        this.x.setValue(x);
+    public void setRow(int row) {
+        this.row.setValue(row);
     }
 
-    public void setY(int y) {
-        this.y.setValue(y);
+    public void setCol(int col) {
+        this.col.setValue(col);
     }
 
-    public int getX() {
-        return this.x.getValue();
+    public int getRow() {
+        return this.row.getValue();
     }
 
-    public int getY() {
-        return this.y.getValue();
+    public int getCol() {
+        return this.col.getValue();
     }
 
     public IntegerProperty getXProperty() {
-        return x;
+        return row;
     }
 
     public IntegerProperty getYProperty() {
-        return y;
+        return col;
     }
 
     public boolean match(Location location) {
-        return this.x.getValue() == location.getX() && this.y.getValue() == location.getY();
+        return this.row.getValue() == location.getRow() && this.col.getValue() == location.getCol();
+    }
+
+    public String toString() {
+        return "Row: " + row.getValue() + " - Col: " + col.getValue();
     }
 }

@@ -20,16 +20,20 @@ public class TileMap {
     /**
      * getTile
      * Returns the Tile that matches given coordinates.
-     * @param x column
-     * @param y row
+     * @param row row
+     * @param col column
      * @return a Tile
      */
-    public Tile getTile(int x, int y) {
-        Location loc = new Location(x, y);
+    public Tile getTile(int row, int col) {
+        Location loc = new Location(row, col);
         for (Tile tile : tiles)
             if (tile.getPos().match(loc))
                 return tile;
         return null;
+    }
+
+    public ArrayList<Tile> getTiles() {
+        return tiles;
     }
 
     /**
@@ -39,20 +43,33 @@ public class TileMap {
      */
     public void compose() {
         try {
-            BufferedReader csvReader = new BufferedReader(new FileReader("src/utils/mapFlat.csv"));
-            String row;
-            int line = 0;
-            while ((row = csvReader.readLine()) != null) {
-                String[] data = row.split(",");
+            BufferedReader csvReader = new BufferedReader(new FileReader("src/utils/map32.csv"));
+            String line;
+            int row = 0;
+            while ((line = csvReader.readLine()) != null) {
+                String[] data = line.split(",");
                 for (int col = 0; col < data.length; col++) {
-                    this.tiles.add(new Tile(line, col, Integer.parseInt(data[col])));
+                    Tile tile = new Tile(row, col, Integer.parseInt(data[col]));
+                    this.tiles.add(tile);
                 }
-                line++;
+                row++;
             }
 
             csvReader.close();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public static Tile getNeighbor(TileMap map, Tile tile, String dir) {
+        int row = tile.getPos().getRow();
+        int col = tile.getPos().getCol();
+        switch (dir.toLowerCase()) {
+            case "up": return map.getTile(row - 1, col);
+            case "down": return map.getTile(row + 1, col);
+            case "left": return map.getTile(row, col - 1);
+            case "right": return map.getTile(row, col + 1);
+            default: return null;
         }
     }
 }

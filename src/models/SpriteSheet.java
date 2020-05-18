@@ -9,7 +9,7 @@ public class SpriteSheet {
 
     private ImageView spriteSheet;
     private double spriteSize;
-    private HashMap<Integer, ImageView> sprites;
+    private HashMap<Integer, Image> sprites;
 
     public SpriteSheet(String url, int spriteSize) {
         this.spriteSize = spriteSize;
@@ -26,8 +26,8 @@ public class SpriteSheet {
      * Splits a sprite sheet into individual sprites.
      * @return the HashMap containing all the sprites for every possible ID.
      */
-    private HashMap<Integer, ImageView> splitSheet() {
-        HashMap<Integer, ImageView> list = new HashMap<>();
+    private HashMap<Integer, Image> splitSheet() {
+        HashMap<Integer, Image> list = new HashMap<>();
         // Calculates how many sprites per rows there are in the sheet.
         double cols = spriteSheet.getImage().getWidth() / this.spriteSize;
         double rows = spriteSheet.getImage().getHeight() / this.spriteSize;
@@ -40,7 +40,7 @@ public class SpriteSheet {
         return list;
     }
 
-    public ImageView getSprite(int ID) {
+    public Image getSprite(int ID) {
         return this.sprites.get(ID);
     }
 
@@ -53,7 +53,7 @@ public class SpriteSheet {
      * @param width width of the desired image
      * @return A cropped image.
      */
-    private ImageView crop(int col, int row, int height, int width) {
+    private Image crop(int col, int row, int height, int width) {
         Image image = this.spriteSheet.getImage();
         PixelReader pixelReader = image.getPixelReader();
         PixelWriter pixelWriter;
@@ -67,6 +67,6 @@ public class SpriteSheet {
                 pixelWriter.setColor(i, j, pixelReader.getColor(i + col * (int) spriteSize, j + row * (int) spriteSize));
             }
         }
-        return new ImageView(writableImage);
+        return writableImage;
     }
 }

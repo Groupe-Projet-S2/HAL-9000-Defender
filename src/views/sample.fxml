@@ -8,9 +8,9 @@
 
 <BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MapController">
    <center>
-      <Pane fx:id="world" maxWidth="1024" onMouseClicked="#createTower" BorderPane.alignment="CENTER">
-         <GridPane fx:id="grid" alignment="CENTER" prefHeight="1024.0" prefWidth="1024.0">
-         </GridPane>
+      <Pane fx:id="world" maxWidth="800" BorderPane.alignment="CENTER">
+         <TilePane fx:id="grid" alignment="CENTER" onMouseClicked="#createTower" prefHeight="800.0" prefWidth="800.0">
+         </TilePane>
       </Pane>
    </center>
    <right>

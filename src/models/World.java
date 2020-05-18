@@ -7,10 +7,12 @@ public class World {
 
     private ObservableList<Node> Nodes;
     private ObservableList<Virus> Virus;
+    private ObservableList<Projectile> Projectile;
 
     public World() {
         this.Nodes = FXCollections.observableArrayList();
         this.Virus = FXCollections.observableArrayList();
+        this.Projectile = FXCollections.observableArrayList();
     }
 
     public void addToList(Entity e) {
@@ -18,13 +20,20 @@ public class World {
             this.Virus.add((Virus) e);
         if (e instanceof Node)
             this.Nodes.add((Node) e);
+        if(e instanceof Projectile)
+            this.Projectile.add((Projectile) e);
     }
 
     public ObservableList<Node> getNodeList(){
         return this.Nodes;
     }
 
-/*    Entity spawnEntity(Entity entity, Location location) {
+    public ObservableList<Projectile> getProjectileList(){
+        return this.Projectile;
+    }
+
+
+    /*    Entity spawnEntity(Entity entity, Location location) {
 
     }
 

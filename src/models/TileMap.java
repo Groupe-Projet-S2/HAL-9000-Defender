@@ -3,6 +3,7 @@ package models;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class TileMap {
     private int cols;
@@ -61,15 +62,18 @@ public class TileMap {
         }
     }
 
-    public static Tile getNeighbor(TileMap map, Tile tile, String dir) {
+    public static Collection<Tile> getAvailableNeighbors(TileMap map, Tile tile) {
+        Collection<Tile> neighbors = new ArrayList<>();
         int row = tile.getPos().getRow();
         int col = tile.getPos().getCol();
-        switch (dir.toLowerCase()) {
-            case "up": return map.getTile(row - 1, col);
-            case "down": return map.getTile(row + 1, col);
-            case "left": return map.getTile(row, col - 1);
-            case "right": return map.getTile(row, col + 1);
-            default: return null;
-        }
+
+        neighbors.add(map.getTile(row - 1, col));
+        neighbors.add(map.getTile(row + 1, col));
+        neighbors.add(map.getTile(row, col - 1));
+        neighbors.add(map.getTile(row, col + 1));
+
+        neighbors.removeIf(t -> t == null || t.hasParent() || !t.isAvailable());
+
+        return neighbors;
     }
 }

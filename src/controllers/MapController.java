@@ -68,6 +68,7 @@ public class MapController {
         grid.setPrefColumns(COLS);
         grid.setPrefRows(ROWS);
         tileSet = new SpriteSheet("src/utils/tileset32.png", SIZE);
+        Graphs.bfs(world, tileMap, tileMap.getTile(6, 0), tileMap.getTile(5, 24));
 
         MapView.draw(grid, COLS, ROWS, SIZE, tileMap);
 

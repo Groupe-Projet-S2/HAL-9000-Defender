@@ -63,10 +63,13 @@ public class Node extends Entity {
         return target;
     }
 
+    public boolean hasTarget(){
+        return target != null;
+    }
+
     public boolean isInRange(Virus virus){
         int deltaX = this.getLocation().getCol() - Math.max(virus.getLocation().getCol(), Math.min(this.getLocation().getCol(),virus.getLocation().getCol()+virus.getSizeW()));
         int deltaY = this.getLocation().getRow() - Math.max(virus.getLocation().getRow(), Math.min(this.getLocation().getRow(),virus.getLocation().getRow()+virus.getSizeH()));
-        System.out.println(deltaX+ " , "+deltaY);
 
         return (Math.pow(deltaX,2) + Math.pow(deltaY,2)) < Math.pow(this.getRange(),2);
     }

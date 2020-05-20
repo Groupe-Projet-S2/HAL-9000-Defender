@@ -23,6 +23,18 @@ public class Entity {
         this.location.setRow(y);
     }
 
+    public static boolean isVirus(Entity ent){
+        return (ent instanceof Virus);
+    }
+
+    public static boolean isNode(Entity ent){
+        return (ent instanceof Node);
+    }
+
+    /*public static boolean isProjectile(Entity ent){
+        return (ent instanceof Projectile);
+    }*/
+
     public String getId(){
         return this.id;
     }

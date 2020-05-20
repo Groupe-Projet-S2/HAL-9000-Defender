@@ -8,12 +8,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import models.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.input.MouseEvent;
 import views.MapView;
+
+import java.util.Collection;
 
 public class MapController {
 
@@ -66,14 +69,15 @@ public class MapController {
 
         env = new World();
 
-        virus = new Virus(5,new Location(6 * SIZE + SIZE / 2 ,SIZE / 2));
+        virus = new Virus(5,new Location(6 * SIZE + SIZE / 2,SIZE /2), tileMap.getTile(6,0));
         env.addToList(virus);
         Rectangle r = new Rectangle();
         r.setHeight(virus.getSizeH());
         r.setWidth(virus.getSizeW());
         r.setFill(Color.RED);
-        r.yProperty().bind(virus.getCenter().getRowProperty());
-        r.xProperty().bind(virus.getCenter().getColProperty());
+        r.setX(virus.getLocation().getCol()-virus.getSizeW()/2);
+        r.setY(virus.getLocation().getRow()-virus.getSizeH()/2);
+        r.setId("S"+virus.getId());
         world.getChildren().add(r);
 
         // Starts the loop
@@ -86,12 +90,50 @@ public class MapController {
     This is where we code what will happen during a tick. It will happen at a certain number of times per framerate (ideally 60).
     */
     private void tick() {
-        virus.move(tileMap.getTile(virus.getLocation().getRow(),virus.getLocation().getCol()));
-        if(!env.getNodeList().isEmpty()){
-            if (env.getNodeList().get(0).isInRange(virus)){
-                System.out.println("SPOTTED");
+        updateView();
+        env.nextRound();
+    }
+
+    private void updateView(){
+        /*if (!env.getNodeList().isEmpty() && env.getNodeList().get(0).getTarget()!=null) {
+            line.setVisible(true);
+            line.setStartX(env.getNodeList().get(0).getLocation().getCol());
+            line.setStartY(env.getNodeList().get(0).getLocation().getRow());
+            line.setEndX(env.getNodeList().get(0).getTarget().getLocation().getCol());
+            line.setEndY(env.getNodeList().get(0).getTarget().getLocation().getRow());
+        }
+        else
+            line.setVisible(false);*/
+
+        Line target;
+        for (Node node:env.getNodeList()){
+            if (node.hasTarget()){
+                if ((target = (Line)world.lookup("#L"+node.getId()))!=null){
+                    target.setEndX(node.getTarget().getLocation().getCol());
+                    target.setEndY(node.getTarget().getLocation().getRow());
+                }
+                else{
+                    target = new Line();
+                    target.setStartX(node.getLocation().getCol());
+                    target.setStartY(node.getLocation().getRow());
+                    target.setStrokeWidth(1);
+                    target.setStroke(Color.YELLOW);
+                    target.setEndX(node.getTarget().getLocation().getCol());
+                    target.setEndY(node.getTarget().getLocation().getRow());
+                    target.setId("L"+node.getId());
+                    world.getChildren().add(target);
+                }
+            }
+            else if ((target = (Line)world.lookup("#L"+node.getId()))!=null){
+                world.getChildren().remove(target);
             }
         }
+
+        for (Virus virus:env.getVirusList()) {
+            ((Rectangle) world.lookup("#S" + virus.getId())).setX(virus.getLocation().getCol() - virus.getSizeW() / 2);
+            ((Rectangle) world.lookup("#S" + virus.getId())).setY(virus.getLocation().getRow() - virus.getSizeH() / 2);
+        }
+
     }
 
     /**
@@ -140,8 +182,6 @@ public class MapController {
             test.setImage(imageTower.getImage());
             test.setId(tower.getId());
             world.getChildren().add(test);
-
-            System.out.println(env.getNodeList());
         }
     }
 

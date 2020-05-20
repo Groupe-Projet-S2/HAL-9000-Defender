@@ -1,6 +1,6 @@
 package models;
 
-public class Projectile {
+public class Projectile{
 
     private Location location;
     private Location destination;

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public abstract class Projectile extends Entity {
 
     private Location destination;
-    private Vector direction;
+    protected Vector direction;
     private Node sender;
     private int damage;
 
@@ -22,6 +22,8 @@ public abstract class Projectile extends Entity {
         this.sender = sender;
         this.damage = damage;
     }
+
+    public abstract void move();
 
     public abstract void hit(ArrayList<Virus> inRangeVirus);
 

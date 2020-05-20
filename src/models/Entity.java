@@ -3,7 +3,7 @@ package models;
 public class Entity {
 
     private int range;
-    private Location location;
+    protected Location location;
     private Location target;
     private String id;
     public static int count = 0;

@@ -16,8 +16,8 @@ public class MapView {
      * One tile is 32x32.
      * Every tile gets its corresponding sprite as a background.
      */
-    public static void draw(TilePane grid, int COLS, int ROWS, int SIZE, TileMap tileMap) {
-        SpriteSheet tileSet = new SpriteSheet("src/utils/tileset32.png", SIZE);
+    public static void draw(TilePane grid, int COLS, int ROWS, TileMap tileMap) {
+        SpriteSheet tileSet = new SpriteSheet("src/utils/tileset32.png");
         for (int i = 0; i < COLS; i++)
             for (int j = 0; j < ROWS; j++) {
                 Tile tile = tileMap.getTile(i, j);

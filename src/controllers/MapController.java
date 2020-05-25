@@ -15,16 +15,11 @@ import models.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.input.MouseEvent;
 import views.MapView;
-
-import java.util.Collection;
-
 public class MapController {
 
     private Timeline gameloop;
     private ImageView imageTower;
     private Node tower;
-
-    private final static int SIZE = 32; // tile's size
     private final int COLS = 25; // columns
     private final int ROWS = 25; // rows
 
@@ -58,18 +53,18 @@ public class MapController {
 
     @FXML void initialize() {
         grid.setAlignment(Pos.CENTER);
-        tileMap = new TileMap(COLS, ROWS, SIZE * SIZE);
+        tileMap = new TileMap(COLS, ROWS);
         tileMap.compose();
         grid.setPrefColumns(COLS);
         grid.setPrefRows(ROWS);
-        tileSet = new SpriteSheet("src/utils/tileset32.png", SIZE);
+        tileSet = new SpriteSheet("src/utils/tileset32.png");
         Graphs.bfs(world, tileMap, tileMap.getTile(6, 0), tileMap.getTile(5, 24));
 
-        MapView.draw(grid, COLS, ROWS, SIZE, tileMap);
+        MapView.draw(grid, COLS, ROWS, tileMap);
 
         env = new World();
 
-        virus = new Virus(5,new Location(6 * SIZE + SIZE / 2,SIZE /2), tileMap.getTile(6,0));
+        virus = new Virus(5,new Location(6 * Tile.SIZE + Tile.SIZE / 2, Tile.SIZE/2), tileMap.getTile(6,0));
         env.addToList(virus);
         Rectangle r = new Rectangle();
         r.setHeight(virus.getSizeH());
@@ -203,16 +198,5 @@ public class MapController {
     @FXML
     void setTowerOnKbd(MouseEvent event) {
         imageTower = imageKbd;
-    }
-
-    public void createSprite(Virus ent){
-        Rectangle r = new Rectangle();
-        r.setWidth(ent.getSizeW());
-        r.setHeight(ent.getSizeH());
-        r.translateXProperty().bind(ent.getLocation().getColProperty());
-        r.translateYProperty().bind(ent.getLocation().getRowProperty());
-        r.setFill(Color.web("#000000"));
-        r.setId(ent.getId());
-        world.getChildren().add(r);
     }
 }

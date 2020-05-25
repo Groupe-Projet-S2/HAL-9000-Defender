@@ -1,13 +1,11 @@
 package models;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-
 public class Vector {
 
     private int row, col;
 
     public Vector(){}
+
     public Vector(int row, int col) {
         this.row = row;
         this.col = col;

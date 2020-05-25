@@ -11,8 +11,8 @@ public class SpriteSheet {
     private double spriteSize;
     private HashMap<Integer, Image> sprites;
 
-    public SpriteSheet(String url, int spriteSize) {
-        this.spriteSize = spriteSize;
+    public SpriteSheet(String url) {
+        this.spriteSize = Tile.SIZE;
         try {
             this.spriteSheet = new ImageView(new Image(new FileInputStream(url)));
             this.sprites = splitSheet();

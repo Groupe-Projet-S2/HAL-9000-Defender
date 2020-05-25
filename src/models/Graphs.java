@@ -22,18 +22,15 @@ public class Graphs {
      */
     public static void bfs(Pane world, TileMap tileMap, Tile start, Tile end) {
         Tile temp = null; // The current tile
-        Tile neighbor; // Iterates over the neighbors of the current tile
         Stack<Tile> stack = new Stack<>();
         stack.add(end);
-        int row, col;
+        end.setParent(end);
 
         Collection<Tile> neighbors;
 
         do {
             if (stack.size() > 0) {
                 temp = stack.pop();
-                row = temp.getPos().getRow();
-                col = temp.getPos().getCol();
                 neighbors = TileMap.getAvailableNeighbors(tileMap, temp);
                 stack.addAll(neighbors);
 
@@ -41,16 +38,18 @@ public class Graphs {
                     stack.add(tile);
                     tile.setParent(temp);
                 }
-                //if (stack.peek() != null) temp.setParent(stack.peek());
             }
         } while (temp != start);
 
+
+
+
         for (Tile tile : tileMap.getTiles()) {
             if (tile.hasParent()) {
-                Circle p = new Circle(tile.getPos().getCol() * 32 + 32 / 2.0, tile.getPos().getRow() * 32 + 32 / 2.0, 3, Color.BLUE);
+                Circle p = new Circle(tile.getPos().getCol() * Tile.SIZE + Tile.SIZE / 2.0, tile.getPos().getRow() * Tile.SIZE + Tile.SIZE / 2.0, 3, Color.BLUE);
                 Location parent = tile.getParent().getPos();
                 world.getChildren().add(p);
-                world.getChildren().add(new Line(p.getCenterX(), p.getCenterY(), parent.getCol() * 32 + 32 / 2.0, parent.getRow() * 32 + 32 / 2.0));
+                world.getChildren().add(new Line(p.getCenterX(), p.getCenterY(), parent.getCol() * Tile.SIZE + Tile.SIZE / 2.0, parent.getRow() * Tile.SIZE + Tile.SIZE / 2.0));
             }
         }
     }

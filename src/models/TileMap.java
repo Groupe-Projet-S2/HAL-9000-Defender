@@ -11,10 +11,10 @@ public class TileMap {
     private int size;
     private ArrayList<Tile> tiles;
 
-    public TileMap(int cols, int rows, int size) {
+    public TileMap(int cols, int rows) {
         this.cols = cols;
         this.rows = rows;
-        this.size = size;
+        this.size = Tile.SIZE * Tile.SIZE;
         this.tiles = new ArrayList<>();
     }
 

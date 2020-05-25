@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public abstract class Projectile extends Entity {
 
-    private Location destination;
+    protected Location destination;
     protected Vector direction;
     private Node sender;
     private int damage;

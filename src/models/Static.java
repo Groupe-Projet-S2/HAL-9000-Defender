@@ -19,17 +19,17 @@ public class Static extends Projectile {
 
     @Override
     public void move() {
-        if (this.isInTheWay()=-1 || !this.location.match(this.destination)) {
+        if (!this.location.match(this.destination) && this.isInTheWay()==-1) {
             if(this.location.getRow()!=this.destination.getRow()) {
-                if(this.location.getRow()<this.destination.getLocation().getRow()) {
+                if(this.location.getRow()<this.destination.getRow()) {
                     this.direction.setRow(1);
                 }
                 else {
                     this.direction.setRow(-1);
                 }
             }
-            if(this.location.getCol()!=this.destination.getLocation().getCol()) {
-                if(this.location.getCol()<this.destination.getLocation().getCol()) {
+            if(this.location.getCol()!=this.destination.getCol()) {
+                if(this.location.getCol()<this.destination.getCol()) {
                     this.direction.setCol(1);
                 }
                 else {

@@ -28,7 +28,7 @@ public class Entity {
     }
 
     public static boolean isNode(Entity ent){
-        return (ent instanceof Node);
+        return (ent instanceof Tower);
     }
 
     public static boolean isProjectile(Entity ent){

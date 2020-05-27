@@ -6,6 +6,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.Stack;
 
 public class Graphs {
@@ -22,23 +23,34 @@ public class Graphs {
      */
     public static void bfs(Pane world, TileMap tileMap, Tile start, Tile end) {
         Tile temp = null; // The current tile
-        Stack<Tile> stack = new Stack<>();
-        stack.add(end);
+        //Stack<Tile> stack = new Stack<>();
+        //stack.add(end);
+        LinkedList<Tile> file = new LinkedList<Tile>();
+        file.addFirst(end);
         end.setParent(end);
 
         Collection<Tile> neighbors;
 
         do {
-            if (stack.size() > 0) {
-                temp = stack.pop();
+            if(!file.isEmpty()) {
+                temp = file.removeLast();
                 neighbors = TileMap.getAvailableNeighbors(tileMap, temp);
-                stack.addAll(neighbors);
 
                 for (Tile tile : neighbors) {
-                    stack.add(tile);
+                    file.addFirst(tile);
                     tile.setParent(temp);
                 }
             }
+            /*if (stack.size() > 0) {
+                //temp = stack.pop();
+                neighbors = TileMap.getAvailableNeighbors(tileMap, temp);
+                //stack.addAll(neighbors);
+
+                for (Tile tile : neighbors) {
+                    //stack.add(tile);
+                    tile.setParent(temp);
+                }
+            }*/
         } while (temp != start);
 
 

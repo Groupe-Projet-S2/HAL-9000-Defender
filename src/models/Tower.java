@@ -2,7 +2,7 @@ package models;
 
 import java.util.ArrayList;
 
-public class Node extends Entity {
+public class Tower extends Entity {
 
     private int upgradePrice;
     private int maxCons;
@@ -11,7 +11,7 @@ public class Node extends Entity {
     private Entity target;
     private ArrayList<Virus> inRangeVirus;
 
-    public Node(int range, Location location, int upgradePrice, int maxCons, int consumption) {
+    public Tower(int range, Location location, int upgradePrice, int maxCons, int consumption) {
         super(range, location);
         this.upgradePrice = upgradePrice;
         this.maxCons = maxCons;

@@ -6,7 +6,7 @@ public class Dynamic extends Projectile {
 
     private Virus target;
 
-    public Dynamic(Location location, Location destination, Vector direction, Node sender, Virus target, int damage, int range) {
+    public Dynamic(Location location, Location destination, Vector direction, Tower sender, Virus target, int damage, int range) {
         super(location, destination, direction, sender, damage, range);
         this.target = target;
     }

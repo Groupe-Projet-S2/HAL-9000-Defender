@@ -19,7 +19,7 @@ public class MapController {
 
     private Timeline gameloop;
     private ImageView imageTower;
-    private Node tower;
+    private Tower tower;
     private final int COLS = 25; // columns
     private final int ROWS = 25; // rows
 
@@ -101,25 +101,25 @@ public class MapController {
             line.setVisible(false);*/
 
         Line target;
-        for (Node node:env.getNodeList()){
-            if (node.hasTarget()){
-                if ((target = (Line)world.lookup("#L"+node.getId()))!=null){
-                    target.setEndX(node.getTarget().getLocation().getCol());
-                    target.setEndY(node.getTarget().getLocation().getRow());
+        for (Tower tower :env.getNodeList()){
+            if (tower.hasTarget()){
+                if ((target = (Line)world.lookup("#L"+ tower.getId()))!=null){
+                    target.setEndX(tower.getTarget().getLocation().getCol());
+                    target.setEndY(tower.getTarget().getLocation().getRow());
                 }
                 else{
                     target = new Line();
-                    target.setStartX(node.getLocation().getCol());
-                    target.setStartY(node.getLocation().getRow());
+                    target.setStartX(tower.getLocation().getCol());
+                    target.setStartY(tower.getLocation().getRow());
                     target.setStrokeWidth(1);
                     target.setStroke(Color.YELLOW);
-                    target.setEndX(node.getTarget().getLocation().getCol());
-                    target.setEndY(node.getTarget().getLocation().getRow());
-                    target.setId("L"+node.getId());
+                    target.setEndX(tower.getTarget().getLocation().getCol());
+                    target.setEndY(tower.getTarget().getLocation().getRow());
+                    target.setId("L"+ tower.getId());
                     world.getChildren().add(target);
                 }
             }
-            else if ((target = (Line)world.lookup("#L"+node.getId()))!=null){
+            else if ((target = (Line)world.lookup("#L"+ tower.getId()))!=null){
                 world.getChildren().remove(target);
             }
         }
@@ -156,7 +156,7 @@ public class MapController {
     @FXML
     public void createTower(MouseEvent event) {
         if (imageTower != null) {
-            tower = new Node(50, new Location((int) event.getY(), (int) event.getX()), 150, 150, 150);
+            tower = new Tower(50, new Location((int) event.getY(), (int) event.getX()), 150, 150, 150);
             env.addToList(tower);
 
             Circle range = new Circle(tower.getRange());

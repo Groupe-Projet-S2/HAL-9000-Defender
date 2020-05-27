@@ -3,12 +3,6 @@ package models;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.function.Predicate;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
 public class World {
 
     private ObservableList<Entity> entities;
@@ -22,13 +16,13 @@ public class World {
         this.entities.add(e);
     }
 
-    public ObservableList<Node> getNodeList(){
-        ObservableList<Node> nodeList = FXCollections.observableArrayList();
+    public ObservableList<Tower> getNodeList(){
+        ObservableList<Tower> towerList = FXCollections.observableArrayList();
         for (Entity e:entities){
             if (Entity.isNode(e))
-                nodeList.add((Node)e);
+                towerList.add((Tower)e);
         }
-        return nodeList;
+        return towerList;
     }
 
     public ObservableList<Virus> getVirusList() {
@@ -55,10 +49,10 @@ public class World {
         return null;
     }
 
-    public Node getNode(String id){
-        for (Node node:getNodeList()){
-            if (node.getId().equals(id))
-                return node;
+    public Tower getNode(String id){
+        for (Tower tower :getNodeList()){
+            if (tower.getId().equals(id))
+                return tower;
         }
         return null;
     }

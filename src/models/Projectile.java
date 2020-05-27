@@ -6,10 +6,10 @@ public abstract class Projectile extends Entity {
 
     protected Location destination;
     protected Vector direction;
-    private Node sender;
+    private Tower sender;
     private int damage;
 
-    public Projectile(Location location, Location destination, Vector direction, Node sender, int damage, int range) {
+    public Projectile(Location location, Location destination, Vector direction, Tower sender, int damage, int range) {
         super(range, location);
         this.destination = destination;
         this.direction = direction;
@@ -17,7 +17,7 @@ public abstract class Projectile extends Entity {
         this.damage = damage;
     }
 
-    public Projectile(Location location, Node sender, int damage, int range) {
+    public Projectile(Location location, Tower sender, int damage, int range) {
         super(range, location);
         this.sender = sender;
         this.damage = damage;

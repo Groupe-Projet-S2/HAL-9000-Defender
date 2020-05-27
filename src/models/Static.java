@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Static extends Projectile {
 
-    public Static(Location location, Location destination, Vector direction, Node sender, int damage, int range) {
+    public Static(Location location, Location destination, Vector direction, Tower sender, int damage, int range) {
         super(location, destination, direction, sender, damage, range);
     }
 

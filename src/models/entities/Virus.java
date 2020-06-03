@@ -70,7 +70,8 @@ public abstract class Virus extends Entity {
     }
 
     public void addTarget(Entity entity) {
-        targets.add(entity);
+        if (this.isInRange(entity))
+            targets.add(entity);
     }
 
     public void removeTarget(Entity entity) {

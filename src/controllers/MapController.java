@@ -65,7 +65,7 @@ public class MapController {
 
         env = new World();
 
-        //virus = new Adware(new Location(6 * Tile.SIZE + Tile.SIZE / 2, Tile.SIZE/2), tileMap.getTile(6,0));
+        virus = new Zombie(new Location(6 * Tile.SIZE + Tile.SIZE / 2, Tile.SIZE/2), tileMap.getTile(6,0));
 
         env.getEntities().addListener((ListChangeListener<? super Entity>) c -> {
             while (c.next())

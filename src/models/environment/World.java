@@ -1,32 +1,48 @@
-package models;
+package models.environment;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
+import javafx.scene.layout.HBox;
+import models.entities.*;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class World {
 
     private ObservableList<Entity> entities;
+    private Set<HBox> overlays;
 
     public World() {
         this.entities = FXCollections.observableArrayList();
-
+        this.overlays = new HashSet<>();
     }
 
     public void addToList(Entity e) {
         this.entities.add(e);
     }
 
-    public ObservableList<Tower> getNodeList(){
-        ObservableList<Tower> towerList = FXCollections.observableArrayList();
+    public ObservableList<Entity> getEntities() {
+        return entities;
+    }
+
+    public ArrayList<Tower> getNodeList(){
+        ArrayList<Tower> towerList = new ArrayList<>();
         for (Entity e:entities){
             if (Entity.isNode(e))
-                towerList.add((Tower)e);
+                towerList.add((Tower) e);
         }
         return towerList;
     }
 
-    public ObservableList<Virus> getVirusList() {
-        ObservableList<Virus> virusList = FXCollections.observableArrayList();
+    public Set<HBox> getOverlays() {
+        return this.overlays;
+    }
+
+    public ArrayList<Virus> getVirusList() {
+        ArrayList<Virus> virusList = new ArrayList<>();
         for (Entity e:entities){
             if (Entity.isVirus(e))
                 virusList.add((Virus)e);
@@ -35,11 +51,14 @@ public class World {
     }
 
 
-    /*public ObservableList<Projectile> getProjectileList(){
-        ObservableList<Projectile> projectileList = FXCollections.observableArrayList();
-        projectileList.addAll((Collection<? extends Projectile>) entities.stream().filter(entity -> Entity.isProjectile(entity)).collect(Collectors.toList()));
+    public ArrayList<Projectile> getProjectileList(){
+        ArrayList<Projectile> projectileList = new ArrayList<>();
+        // projectileList.addAll((Collection<? extends Projectile>) entities.stream().filter(entity -> Entity.isProjectile(entity)).collect(Collectors.toList()));
+        for (Entity p : entities)
+            if (Entity.isProjectile(p))
+                projectileList.add((Projectile) p);
         return projectileList;
-    }*/
+    }
 
     public Virus getVirus(String id){
         for (Virus virus:getVirusList()){
@@ -85,7 +104,18 @@ public class World {
     public void nextRound() {
         for (Virus virus:getVirusList()){
             virus.move();
+
+            for (Tower tower : getNodeList()) {
+                if (virus.isInRange(tower)) {
+                    virus.addTarget(tower);
+                }
+            }
+
+            virus.act();
         }
+
+        for (Projectile projectile : getProjectileList())
+            projectile.move();
 
         for(int i = getNodeList().size()-1; i>=0; i--){  // Browse the node list
             for (int j = getVirusList().size()-1; j>=0; j--){  // Browse the virus list
@@ -107,6 +137,7 @@ public class World {
             // Setting node target
             if(!getNodeList().get(i).getInRangeVirus().isEmpty()) {
                 getNodeList().get(i).setTarget(getNodeList().get(i).getInRangeVirus().get(0));
+
             }
             else {
                 getNodeList().get(i).setTarget(null);

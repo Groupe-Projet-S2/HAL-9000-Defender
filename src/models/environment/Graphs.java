@@ -1,4 +1,4 @@
-package models;
+package models.environment;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -7,7 +7,6 @@ import javafx.scene.shape.Line;
 
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.Stack;
 
 public class Graphs {
 
@@ -41,28 +40,18 @@ public class Graphs {
                     tile.setParent(temp);
                 }
             }
-            /*if (stack.size() > 0) {
-                //temp = stack.pop();
-                neighbors = TileMap.getAvailableNeighbors(tileMap, temp);
-                //stack.addAll(neighbors);
-
-                for (Tile tile : neighbors) {
-                    //stack.add(tile);
-                    tile.setParent(temp);
-                }
-            }*/
         } while (temp != start);
 
 
 
 
-        for (Tile tile : tileMap.getTiles()) {
+/*        for (Tile tile : tileMap.getTiles()) {
             if (tile.hasParent()) {
                 Circle p = new Circle(tile.getPos().getCol() * Tile.SIZE + Tile.SIZE / 2.0, tile.getPos().getRow() * Tile.SIZE + Tile.SIZE / 2.0, 3, Color.BLUE);
                 Location parent = tile.getParent().getPos();
                 world.getChildren().add(p);
                 world.getChildren().add(new Line(p.getCenterX(), p.getCenterY(), parent.getCol() * Tile.SIZE + Tile.SIZE / 2.0, parent.getRow() * Tile.SIZE + Tile.SIZE / 2.0));
             }
-        }
+        }*/
     }
 }

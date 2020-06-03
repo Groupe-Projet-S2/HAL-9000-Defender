@@ -1,4 +1,4 @@
-package models;
+package models.environment;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -9,6 +9,11 @@ public class Location {
     public Location(int row, int col) {
         this.row = new SimpleIntegerProperty(row);
         this.col = new SimpleIntegerProperty(col);
+    }
+
+    public void set(int row, int col) {
+        setRow(row);
+        setCol(col);
     }
 
     public void setRow(int row) {

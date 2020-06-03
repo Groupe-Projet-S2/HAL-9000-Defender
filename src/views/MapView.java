@@ -3,9 +3,9 @@ package views;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
-import models.SpriteSheet;
-import models.Tile;
-import models.TileMap;
+import models.environment.SpriteSheet;
+import models.environment.Tile;
+import models.environment.TileMap;
 
 public class MapView {
     /**

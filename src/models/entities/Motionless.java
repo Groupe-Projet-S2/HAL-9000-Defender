@@ -1,4 +1,6 @@
-package models;
+package models.entities;
+
+import models.environment.Location;
 
 import java.util.ArrayList;
 

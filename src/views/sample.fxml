@@ -6,103 +6,326 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MapController">
-   <center>
-      <Pane fx:id="world" maxWidth="800" BorderPane.alignment="CENTER">
-         <TilePane fx:id="grid" alignment="CENTER" onMouseClicked="#createTower" prefHeight="800.0" prefWidth="800.0">
-         </TilePane>
-      </Pane>
-   </center>
-   <right>
-      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="500.0" prefWidth="150.0" style="-fx-border-color: #6666ff; -fx-border-radius: 40; -fx-border-width: 3;" BorderPane.alignment="CENTER">
-         <children>
-            <VBox alignment="CENTER" prefHeight="333.0" prefWidth="208.0" style="-fx-border-color: #b6dcee; -fx-border-width: 4; -fx-border-radius: 40;">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1724.0" style="-fx-background-image: C:\Users\willi\Desktop\Projet S2\Tower-Defence\src\utils\fond.jpg;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MapController">
+   <children>
+      <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../utils/fondV2.jpg" />
+         </image>
+         <viewport>
+            <Rectangle2D />
+         </viewport>
+      </ImageView>
+      <BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1724.0">
+         <bottom>
+            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="176.0" prefWidth="1006.0" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="80.0" left="180.0" />
+               </BorderPane.margin>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
                <children>
-                  <Label alignment="TOP_CENTER" prefHeight="22.0" prefWidth="61.0" text="Towers" textAlignment="CENTER" textFill="#6666ff">
+                  <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="191.0" prefWidth="800.0" style="-fx-border-color: #454545; -fx-border-width: 5; -fx-background-image: url('/utils/barreV8H.png');">
+                     <children>
+                        <ImageView fitHeight="161.0" fitWidth="152.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../utils/1200px-HAL9000.svg.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets left="10.0" top="15.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="185.0" prefWidth="244.0">
+                           <children>
+                              <Label alignment="TOP_LEFT" style="-fx-background-color: #454545;" text="Overheated" textFill="#20a9aa">
+                                 <font>
+                                    <Font name="ROGFonts-Regular" size="24.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="18.0" top="30.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="243.0" style="-fx-border-color: #4e4d4d; -fx-border-width: 5;">
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="74.0" prefWidth="244.0">
+                                 <children>
+                                    <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="36.0" prefWidth="37.0" style="-fx-background-color: #454545;" text="0 %" textFill="#20a9aa">
+                                       <font>
+                                          <Font name="ROGFonts-Regular" size="18.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets top="20.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="33.0" prefWidth="60.0" style="-fx-background-color: #454545;" text="100 %" textFill="#20a9aa">
+                                       <HBox.margin>
+                                          <Insets left="145.0" top="20.0" />
+                                       </HBox.margin>
+                                       <font>
+                                          <Font name="ROGFonts-Regular" size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets left="-10.0" />
+                           </padding>
+                        </VBox>
+                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="181.0" prefWidth="384.0">
+                           <children>
+                              <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="182.0" prefWidth="176.0">
+                                 <children>
+                                    <Label style="-fx-background-color: #454545;" text="Kill count" textFill="#20a9aa">
+                                       <font>
+                                          <Font name="ROGFonts-Regular" size="24.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets top="-20.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label style="-fx-background-color: #454545;" text="01" textFill="#20a9aa">
+                                       <font>
+                                          <Font name="ROGFonts-Regular" size="36.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets top="20.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="182.0" prefWidth="183.0">
+                                 <children>
+                                    <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="47.0" prefWidth="99.0" style="-fx-border-color: #20a9aa; -fx-background-color: #454545;" text="Pause" textFill="#20a9aa">
+                                       <font>
+                                          <Font name="ROGFonts-Regular" size="11.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="47.0" prefWidth="99.0" style="-fx-background-color: #454545; -fx-border-color: #20a9aa;" text="Next Wave" textFill="#20a9aa">
+                                       <font>
+                                          <Font name="ROGFonts-Regular" size="11.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children></HBox>
+                  <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="191.0" prefWidth="191.0" style="-fx-background-image: url('/utils/carréV2.jpg'); -fx-border-width: 5; -fx-border-color: #454545;">
+                     <children>
+                        <Label style="-fx-background-color: #454545;" text="Round" textFill="#20a9aa">
+                           <font>
+                              <Font name="ROGFonts-Regular" size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin></Label>
+                        <Label alignment="CENTER" prefHeight="99.0" prefWidth="156.0" style="-fx-background-color: #454545;" text="01" textFill="#20a9aa">
+                           <font>
+                              <Font name="ROGFonts-Regular" size="67.0" />
+                           </font></Label>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children></HBox>
+         </bottom>
+         <right>
+            <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="803.0" prefWidth="191.0" style="-fx-border-color: #454545; -fx-background-image: url('/utils/barreV8.png'); -fx-border-width: 5;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="43.0" prefWidth="189.0" style="-fx-background-color: #454545;" text=" H@ll 9000" textFill="#20a9aa">
                      <font>
-                        <Font name="System Bold" size="18.0" />
+                        <Font name="ROGFonts-Regular" size="25.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="50.0" />
-                     </VBox.margin></Label>
-                  <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="200.0">
+                        <Insets bottom="20.0" top="-40.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox>
                      <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
+                        <ImageView fitHeight="37.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../utils/bitcoin.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets left="30.0" top="20.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Label prefHeight="35.0" prefWidth="72.0" style="-fx-background-color: #454545;" text=" 1000" textFill="WHITE">
+                           <font>
+                              <Font name="ROGFonts-Regular" size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="30.0" top="20.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="40.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label alignment="TOP_CENTER" prefHeight="35.0" prefWidth="192.0" style="-fx-background-color: #454545;" text="Towers" textAlignment="CENTER" textFill="#20a9aa">
+                     <font>
+                        <Font name="ROGFonts-Regular" size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <VBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="202.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="30.0" prefWidth="200.0">
                            <children>
                               <ImageView fx:id="imageAfast" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#setTowerOnAfast" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../utils/towerAfast.png" />
                                  </image>
+                                 <VBox.margin>
+                                    <Insets left="88.0" />
+                                 </VBox.margin>
                               </ImageView>
-                              <Label maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="39.0" prefWidth="151.0" text="Avast                          100 €">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
                            </children>
-                           <padding>
-                              <Insets bottom="10.0" left="10.0" />
-                           </padding>
-                        </HBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
+                        </VBox>
+                        <VBox prefHeight="42.0" prefWidth="200.0">
                            <children>
                               <ImageView fx:id="imageGb" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#setTowerOnGb" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../utils/towerGoodwarebytes.jpg" />
                                  </image>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" />
-                                 </HBox.margin></ImageView>
-                              <Label prefHeight="30.0" prefWidth="154.0" text="Goodwarebytes          250 €">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
+                                 <VBox.margin>
+                                    <Insets left="88.0" top="20.0" />
+                                 </VBox.margin>
+                              </ImageView>
                            </children>
-                        </HBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
+                        </VBox>
+                        <VBox prefHeight="17.0" prefWidth="200.0">
                            <children>
                               <ImageView fx:id="imageIVG" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#setTowerOnIVG" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../utils/towerIVG.jpg" />
                                  </image>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" />
-                                 </HBox.margin></ImageView>
-                              <Label prefHeight="30.0" prefWidth="151.0" text="IVG                             500 €">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
+                                 <VBox.margin>
+                                    <Insets left="88.0" top="20.0" />
+                                 </VBox.margin>
+                              </ImageView>
                            </children>
-                        </HBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
+                        </VBox>
+                        <VBox prefHeight="51.0" prefWidth="200.0">
                            <children>
                               <ImageView fx:id="imageKbd" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#setTowerOnKbd" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../utils/towerKilobitDefender.jpg" />
                                  </image>
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin></ImageView>
-                              <Label prefHeight="35.0" prefWidth="152.0" text="KilobitDefender         1000€">
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </Label>
+                                 <VBox.margin>
+                                    <Insets left="88.0" top="20.0" />
+                                 </VBox.margin>
+                              </ImageView>
                            </children>
-                        </HBox>
+                        </VBox>
                      </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
                   </VBox>
+                  <Label alignment="CENTER" prefHeight="33.0" prefWidth="181.0" style="-fx-background-color: #454545;" text="Bonus" textFill="#20a9aa">
+                     <font>
+                        <Font name="ROGFonts-Regular" size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="20.0" top="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <VBox prefHeight="30.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fx:id="imageAfast1" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#setTowerOnAfast" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../utils/towerAfast.png" />
+                                 </image>
+                                 <VBox.margin>
+                                    <Insets left="80.0" top="10.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="42.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fx:id="imageGb1" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#setTowerOnGb" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../utils/towerGoodwarebytes.jpg" />
+                                 </image>
+                                 <VBox.margin>
+                                    <Insets left="80.0" top="20.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="17.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fx:id="imageIVG1" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#setTowerOnIVG" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../utils/towerIVG.jpg" />
+                                 </image>
+                                 <VBox.margin>
+                                    <Insets left="80.0" top="20.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="51.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fx:id="imageKbd1" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#setTowerOnKbd" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../utils/towerKilobitDefender.jpg" />
+                                 </image>
+                                 <VBox.margin>
+                                    <Insets left="80.0" top="20.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                           </children>
+                        </VBox>
+                     </children></VBox>
                </children>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
+               <BorderPane.margin>
+                  <Insets right="270.0" top="-100.0" />
+               </BorderPane.margin>
             </VBox>
-         </children>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
-      </VBox>
-   </right>
-</BorderPane>
+         </right>
+         <center>
+            <Pane fx:id="world" maxHeight="-Infinity" maxWidth="800.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+               <children>
+                  <TilePane fx:id="grid" alignment="CENTER" onMouseClicked="#createTower" prefHeight="800" prefWidth="800">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </TilePane>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <BorderPane.margin>
+                  <Insets left="340.0" top="-100.0" />
+               </BorderPane.margin>
+            </Pane>
+         </center>
+         <left>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+         </left>
+         <top>
+            <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin></HBox>
+         </top>
+      </BorderPane>
+   </children>
+</Pane>

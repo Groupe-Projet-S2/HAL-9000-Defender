@@ -86,6 +86,7 @@ public class MapController {
         });
 
         env.addToList(virus);
+
         //env.addToList(new Dynamic(new Location(500, 500), null, virus, 10, 10));
 
         // Starts the loop

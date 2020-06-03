@@ -2,23 +2,27 @@ package controllers;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import models.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.input.MouseEvent;
-import views.MapView;
+import models.entities.*;
+import models.environment.*;
+import views.*;
+
+import java.util.Date;
+
 public class MapController {
 
     private Timeline gameloop;
-    private ImageView imageTower;
+    private ImageView selectedNode;
+    private Location placedNodeLoc;
     private Tower tower;
     private final int COLS = 25; // columns
     private final int ROWS = 25; // rows
@@ -31,9 +35,6 @@ public class MapController {
 
     @FXML
     private ImageView imageKbd;
-
-    @FXML
-    private BorderPane pane;
 
     @FXML
     private ImageView imageIVG;
@@ -64,16 +65,28 @@ public class MapController {
 
         env = new World();
 
-        virus = new Virus(5,new Location(6 * Tile.SIZE + Tile.SIZE / 2, Tile.SIZE/2), tileMap.getTile(6,0));
+        //virus = new Adware(new Location(6 * Tile.SIZE + Tile.SIZE / 2, Tile.SIZE/2), tileMap.getTile(6,0));
+
+        env.getEntities().addListener((ListChangeListener<? super Entity>) c -> {
+            while (c.next())
+                if (c.wasAdded()) {
+                    for (Entity a : c.getAddedSubList()) {
+                        if (Entity.isVirus(a))
+                            world.getChildren().add(VirusView.renderVirus((Virus) a));
+                        else if (Entity.isNode(a))
+                            world.getChildren().addAll(
+                                    TowerView.drawRadius(50, a.getLocation(), a.getId()),
+                                    TowerView.renderTower((Tower) a, placedNodeLoc, selectedNode.getImage())
+                            );
+                        else if (Entity.isProjectile(a)) {
+                            world.getChildren().add(ProjectileView.renderProjectile((Projectile) a));
+                        }
+                    }
+                }
+        });
+
         env.addToList(virus);
-        Rectangle r = new Rectangle();
-        r.setHeight(virus.getSizeH());
-        r.setWidth(virus.getSizeW());
-        r.setFill(Color.RED);
-        r.setX(virus.getLocation().getCol()-virus.getSizeW()/2);
-        r.setY(virus.getLocation().getRow()-virus.getSizeH()/2);
-        r.setId("S"+virus.getId());
-        world.getChildren().add(r);
+        //env.addToList(new Dynamic(new Location(500, 500), null, virus, 10, 10));
 
         // Starts the loop
         initLoop();
@@ -89,46 +102,17 @@ public class MapController {
         env.nextRound();
     }
 
-    private void updateView(){
-        /*if (!env.getNodeList().isEmpty() && env.getNodeList().get(0).getTarget()!=null) {
-            line.setVisible(true);
-            line.setStartX(env.getNodeList().get(0).getLocation().getCol());
-            line.setStartY(env.getNodeList().get(0).getLocation().getRow());
-            line.setEndX(env.getNodeList().get(0).getTarget().getLocation().getCol());
-            line.setEndY(env.getNodeList().get(0).getTarget().getLocation().getRow());
-        }
-        else
-            line.setVisible(false);*/
-
+    private void updateView() {
         Line target;
-        for (Tower tower :env.getNodeList()){
-            if (tower.hasTarget()){
-                if ((target = (Line)world.lookup("#L"+ tower.getId()))!=null){
-                    target.setEndX(tower.getTarget().getLocation().getCol());
-                    target.setEndY(tower.getTarget().getLocation().getRow());
-                }
-                else{
-                    target = new Line();
-                    target.setStartX(tower.getLocation().getCol());
-                    target.setStartY(tower.getLocation().getRow());
-                    target.setStrokeWidth(1);
-                    target.setStroke(Color.YELLOW);
-                    target.setEndX(tower.getTarget().getLocation().getCol());
-                    target.setEndY(tower.getTarget().getLocation().getRow());
-                    target.setId("L"+ tower.getId());
-                    world.getChildren().add(target);
-                }
+        for (Tower tower : env.getNodeList()) {
+            if (tower.hasTarget()) {
+                if (world.lookup("#L"+ tower.getId()) == null)
+                    world.getChildren().add(TowerView.drawTarget(tower.getLocation(), tower.getTarget().getLocation(), tower.getId()));
             }
-            else if ((target = (Line)world.lookup("#L"+ tower.getId()))!=null){
+            else if ((target = (Line) world.lookup("#L"+ tower.getId())) != null) {
                 world.getChildren().remove(target);
             }
         }
-
-        for (Virus virus:env.getVirusList()) {
-            ((Rectangle) world.lookup("#S" + virus.getId())).setX(virus.getLocation().getCol() - virus.getSizeW() / 2);
-            ((Rectangle) world.lookup("#S" + virus.getId())).setY(virus.getLocation().getRow() - virus.getSizeH() / 2);
-        }
-
     }
 
     /**
@@ -140,7 +124,7 @@ public class MapController {
         gameloop.setCycleCount(Timeline.INDEFINITE);
 
         KeyFrame kf = new KeyFrame(
-                Duration.seconds(0.017), // FPS Number
+                Duration.seconds(0.034), // FPS Number
                 (event -> {tick();
                     //System.out.println("A tick has been run");
                 })
@@ -155,48 +139,30 @@ public class MapController {
 
     @FXML
     public void createTower(MouseEvent event) {
-        if (imageTower != null) {
-            tower = new Tower(50, new Location((int) event.getY(), (int) event.getX()), 150, 150, 150);
+        if (selectedNode != null) {
+            placedNodeLoc = new Location((int) event.getY(), (int) event.getX());
+            tower = new Tower(50, placedNodeLoc, 150, 150, 150);
             env.addToList(tower);
-
-            Circle range = new Circle(tower.getRange());
-            range.setStroke(Color.web("#000000"));
-            range.setFill(Color.rgb(0, 0, 0, 0.25));
-            range.setCenterX(tower.getLocation().getCol());
-            range.setCenterY(tower.getLocation().getRow());
-            range.setId("R" + tower.getId());
-            world.getChildren().add(range);
-
-            ImageView test = new ImageView();
-            int col = (int) (event.getX() - imageTower.getFitWidth() / 2);
-            int row = (int) (event.getY() - imageTower.getFitHeight() / 2);
-            test.setX(col);
-            test.setY(row);
-            test.setFitHeight(imageTower.getFitHeight());
-            test.setFitWidth(imageTower.getFitWidth());
-            test.setImage(imageTower.getImage());
-            test.setId(tower.getId());
-            world.getChildren().add(test);
         }
     }
 
     @FXML
-    void setTowerOnAfast(MouseEvent event) {
-        imageTower = imageAfast;
+    void setTowerOnAfast() {
+        selectedNode = imageAfast;
     }
 
     @FXML
-    void setTowerOnGb(MouseEvent event) {
-        imageTower = imageGb;
+    void setTowerOnGb() {
+        selectedNode = imageGb;
     }
 
     @FXML
-    void setTowerOnIVG(MouseEvent event) {
-        imageTower = imageIVG;
+    void setTowerOnIVG() {
+        selectedNode = imageIVG;
     }
 
     @FXML
-    void setTowerOnKbd(MouseEvent event) {
-        imageTower = imageKbd;
+    void setTowerOnKbd() {
+        selectedNode = imageKbd;
     }
 }

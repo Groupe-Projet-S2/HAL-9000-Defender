@@ -1,10 +1,14 @@
-package models;
+package models.entities;
+
+import models.environment.Location;
 
 public class Entity {
 
     private int range;
     protected Location location;
     private Location target;
+    private boolean isActive;
+    private int sizeW, sizeH;
     private String id;
     public static int count = 0;
 
@@ -12,12 +16,27 @@ public class Entity {
         this.range=range;
         this.location=location;
         this.id="E"+count;
+        this.isActive = true;
+        sizeW = 10;
+        sizeH = 10;
         count++;
+    }
+
+    public int getSizeW(){
+        return sizeW;
+    }
+    public int getSizeH(){
+        return sizeH;
+    }
+
+    public boolean isActive() {
+        return this.isActive;
     }
 
     public Location getLocation() {
         return this.location;
     }
+
     void setLocation(int x, int y) {
         this.location.setCol(x);
         this.location.setRow(y);
@@ -43,9 +62,9 @@ public class Entity {
         return this.range;
     }
 
-    public boolean isInRange(Virus virus){
-        int deltaX = this.getLocation().getCol() - Math.max(virus.getLocation().getCol(), Math.min(this.getLocation().getCol(),virus.getLocation().getCol()+virus.getSizeW()));
-        int deltaY = this.getLocation().getRow() - Math.max(virus.getLocation().getRow(), Math.min(this.getLocation().getRow(),virus.getLocation().getRow()+virus.getSizeH()));
+    public boolean isInRange(Entity entity){
+        int deltaX = this.getLocation().getCol() - Math.max(entity.getLocation().getCol(), Math.min(this.getLocation().getCol(),entity.getLocation().getCol()+entity.getSizeW()));
+        int deltaY = this.getLocation().getRow() - Math.max(entity.getLocation().getRow(), Math.min(this.getLocation().getRow(),entity.getLocation().getRow()+entity.getSizeH()));
 
         return (Math.pow(deltaX,2) + Math.pow(deltaY,2)) < Math.pow(this.getRange(),2);
     }

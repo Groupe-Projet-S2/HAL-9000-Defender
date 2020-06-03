@@ -1,4 +1,4 @@
-package models;
+package models.environment;
 
 import javafx.scene.image.*;
 

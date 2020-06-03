@@ -1,4 +1,4 @@
-package models;
+package models.environment;
 
 public class Tile {
     private Location pos;

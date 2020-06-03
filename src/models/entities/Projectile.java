@@ -1,4 +1,7 @@
-package models;
+package models.entities;
+
+import models.environment.Location;
+import models.environment.Vector;
 
 import java.util.ArrayList;
 

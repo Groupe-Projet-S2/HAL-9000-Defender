@@ -1,4 +1,4 @@
-package models;
+package models.environment;
 
 public class Vector {
 
@@ -26,4 +26,5 @@ public class Vector {
     public int getCol() {
         return this.col;
     }
+
 }

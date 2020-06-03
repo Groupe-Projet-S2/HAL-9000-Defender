@@ -1,4 +1,6 @@
-package models;
+package models.entities;
+
+import models.environment.Location;
 
 import java.util.ArrayList;
 
@@ -17,6 +19,7 @@ public class Tower extends Entity {
         this.maxCons = maxCons;
         this.consumption = consumption;
         this.inRangeVirus = new ArrayList<Virus>();
+        this.active = true;
     }
 
     public void setMaxCons(int maxCons) {

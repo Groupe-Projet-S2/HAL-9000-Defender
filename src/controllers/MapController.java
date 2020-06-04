@@ -46,10 +46,9 @@ public class MapController {
 
     private SpriteSheet tileSet;
 
-    private TileMap tileMap;
+    public static TileMap tileMap;
 
-    World env;
-    Virus virus;
+    Game game;
 
     @FXML void initialize() {
         grid.setAlignment(Pos.CENTER);
@@ -62,10 +61,10 @@ public class MapController {
 
         MapView.draw(grid, COLS, ROWS, tileMap);
 
-        env = new World();
+        game = new Game();
 
-        virus = new Virus(5,new Location(6 * Tile.SIZE + Tile.SIZE / 2, Tile.SIZE/2), tileMap.getTile(6,0));
-        env.addToList(virus);
+        /*virus = new Virus(5,new Location(6 * Tile.SIZE + Tile.SIZE / 2, Tile.SIZE/2), tileMap.getTile(6,0));
+        game.getWorld().addToList(virus);
         Rectangle r = new Rectangle();
         r.setHeight(virus.getSizeH());
         r.setWidth(virus.getSizeW());
@@ -73,7 +72,7 @@ public class MapController {
         r.setX(virus.getLocation().getCol()-virus.getSizeW()/2);
         r.setY(virus.getLocation().getRow()-virus.getSizeH()/2);
         r.setId("S"+virus.getId());
-        world.getChildren().add(r);
+        world.getChildren().add(r);*/
 
         // Starts the loop
         initLoop();
@@ -86,28 +85,17 @@ public class MapController {
     */
     private void tick() {
         updateView();
-        env.nextRound();
+        game.update();
     }
 
-    private void updateView(){
-        /*if (!env.getNodeList().isEmpty() && env.getNodeList().get(0).getTarget()!=null) {
-            line.setVisible(true);
-            line.setStartX(env.getNodeList().get(0).getLocation().getCol());
-            line.setStartY(env.getNodeList().get(0).getLocation().getRow());
-            line.setEndX(env.getNodeList().get(0).getTarget().getLocation().getCol());
-            line.setEndY(env.getNodeList().get(0).getTarget().getLocation().getRow());
-        }
-        else
-            line.setVisible(false);*/
-
+    private void updateView() {
         Line target;
-        for (Tower tower :env.getNodeList()){
-            if (tower.hasTarget()){
-                if ((target = (Line)world.lookup("#L"+ tower.getId()))!=null){
+        for (Tower tower : game.getWorld().getNodeList()) {
+            if (tower.hasTarget()) {
+                if ((target = (Line) world.lookup("#L" + tower.getId())) != null) {
                     target.setEndX(tower.getTarget().getLocation().getCol());
                     target.setEndY(tower.getTarget().getLocation().getRow());
-                }
-                else{
+                } else {
                     target = new Line();
                     target.setStartX(tower.getLocation().getCol());
                     target.setStartY(tower.getLocation().getRow());
@@ -115,20 +103,25 @@ public class MapController {
                     target.setStroke(Color.YELLOW);
                     target.setEndX(tower.getTarget().getLocation().getCol());
                     target.setEndY(tower.getTarget().getLocation().getRow());
-                    target.setId("L"+ tower.getId());
+                    target.setId("L" + tower.getId());
                     world.getChildren().add(target);
                 }
-            }
-            else if ((target = (Line)world.lookup("#L"+ tower.getId()))!=null){
+            } else if ((target = (Line) world.lookup("#L" + tower.getId())) != null) {
                 world.getChildren().remove(target);
             }
         }
 
-        for (Virus virus:env.getVirusList()) {
-            ((Rectangle) world.lookup("#S" + virus.getId())).setX(virus.getLocation().getCol() - virus.getSizeW() / 2);
-            ((Rectangle) world.lookup("#S" + virus.getId())).setY(virus.getLocation().getRow() - virus.getSizeH() / 2);
-        }
+        for (int i = game.getWorld().getVirusList().size() - 1; i >= 0; i--) {
+            Virus a = game.getWorld().getVirusList().get(i);
+            String id = "#" + a.getId();
 
+            if (world.lookup(id) != null) {
+                world.lookup(id).setTranslateX(a.getLocation().getCol() - a.getSizeW() / 2);
+                world.lookup(id).setTranslateY(a.getLocation().getRow() - a.getSizeH() / 2);
+            } else {
+                createVirus(a);
+            }
+        }
     }
 
     /**
@@ -153,11 +146,22 @@ public class MapController {
      * Manages the creation of towers on the map
      */
 
+    public void createVirus(Virus virus){
+            Rectangle r = new Rectangle();
+            r.setHeight(virus.getSizeH());
+            r.setWidth(virus.getSizeW());
+            r.setFill(Color.RED);
+            r.setTranslateX(virus.getLocation().getCol()-virus.getSizeW()/2);
+            r.setTranslateX(virus.getLocation().getRow()-virus.getSizeH()/2);
+            r.setId(virus.getId());
+            world.getChildren().add(r);
+        }
+
     @FXML
     public void createTower(MouseEvent event) {
         if (imageTower != null) {
-            tower = new Tower(50, new Location((int) event.getY(), (int) event.getX()), 150, 150, 150);
-            env.addToList(tower);
+            tower = new Tower(50, new Location((int) event.getY(), (int) event.getX()), 150, 150, 150, game.getWorld());
+            game.getWorld().addToList(tower);
 
             Circle range = new Circle(tower.getRange());
             range.setStroke(Color.web("#000000"));

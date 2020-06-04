@@ -10,13 +10,15 @@ public class Tower extends Entity {
     private boolean active;
     private Entity target;
     private ArrayList<Virus> inRangeVirus;
+    private World env;
 
-    public Tower(int range, Location location, int upgradePrice, int maxCons, int consumption) {
+    public Tower(int range, Location location, int upgradePrice, int maxCons, int consumption, World env) {
         super(range, location);
         this.upgradePrice = upgradePrice;
         this.maxCons = maxCons;
         this.consumption = consumption;
         this.inRangeVirus = new ArrayList<Virus>();
+        this.env = env;
     }
 
     public void setMaxCons(int maxCons) {
@@ -79,4 +81,28 @@ public class Tower extends Entity {
             this.inRangeVirus.remove(virus);
     }
 
+    public void act(){
+
+        for (int j = env.getVirusList().size()-1; j>=0; j--){  // Browse the virus list
+            // Virus j is in range of node i and not yet in its range list so we add it to the list
+            if (isInRange(env.getVirusList().get(j)) && !getInRangeVirus().contains(env.getVirusList().get(j))) {
+                addRangedVirus(env.getVirusList().get(j));
+            }
+
+            // Virus j is not in range of node i and is in its range list so we remove it from the list
+            else if (!isInRange(env.getVirusList().get(j)) && getInRangeVirus().contains(env.getVirusList().get(j))) {
+                delRangedVirus(env.getVirusList().get(j));
+            }
+            if (!env.getVirusList().get(j).isAlive())
+                env.getVirusList().remove(j);
+        }
+
+        // Setting node target
+        if(!getInRangeVirus().isEmpty()) {
+            setTarget(getInRangeVirus().get(0));
+        }
+        else {
+            setTarget(null);
+        }
+    }
 }

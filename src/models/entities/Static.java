@@ -22,7 +22,7 @@ public class Static extends Projectile {
 
     @Override
     public void move() {
-        if (!this.location.match(this.destination) && this.isInTheWay()==-1) {
+        /*if (!this.location.match(this.destination) && this.isInTheWay()==-1) {
             if(this.location.getRow()!=this.destination.getRow()) {
                 if(this.location.getRow()<this.destination.getRow()) {
                     this.direction.setRow(1);
@@ -41,7 +41,20 @@ public class Static extends Projectile {
             }
             this.location.setRow(this.location.getRow()+this.direction.getRow());
             this.location.setCol(this.location.getCol()+this.direction.getCol());
-        }
+        }*/
+
+        double x = destination.getRow()-location.getRow();
+        double y = destination.getCol()-location.getCol();
+        double coef = Math.min(Math.abs(x),Math.abs(y));
+
+        x = Math.round(x/coef);
+        y = Math.round(y/coef);
+
+        direction.setRow((int)y);
+        direction.setCol((int)x);
+
+        location.setRow(location.getRow()+direction.getRow());
+        location.setCol(location.getCol()+direction.getCol());
     }
 
     @Override

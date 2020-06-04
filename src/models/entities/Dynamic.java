@@ -23,33 +23,18 @@ public class Dynamic extends Projectile {
     @Override
     public void move() {
 
-        /*int x = destination.getCol();
-        int y = destination.getRow();
-        int xD = x - location.getCol();
-        int yD = y - location.getRow();
-        int distance = (int) Math.sqrt(yD * yD + (xD*xD));
-        double ratio = 4.0/distance;
-        int ySpeed = (int) ratio*yD;
-        int xSpeed = (int) ratio*xD;
-        System.out.println(distance);
-        location.set(location.getRow() + distance / yD, location.getCol() + distance / xD);*/
+        double x = destination.getRow()-location.getRow();
+        double y = destination.getCol()-location.getCol();
+        double coef = Math.min(Math.abs(x),Math.abs(y));
 
-        if(location.getRow()<destination.getRow()) {
-            direction.setRow(1);
-        }
-        if (location.getRow() > destination.getRow()) {
-            direction.setRow(-1);
-        }
-        if(location.getCol() < destination.getCol()) {
-            direction.setCol(1);
-        }
-        if (location.getCol() > destination.getCol()) {
-            direction.setCol(-1);
-        }
+        x = Math.round(x/coef);
+        y = Math.round(y/coef);
 
-        this.location.set(location.getRow()+direction.getRow() * 2, location.getCol()+direction.getCol() * 2);
-        this.direction.setCol(0);
-        this.direction.setRow(0);
+        direction.setRow((int)y);
+        direction.setCol((int)x);
+
+        location.setRow(location.getRow()+direction.getRow());
+        location.setCol(location.getCol()+direction.getCol());
     }
 
     @Override

@@ -6,8 +6,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class Game {
 
-    private Wave wave;
-    private IntegerProperty number, difficulty, waveNumber;
+    private int number;
+    private IntegerProperty difficulty;
+    private IntegerProperty waveNumber;
     private World env;
     private long startTime;
     private long spawnTime;
@@ -16,9 +17,7 @@ public class Game {
         this.env = new World();
         difficulty = new SimpleIntegerProperty(1);
         waveNumber = new SimpleIntegerProperty(1);
-        number = new SimpleIntegerProperty(difficulty.getValue() * 5);
-        this.wave = new Wave(env);
-        wave.init(1000, 5, new Virus(5,new Location(6 * Tile.SIZE + Tile.SIZE / 2, Tile.SIZE/2), MapController.tileMap.getTile(6,0)));
+        number = difficulty.getValue() * 5;
         startTime = System.currentTimeMillis();
         spawnTime = 1000;
     }
@@ -27,7 +26,7 @@ public class Game {
         return env;
     }
 
-    public void waveDef(int virus) {
+    public void enemySet(int virus) {
         switch (virus) {
             case 1:
                 env.addToList(new Virus(5, new Location(6 * Tile.SIZE + Tile.SIZE / 2, Tile.SIZE / 2), MapController.tileMap.getTile(6, 0)));
@@ -54,21 +53,37 @@ public class Game {
         }
 
         long current = System.currentTimeMillis();
-        if (current >= startTime + spawnTime && number.getValue() > 0) {
-            waveDef(1);
+        if (current >= startTime + spawnTime && number > 0) {
+            enemySet(decider());
             startTime = current;
-            number.setValue(number.getValue()-1);
+            number--;
         }
-        /*
         else{
-            waveNumber++;
-            if (waveNumber % 2 == 0)
-                difficulty++;
-            number = difficulty * 5;
+            waveNumber.add(1);
+            if (waveNumber.getValue() % 2 == 0)
+                difficulty.add(1);
+            number = difficulty.getValue() * 5;
+            if (env.getVirusList().isEmpty())
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException ie) {
             }
-        }*/
+        }
+    }
+
+    public int decider(){
+        double decider = Math.random();
+        if (decider <= 0.5){
+            return 1;
+        }
+        else if (decider <= 0.75){
+            return 2;
+        }
+        else if (decider <= 0.90){
+            return 3;
+        }
+        else{
+            return 4;
+        }
     }
 }

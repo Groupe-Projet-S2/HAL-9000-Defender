@@ -12,6 +12,10 @@ public class World {
 
     }
 
+    public ObservableList<Entity> getEntities() {
+        return entities;
+    }
+
     public void addToList(Entity e) {
         this.entities.add(e);
     }

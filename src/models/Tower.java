@@ -93,8 +93,10 @@ public class Tower extends Entity {
             else if (!isInRange(env.getVirusList().get(j)) && getInRangeVirus().contains(env.getVirusList().get(j))) {
                 delRangedVirus(env.getVirusList().get(j));
             }
-            if (!env.getVirusList().get(j).isAlive())
-                env.getVirusList().remove(j);
+            if (!env.getVirusList().get(j).isAlive()) {
+                env.getEntities().remove(j);
+
+            }
         }
 
         // Setting node target

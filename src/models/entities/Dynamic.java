@@ -23,8 +23,8 @@ public class Dynamic extends Projectile {
     @Override
     public void move() {
 
-        double x = destination.getRow()-location.getRow();
-        double y = destination.getCol()-location.getCol();
+        double x = destination.getCol()-location.getCol();
+        double y = destination.getRow()-location.getRow();
         double coef = Math.min(Math.abs(x),Math.abs(y));
 
         x = Math.round(x/coef);

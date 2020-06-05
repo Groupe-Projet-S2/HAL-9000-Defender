@@ -15,7 +15,7 @@ public class Adware extends Virus {
     private ObservableList<VBox> popUps;
     private AlertBox alertBox;
     public Adware(Location location, Tile tile) {
-        super(35, location, tile, 2);
+        super(35, location, tile, 2, 2);
         this.popUps = FXCollections.observableArrayList();
         this.alertBox = new AlertBox(this);
     }

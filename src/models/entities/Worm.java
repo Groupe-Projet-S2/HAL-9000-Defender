@@ -7,7 +7,7 @@ public class Worm extends Virus {
 
     private boolean triggered;
     public Worm(Location location, Tile tile) {
-        super(0, location, tile, 1);
+        super(0, location, tile, 1, 4);
         this.triggered = false;
     }
 

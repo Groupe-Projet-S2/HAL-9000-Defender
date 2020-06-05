@@ -13,7 +13,7 @@ public class Ransomware extends Virus {
     private boolean triggered;
     private ObservableList<VBox> ransoms;
     public Ransomware(Location location, Tile tile, Location target) {
-        super(0, location, tile, 2);
+        super(0, location, tile, 2, 3);
         this.target = target;
         this.triggered = false;
         this.ransoms = FXCollections.observableArrayList();

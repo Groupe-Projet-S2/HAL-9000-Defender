@@ -1,24 +1,30 @@
 package views;
 
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import models.entities.Virus;
 import models.environment.Location;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 public class VirusView {
-    public static Rectangle renderVirus(Virus virus) {
+    public static ImageView renderVirus(Virus virus) {
+        FileInputStream file = null;
+        try {
+            file = new FileInputStream("src/utils/virus" + virus.getVirusID() + ".png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        ImageView sprite = new ImageView(new Image(file));
         Location loc = virus.getLocation();
-        Rectangle r = new Rectangle();
-        r.setHeight(virus.getSizeH());
-        r.setWidth(virus.getSizeW());
-        r.setFill(Color.RED);
-        r.setX(loc.getCol() - virus.getSizeW() / 2.0);
-        r.setY(loc.getRow() - virus.getSizeH() / 2.0);
+        sprite.setX(loc.getCol() - 8);
+        sprite.setY(loc.getRow() - 8);
 
-        loc.getRowProperty().addListener((obs, prev, next) -> r.setY(next.intValue() - virus.getSizeW() / 2.0));
-        loc.getColProperty().addListener((obs, prev, next) -> r.setX(next.intValue() - virus.getSizeH() / 2.0));
+        loc.getRowProperty().addListener((obs, prev, next) -> sprite.setY(next.intValue() - virus.getSizeW() / 2.0));
+        loc.getColProperty().addListener((obs, prev, next) -> sprite.setX(next.intValue() - virus.getSizeH() / 2.0));
 
-        r.setId("S" + virus.getId());
-        return r;
+        sprite.setId("S" + virus.getId());
+        return sprite;
     }
 }

@@ -5,6 +5,7 @@ import javafx.animation.Timeline;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Line;
@@ -12,10 +13,13 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import javafx.scene.layout.Pane;
 import javafx.scene.input.MouseEvent;
+import models.Game;
 import models.entities.*;
 import models.environment.*;
 import views.*;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Date;
 
 public class MapController {
@@ -49,8 +53,8 @@ public class MapController {
 
     private TileMap tileMap;
 
-    World env;
-    Virus virus;
+    private Game game;
+    private World env;
 
     @FXML void initialize() {
         grid.setAlignment(Pos.CENTER);
@@ -63,12 +67,12 @@ public class MapController {
 
         MapView.draw(grid, COLS, ROWS, tileMap);
 
-        env = new World();
+        game = new Game(tileMap, 5, 24);
 
-        virus = new Zombie(new Location(6 * Tile.SIZE + Tile.SIZE / 2, Tile.SIZE/2), tileMap.getTile(6,0));
+        env = game.getWorld();
 
         env.getEntities().addListener((ListChangeListener<? super Entity>) c -> {
-            while (c.next())
+            while (c.next()) {
                 if (c.wasAdded()) {
                     for (Entity a : c.getAddedSubList()) {
                         if (Entity.isVirus(a))
@@ -82,12 +86,12 @@ public class MapController {
                             world.getChildren().add(ProjectileView.renderProjectile((Projectile) a));
                         }
                     }
+                } else if (c.wasRemoved()) {
+                    for (Entity a : c.getRemoved())
+                        world.getChildren().remove(a);
                 }
+            }
         });
-
-        env.addToList(virus);
-
-        //env.addToList(new Dynamic(new Location(500, 500), null, virus, 10, 10));
 
         // Starts the loop
         initLoop();
@@ -100,7 +104,7 @@ public class MapController {
     */
     private void tick() {
         updateView();
-        env.nextRound();
+        game.update();
     }
 
     private void updateView() {

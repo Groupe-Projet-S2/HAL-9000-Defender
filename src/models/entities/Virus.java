@@ -14,13 +14,19 @@ public abstract class Virus extends Entity {
     private Vector direction;
     private int speed;
     public Set<Entity> targets;
+    private int virusID;
 
-    public Virus(int range, Location location, Tile tile, int speed) {
+    public Virus(int range, Location location, Tile tile, int speed, int virusID) {
         super(range, location);
+        this.virusID = virusID;
         this.direction = new Vector();
         this.current = tile;
         this.speed = speed;
         this.targets = new HashSet<>();
+    }
+
+    public int getVirusID() {
+        return virusID;
     }
 
     public boolean isAlive(){

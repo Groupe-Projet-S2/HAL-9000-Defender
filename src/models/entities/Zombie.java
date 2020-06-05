@@ -7,7 +7,7 @@ public class Zombie extends Virus {
 
     private int damage;
     public Zombie(Location location, Tile tile) {
-        super(35, location, tile, 2);
+        super(35, location, tile, 2, 1);
         this.damage = 10;
     }
 /*

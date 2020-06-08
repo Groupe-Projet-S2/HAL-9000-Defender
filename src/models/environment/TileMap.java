@@ -72,7 +72,7 @@ public class TileMap {
         neighbors.add(map.getTile(row, col - 1));
         neighbors.add(map.getTile(row, col + 1));
 
-        neighbors.removeIf(t -> t == null || t.hasParent() || !t.isAvailable());
+        neighbors.removeIf(t -> t == null || t.hasParent() || !t.isPath());
 
         return neighbors;
     }

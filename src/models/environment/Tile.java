@@ -22,7 +22,7 @@ public class Tile {
         return this.parent != null;
     }
 
-    public boolean isAvailable() {
+    public boolean isPath() {
         return this.isAvailable;
     }
 

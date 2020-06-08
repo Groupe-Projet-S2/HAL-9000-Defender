@@ -47,7 +47,7 @@ public class Game {
                 env.addToList(new Ransomware(loc, tileMap.getTile(6, 0), new Location(5, 23)));
                 break;
             case 4:
-                env.addToList(new Worm(loc, tileMap.getTile(6, 0)));
+                //env.addToList(new Worm(loc, tileMap.getTile(6, 0)));
                 break;
             case 5:
                 env.addToList(new Trojan(loc, tileMap.getTile(6, 0)));
@@ -82,7 +82,7 @@ public class Game {
             number = difficulty.getValue() * 5;
             if (env.getVirusList().isEmpty())
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException ie) {
                 }
         }

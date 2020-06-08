@@ -5,11 +5,9 @@ import javafx.animation.Timeline;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import javafx.scene.layout.Pane;
 import javafx.scene.input.MouseEvent;
@@ -17,10 +15,6 @@ import models.Game;
 import models.entities.*;
 import models.environment.*;
 import views.*;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.Date;
 
 public class MapController {
 
@@ -145,9 +139,15 @@ public class MapController {
     @FXML
     public void createTower(MouseEvent event) {
         if (selectedNode != null) {
-            placedNodeLoc = new Location((int) event.getY(), (int) event.getX());
-            tower = new Tower(50, placedNodeLoc, 150, 150, 150);
-            env.addToList(tower);
+            double y = event.getY();
+            double x = event.getX();
+            int row = (int) y / Tile.SIZE, col = (int) x / Tile.SIZE;
+            Tile tile = tileMap.getTile(row, col);
+            placedNodeLoc = new Location(row * Tile.SIZE + Tile.SIZE / 2, col * Tile.SIZE + Tile.SIZE / 2);
+            if (! tile.isPath()) {
+                tower = new Tower(50, placedNodeLoc, 150, 150, 150);
+                env.addToList(tower);
+            }
         }
     }
 

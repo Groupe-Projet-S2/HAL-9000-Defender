@@ -1,8 +1,10 @@
 package controllers;
 
+import controllers.listeners.ProjectileListener;
+import controllers.listeners.TowerListener;
+import controllers.listeners.VirusListener;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
@@ -12,7 +14,10 @@ import javafx.util.Duration;
 import javafx.scene.layout.Pane;
 import javafx.scene.input.MouseEvent;
 import models.Game;
-import models.entities.*;
+import models.entities.tower.Afast;
+import models.entities.tower.GoodwareBytes;
+import models.entities.tower.KiloBitDefender;
+import models.entities.tower.Tower;
 import models.environment.*;
 import views.*;
 
@@ -65,27 +70,9 @@ public class MapController {
 
         env = game.getWorld();
 
-        env.getEntities().addListener((ListChangeListener<? super Entity>) c -> {
-            while (c.next()) {
-                if (c.wasAdded()) {
-                    for (Entity a : c.getAddedSubList()) {
-                        if (Entity.isVirus(a))
-                            world.getChildren().add(VirusView.renderVirus((Virus) a));
-                        else if (Entity.isNode(a))
-                            world.getChildren().addAll(
-                                    TowerView.drawRadius(50, a.getLocation(), a.getId()),
-                                    TowerView.renderTower((Tower) a, placedNodeLoc, selectedNode.getImage())
-                            );
-                        else if (Entity.isProjectile(a)) {
-                            world.getChildren().add(ProjectileView.renderProjectile((Projectile) a));
-                        }
-                    }
-                } else if (c.wasRemoved()) {
-                    for (Entity a : c.getRemoved())
-                        world.getChildren().remove(a);
-                }
-            }
-        });
+        env.getVirusList().addListener(new VirusListener(world));
+        env.getNodeList().addListener(new TowerListener(world, env));
+        env.getProjectileList().addListener(new ProjectileListener(world));
 
         // Starts the loop
         initLoop();
@@ -97,21 +84,8 @@ public class MapController {
     This is where we code what will happen during a tick. It will happen at a certain number of times per framerate (ideally 60).
     */
     private void tick() {
-        updateView();
+        env.nextRound();
         game.update();
-    }
-
-    private void updateView() {
-        Line target;
-        for (Tower tower : env.getNodeList()) {
-            if (tower.hasTarget()) {
-                if (world.lookup("#L"+ tower.getId()) == null)
-                    world.getChildren().add(TowerView.drawTarget(tower.getLocation(), tower.getTarget().getLocation(), tower.getId()));
-            }
-            else if ((target = (Line) world.lookup("#L"+ tower.getId())) != null) {
-                world.getChildren().remove(target);
-            }
-        }
     }
 
     /**
@@ -138,14 +112,27 @@ public class MapController {
 
     @FXML
     public void createTower(MouseEvent event) {
-        if (selectedNode != null) {
+        if (env.getSelectedNodePreview() != null) {
             double y = event.getY();
             double x = event.getX();
             int row = (int) y / Tile.SIZE, col = (int) x / Tile.SIZE;
             Tile tile = tileMap.getTile(row, col);
-            placedNodeLoc = new Location(row * Tile.SIZE + Tile.SIZE / 2, col * Tile.SIZE + Tile.SIZE / 2);
+            Location loc = new Location(row * Tile.SIZE + Tile.SIZE / 2, col * Tile.SIZE + Tile.SIZE / 2);
+            env.setSelectedNodeLocation(loc);
+
+            switch (env.getSelectedNode()) {
+                case 1 :
+                    tower = new Afast(50, loc, 150, 50,150, 150, env);
+                    break;
+                case 2 :
+                    tower = new GoodwareBytes(50, loc, 150, 50,150, 150, env);
+                    break;
+                case 4 :
+                    tower = new KiloBitDefender(100, loc, 150, 50,150, 150, env);
+                    break;
+            }
+
             if (! tile.isPath()) {
-                tower = new Tower(50, placedNodeLoc, 150, 150, 150);
                 env.addToList(tower);
             }
         }
@@ -153,21 +140,25 @@ public class MapController {
 
     @FXML
     void setTowerOnAfast() {
-        selectedNode = imageAfast;
+        env.setSelectedNodePreview(imageAfast);
+        env.setSelectedNode(1);
     }
 
     @FXML
     void setTowerOnGb() {
-        selectedNode = imageGb;
+        env.setSelectedNodePreview(imageGb);
+        env.setSelectedNode(2);
     }
 
     @FXML
     void setTowerOnIVG() {
-        selectedNode = imageIVG;
+        env.setSelectedNodePreview(imageIVG);
+        env.setSelectedNode(3);
     }
 
     @FXML
     void setTowerOnKbd() {
-        selectedNode = imageKbd;
+        env.setSelectedNodePreview(imageKbd);
+        env.setSelectedNode(4);
     }
 }

@@ -1,5 +1,8 @@
-package models.entities;
+package models.entities.projectile;
 
+import models.entities.Entity;
+import models.entities.tower.Tower;
+import models.entities.virus.Virus;
 import models.environment.Location;
 import models.environment.Vector;
 
@@ -12,10 +15,10 @@ public abstract class Projectile extends Entity {
     private Tower sender;
     private int damage;
 
-    public Projectile(Location location, Location destination, Vector direction, Tower sender, int damage, int range) {
+    public Projectile(Location location, Location destination, Tower sender, int damage, int range) {
         super(range, location);
         this.destination = destination;
-        this.direction = direction;
+        this.direction = new Vector();
         this.sender = sender;
         this.damage = damage;
     }
@@ -30,20 +33,8 @@ public abstract class Projectile extends Entity {
 
     public abstract void hit(ArrayList<Virus> inRangeVirus);
 
-    public Location getDestination() {
-        return this.destination;
-    }
-
-    public Vector getDirection() {
-        return this.direction;
-    }
-
     public int getDamage() {
         return this.damage;
-    }
-
-    public Entity getSender() {
-        return this.sender;
     }
 
     public ArrayList<Virus> getInRangeVirus() {
@@ -51,6 +42,6 @@ public abstract class Projectile extends Entity {
     }
 
     public void explode(Virus virus) {
-        virus.setCurrentHP(virus.getCurrentHP()-this.getDamage());
+        virus.setCurrentHP(virus.getCurrentHP() - this.getDamage());
     }
 }

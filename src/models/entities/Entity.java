@@ -1,20 +1,23 @@
 package models.entities;
 
+import models.entities.projectile.Projectile;
+import models.entities.tower.Tower;
+import models.entities.virus.Virus;
 import models.environment.Location;
 
 public class Entity {
 
     private int range;
-    protected Location location;
+    protected Location position;
     private Location target;
     private boolean isActive;
     private int sizeW, sizeH;
     private String id;
     public static int count = 0;
 
-    public Entity(int range, Location location) {
+    public Entity(int range, Location position) {
         this.range=range;
-        this.location=location;
+        this.position = position;
         this.id="E"+count;
         this.isActive = true;
         sizeW = 10;
@@ -33,13 +36,8 @@ public class Entity {
         return this.isActive;
     }
 
-    public Location getLocation() {
-        return this.location;
-    }
-
-    void setLocation(int x, int y) {
-        this.location.setCol(x);
-        this.location.setRow(y);
+    public Location getPosition() {
+        return this.position;
     }
 
     public static boolean isVirus(Entity ent){
@@ -63,8 +61,8 @@ public class Entity {
     }
 
     public boolean isInRange(Entity entity){
-        int deltaX = this.getLocation().getCol() - Math.max(entity.getLocation().getCol(), Math.min(this.getLocation().getCol(),entity.getLocation().getCol()+entity.getSizeW()));
-        int deltaY = this.getLocation().getRow() - Math.max(entity.getLocation().getRow(), Math.min(this.getLocation().getRow(),entity.getLocation().getRow()+entity.getSizeH()));
+        int deltaX = this.getPosition().getCol() - Math.max(entity.getPosition().getCol(), Math.min(this.getPosition().getCol(),entity.getPosition().getCol()+entity.getSizeW()));
+        int deltaY = this.getPosition().getRow() - Math.max(entity.getPosition().getRow(), Math.min(this.getPosition().getRow(),entity.getPosition().getRow()+entity.getSizeH()));
 
         return (Math.pow(deltaX,2) + Math.pow(deltaY,2)) < Math.pow(this.getRange(),2);
     }

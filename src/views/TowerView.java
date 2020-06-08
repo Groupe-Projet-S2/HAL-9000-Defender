@@ -5,7 +5,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import models.entities.Tower;
+import models.entities.tower.Tower;
 import models.environment.Location;
 
 public class TowerView {
@@ -17,7 +17,7 @@ public class TowerView {
         towerView.setY(row);
         towerView.setFitHeight(30);
         towerView.setFitWidth(30);
-        towerView.setId(tower.getId());
+        towerView.setId("T" + tower.getId());
         return towerView;
     }
 
@@ -42,6 +42,7 @@ public class TowerView {
 
         end.getRowProperty().addListener((obs, prev, next) -> target.setEndY(next.intValue()));
         end.getColProperty().addListener((obs, prev, next) -> target.setEndX(next.intValue()));
+
         target.setId("L"+ id);
         return target;
     }

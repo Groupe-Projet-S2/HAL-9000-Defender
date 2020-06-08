@@ -1,5 +1,7 @@
-package models.entities;
+package models.entities.projectile;
 
+import models.entities.tower.Tower;
+import models.entities.virus.Virus;
 import models.environment.Location;
 
 import java.util.ArrayList;

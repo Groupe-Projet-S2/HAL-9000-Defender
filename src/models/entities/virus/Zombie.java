@@ -1,5 +1,7 @@
-package models.entities;
+package models.entities.virus;
 
+import models.entities.Entity;
+import models.entities.tower.Tower;
 import models.environment.Location;
 import models.environment.Tile;
 

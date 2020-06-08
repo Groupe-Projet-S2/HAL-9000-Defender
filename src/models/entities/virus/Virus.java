@@ -1,5 +1,6 @@
-package models.entities;
+package models.entities.virus;
 
+import models.entities.Entity;
 import models.environment.Location;
 import models.environment.Tile;
 import models.environment.Vector;
@@ -23,6 +24,8 @@ public abstract class Virus extends Entity {
         this.current = tile;
         this.speed = speed;
         this.targets = new HashSet<>();
+        this.sizeH = 16;
+        this.sizeW = 16;
     }
 
     public int getVirusID() {
@@ -53,17 +56,17 @@ public abstract class Virus extends Entity {
 
         Tile parent = current.getParent();
 
-        if (this.getLocation().getRow() == current.getPos().getRow()*Tile.SIZE+(Tile.SIZE/2) && this.getLocation().getCol() == current.getPos().getCol()*Tile.SIZE+(Tile.SIZE/2)) {
-            if (this.getLocation().getRow() < parent.getPos().getRow() * Tile.SIZE + (Tile.SIZE / 2))
+        if (this.getPosition().getRow() == current.getPos().getRow()*Tile.SIZE+(Tile.SIZE/2) && this.getPosition().getCol() == current.getPos().getCol()*Tile.SIZE+(Tile.SIZE/2)) {
+            if (this.getPosition().getRow() < parent.getPos().getRow() * Tile.SIZE + (Tile.SIZE / 2))
                 direction.setRow(1);
-            else if (this.getLocation().getRow() > parent.getPos().getRow() * Tile.SIZE + (Tile.SIZE / 2))
+            else if (this.getPosition().getRow() > parent.getPos().getRow() * Tile.SIZE + (Tile.SIZE / 2))
                 direction.setRow(-1);
             else
                 direction.setRow(0);
 
-            if (this.getLocation().getCol() < parent.getPos().getCol() * Tile.SIZE + (Tile.SIZE / 2))
+            if (this.getPosition().getCol() < parent.getPos().getCol() * Tile.SIZE + (Tile.SIZE / 2))
                 direction.setCol(1);
-            else if (this.getLocation().getCol() > parent.getPos().getCol() * Tile.SIZE + (Tile.SIZE / 2))
+            else if (this.getPosition().getCol() > parent.getPos().getCol() * Tile.SIZE + (Tile.SIZE / 2))
                 direction.setCol(-1);
             else
                 direction.setCol(0);
@@ -71,8 +74,8 @@ public abstract class Virus extends Entity {
             current = parent;
         }
 
-        this.getLocation().setRow(this.getLocation().getRow() + direction.getRow() * speed);
-        this.getLocation().setCol(this.getLocation().getCol() + direction.getCol() * speed);
+        this.getPosition().setRow(this.getPosition().getRow() + (int)direction.getRow() * speed);
+        this.getPosition().setCol(this.getPosition().getCol() + (int)direction.getCol() * speed);
     }
 
     public void addTarget(Entity entity) {

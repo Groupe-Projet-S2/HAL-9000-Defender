@@ -1,14 +1,13 @@
-package models.entities;
+package models.entities.virus;
 
-import controllers.MapController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.VBox;
+import models.entities.Entity;
+import models.entities.tower.Tower;
 import models.environment.Location;
 import models.environment.Tile;
 import views.AlertBox;
-
-import java.util.ArrayList;
 
 public class Adware extends Virus {
 
@@ -39,7 +38,7 @@ public class Adware extends Virus {
             if (target.isActive()) {
                 ((Tower) target).setActive(false);
                 for (int i = popUps.size(); i < 5; i++) {
-                    popUps.add(alertBox.popUp(new Location(target.getLocation().getRow() + i * 20, target.getLocation().getCol() + i * 20)));
+                    popUps.add(alertBox.popUp(new Location(target.getPosition().getRow() + i * 20, target.getPosition().getCol() + i * 20)));
                 }
             }
         }

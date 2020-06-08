@@ -2,28 +2,28 @@ package models.environment;
 
 public class Vector {
 
-    private int row, col;
+    private double row, col;
 
     public Vector(){}
 
-    public Vector(int row, int col) {
+    public Vector(double row, double col) {
         this.row = row;
         this.col = col;
     }
 
-    public void setRow(int row) {
+    public void setRow(double row) {
         this.row = row;
     }
 
-    public void setCol(int col) {
+    public void setCol(double col) {
         this.col = col;
     }
 
-    public int getRow() {
+    public double getRow() {
         return this.row;
     }
 
-    public int getCol() {
+    public double getCol() {
         return this.col;
     }
 

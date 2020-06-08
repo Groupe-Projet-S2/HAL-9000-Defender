@@ -4,9 +4,9 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import models.entities.Adware;
-import models.entities.Ransomware;
-import models.entities.Virus;
+import models.entities.virus.Adware;
+import models.entities.virus.Ransomware;
+import models.entities.virus.Virus;
 import models.environment.Location;
 
 public class AlertBox {

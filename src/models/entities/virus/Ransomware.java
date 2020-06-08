@@ -1,4 +1,4 @@
-package models.entities;
+package models.entities.virus;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,12 +29,12 @@ public class Ransomware extends Virus {
 
     @Override
     public void move() {
-        if (! location.match(target)) super.move();
+        if (! position.match(target)) super.move();
     }
 
     @Override
     public void act() {
-        if (location.match(target) && ! triggered) {
+        if (position.match(target) && ! triggered) {
             triggered = true;
             AlertBox box = new AlertBox(this);
             VBox ransom = box.ransom();

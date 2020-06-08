@@ -2,7 +2,7 @@ package views;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import models.entities.Virus;
+import models.entities.virus.Virus;
 import models.environment.Location;
 
 import java.io.FileInputStream;
@@ -16,8 +16,9 @@ public class VirusView {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        assert file != null;
         ImageView sprite = new ImageView(new Image(file));
-        Location loc = virus.getLocation();
+        Location loc = virus.getPosition();
         sprite.setX(loc.getCol() - 8);
         sprite.setY(loc.getRow() - 8);
 

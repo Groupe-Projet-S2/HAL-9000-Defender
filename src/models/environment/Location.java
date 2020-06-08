@@ -11,11 +11,6 @@ public class Location {
         this.col = new SimpleIntegerProperty(col);
     }
 
-    public void set(int row, int col) {
-        setRow(row);
-        setCol(col);
-    }
-
     public void setRow(int row) {
         this.row.setValue(row);
     }

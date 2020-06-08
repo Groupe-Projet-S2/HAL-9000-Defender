@@ -1,4 +1,4 @@
-package models.entities;
+package models.entities.virus;
 
 import models.environment.Location;
 import models.environment.Tile;

@@ -2,7 +2,6 @@ package models;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import models.entities.*;
 import models.environment.Location;
 import models.environment.Tile;
 import models.environment.TileMap;
@@ -20,7 +19,7 @@ public class Game {
     private long spawnTime;
 
     public Game(TileMap tileMap, int row, int col) {
-        this.env = new World();
+        this.env = new World(tileMap);
         this.tileMap = tileMap;
         difficulty = new SimpleIntegerProperty(1);
         waveNumber = new SimpleIntegerProperty(1);
@@ -34,44 +33,12 @@ public class Game {
         return env;
     }
 
-    public void enemySet(int virus) {
-        Location loc = new Location(6 * Tile.SIZE + Tile.SIZE / 2, Tile.SIZE / 2);
-        switch (virus) {
-            case 1:
-                env.addToList(new Zombie(loc, tileMap.getTile(6, 0)));
-                break;
-            case 2:
-                env.addToList(new Adware(loc, tileMap.getTile(6, 0)));
-                break;
-            case 3:
-                env.addToList(new Ransomware(loc, tileMap.getTile(6, 0), new Location(5, 23)));
-                break;
-            case 4:
-                //env.addToList(new Worm(loc, tileMap.getTile(6, 0)));
-                break;
-            case 5:
-                env.addToList(new Trojan(loc, tileMap.getTile(6, 0)));
-                break;
-            case 6:
-                break;
-        }
-    }
 
     public void update() {
-        for (Virus virus : env.getVirusList()) {
-            virus.move();
-            int x = virus.getLocation().getCol() / 32;
-            int y = virus.getLocation().getRow() / 32;
-            if (end.getPos().getRow() == y && end.getPos().getCol() == x)
-                env.getEntities().remove(virus);
-        }
-        for (Tower tower : env.getNodeList()) {
-            //tower.act();
-        }
 
         long current = System.currentTimeMillis();
         if (current >= startTime + spawnTime && number > 0) {
-            enemySet(decider());
+            env.enemySet(decider());
             startTime = current;
             number--;
         }

@@ -146,7 +146,7 @@ public class MapController {
     public void createTower(MouseEvent event) {
         if (selectedNode != null) {
             placedNodeLoc = new Location((int) event.getY(), (int) event.getX());
-            tower = new Tower(50, placedNodeLoc, 150, 150, 150);
+            tower.getLocation().set(placedNodeLoc);
             env.addToList(tower);
         }
     }
@@ -154,20 +154,24 @@ public class MapController {
     @FXML
     void setTowerOnAfast() {
         selectedNode = imageAfast;
+        tower = new Afast(50, new Location(0, 0), 150, 50,150, 150, env);
     }
 
     @FXML
     void setTowerOnGb() {
         selectedNode = imageGb;
+        tower = new GoodwareBytes(50, new Location(0, 0), 150, 50,150, 150, env);
     }
 
     @FXML
     void setTowerOnIVG() {
         selectedNode = imageIVG;
+        tower = new IVG(50, new Location(0, 0), 150, 50,150, 150, env);
     }
 
     @FXML
     void setTowerOnKbd() {
         selectedNode = imageKbd;
+        tower = new KiloBitDefender(50, new Location(0, 0), 150, 50,150, 150, env);
     }
 }

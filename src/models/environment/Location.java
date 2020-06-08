@@ -16,6 +16,11 @@ public class Location {
         setCol(col);
     }
 
+    public void set(Location location) {
+        setRow(location.getRow());
+        setCol(location.getCol());
+    }
+
     public void setRow(int row) {
         this.row.setValue(row);
     }

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public abstract class Tower extends Entity {
 
     private int upgradePrice;
+    private int price;
     protected int maxCons;
     protected int consumption;
     private boolean active;
@@ -15,7 +16,7 @@ public abstract class Tower extends Entity {
     private ArrayList<Virus> inRangeVirus;
     protected World env;
 
-    public Tower(int range, Location location, int upgradePrice, int maxCons, int consumption, World env) {
+    public Tower(int range, Location location, int upgradePrice, int price, int maxCons, int consumption, World env) {
         super(range, location);
         this.upgradePrice = upgradePrice;
         this.maxCons = maxCons;
@@ -23,6 +24,7 @@ public abstract class Tower extends Entity {
         this.inRangeVirus = new ArrayList<Virus>();
         this.active = true;
         this.env = env;
+        this.price = price;
     }
 
     public void setMaxCons(int maxCons) {

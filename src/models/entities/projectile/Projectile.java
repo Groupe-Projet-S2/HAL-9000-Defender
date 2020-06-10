@@ -15,6 +15,7 @@ public abstract class Projectile extends Entity {
     protected Vector direction;
     private Tower sender;
     private int damage;
+    protected int speed;
 
     public Projectile(Location location, Location destination, Tower sender, int damage, int range) {
         super(range, location);

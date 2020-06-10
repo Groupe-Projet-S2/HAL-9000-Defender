@@ -21,6 +21,8 @@ import models.entities.tower.Tower;
 import models.environment.*;
 import views.*;
 
+import static views.TowerView.drawTarget;
+
 public class MapController {
 
     private Timeline gameloop;
@@ -122,13 +124,13 @@ public class MapController {
 
             switch (env.getSelectedNode()) {
                 case 1 :
-                    tower = new Afast(50, loc, 150, 50,150, 150, env);
+                    tower = new Afast(loc,env);
                     break;
                 case 2 :
-                    tower = new GoodwareBytes(50, loc, 150, 50,150, 150, env);
+                    tower = new GoodwareBytes(loc,env);
                     break;
                 case 4 :
-                    tower = new KiloBitDefender(100, loc, 150, 50,150, 150, env);
+                    tower = new KiloBitDefender(loc,env);
                     break;
             }
 

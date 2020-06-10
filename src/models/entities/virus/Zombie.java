@@ -23,8 +23,8 @@ public class Zombie extends Virus {
         targets.removeIf(t -> !this.isInRange(t));
         for (Entity target : targets) {
             if (Entity.isNode(target)) {
-                ((Tower) target).setConsumption(((Tower) target).getConsumption() + damage);
-                System.out.println(((Tower) target).getConsumption());
+                ((Tower) target).setSpawningTime(((Tower) target).getSpawningTime() + damage);
+                System.out.println(((Tower) target).getSpawningTime());
             }
         }
     }

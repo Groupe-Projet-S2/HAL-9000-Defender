@@ -20,13 +20,13 @@ public class TowerListener implements ListChangeListener<Tower> {
         while (c.next()) {
             if (c.wasAdded()) {
                 for (Tower tower : c.getAddedSubList()) {
-                    pane.getChildren().add(TowerView.drawRadius(100, world.getSelectedNodeLocation(), (tower).getId()));
+                    pane.getChildren().add(TowerView.drawRadius(tower.getRange(), world.getSelectedNodeLocation(), (tower).getId()));
                     pane.getChildren().add(TowerView.renderTower(tower, world.getSelectedNodeLocation(), world.getSelectedNodePreview().getImage()));
                 }
             } else if (c.wasRemoved()) {
                 for (Tower tower : c.getRemoved()) {
-                    pane.getChildren().remove(pane.lookup("T" + (tower).getId()));
-                    pane.getChildren().remove(pane.lookup("R" + (tower).getId()));
+                    pane.getChildren().remove(pane.lookup("#T" + (tower).getId()));
+                    pane.getChildren().remove(pane.lookup("#R" + (tower).getId()));
                 }
             }
         }

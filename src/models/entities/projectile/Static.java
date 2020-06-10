@@ -9,8 +9,11 @@ import java.util.ArrayList;
 
 public class Static extends Projectile {
 
+    private Location reach;
+
     public Static(Location location, Location destination, Tower sender, int damage, int range) {
         super(location, destination, sender, damage, range);
+        reach = new Location(sender.getTarget().getPosition().getRow(),sender.getTarget().getPosition().getCol());
     }
 
     private int isInTheWay() {
@@ -24,8 +27,8 @@ public class Static extends Projectile {
 
     @Override
     public void move() {
-        double x = destination.getCol()- position.getCol();
-        double y = destination.getRow()- position.getRow();
+        double x = reach.getCol()- position.getCol();
+        double y = reach.getRow()- position.getRow();
         double coef = Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
 
         x = Math.round(x/coef);
@@ -47,6 +50,6 @@ public class Static extends Projectile {
 
     @Override
     public boolean isOnTarget(){
-        return getPosition().match(destination);
+        return getPosition().match(reach);
     }
 }

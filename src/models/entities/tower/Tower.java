@@ -11,30 +11,30 @@ public abstract class Tower extends Entity {
 
     private int upgradePrice;
     private int price;
-    protected int maxCons;
-    protected int consumption;
+    protected int reloadingTime;
+    protected int spawningTime;
     private boolean active;
     private Virus target;
     private ArrayList<Virus> inRangeVirus;
     protected World env;
 
-    public Tower(int range, Location position, int upgradePrice, int price, int maxCons, int consumption, World env) {
+    public Tower(int range, Location position, int upgradePrice, int price, int reloadingTime, int spawningTime, World env) {
         super(range, position);
         this.upgradePrice = upgradePrice;
-        this.maxCons = maxCons;
-        this.consumption = consumption;
+        this.reloadingTime = reloadingTime;
+        this.spawningTime = spawningTime;
         this.inRangeVirus = new ArrayList<>();
         this.active = true;
         this.env = env;
         this.price = price;
     }
 
-    public void setMaxCons(int maxCons) {
-        this.maxCons = maxCons;
+    public void setReloadingTime(int reloadingTime) {
+        this.reloadingTime = reloadingTime;
     }
 
-    public void setConsumption(int consumption) {
-        this.consumption = consumption;
+    public void setSpawningTime(int spawningTime) {
+        this.spawningTime = spawningTime;
     }
 
     public void setActive(boolean active) {
@@ -57,12 +57,12 @@ public abstract class Tower extends Entity {
         return upgradePrice;
     }
 
-    public int getMaxCons() {
-        return maxCons;
+    public int getReloadingTime() {
+        return reloadingTime;
     }
 
-    public int getConsumption() {
-        return consumption;
+    public int getSpawningTime() {
+        return spawningTime;
     }
 
     public boolean isActive() {
@@ -115,6 +115,9 @@ public abstract class Tower extends Entity {
         // Setting node target
         if(!getInRangeVirus().isEmpty()) {
             target = getInRangeVirus().get(0);
+        }
+        else{
+            target = null;
 
         }
     }

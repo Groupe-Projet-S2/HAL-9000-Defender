@@ -1,5 +1,6 @@
 package models.entities.projectile;
 
+import jdk.internal.org.objectweb.asm.tree.LocalVariableAnnotationNode;
 import models.entities.Entity;
 import models.entities.tower.Tower;
 import models.entities.virus.Virus;
@@ -32,6 +33,8 @@ public abstract class Projectile extends Entity {
     public abstract void move();
 
     public abstract void hit(ArrayList<Virus> inRangeVirus);
+
+    public abstract boolean isOnTarget();
 
     public int getDamage() {
         return this.damage;

@@ -44,4 +44,9 @@ public class Static extends Projectile {
             this.explode(inRangeVirus.get(this.isInTheWay()));
         }
     }
+
+    @Override
+    public boolean isOnTarget(){
+        return getPosition().match(destination);
+    }
 }

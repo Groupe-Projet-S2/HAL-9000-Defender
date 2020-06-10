@@ -132,7 +132,8 @@ public class MapController {
                     break;
             }
 
-            if (! tile.isPath()) {
+            if (! tile.isPath() && game.Money - tower.getPrice() >=0) {
+                game.Money -= tower.getPrice();
                 env.addToList(tower);
             }
         }

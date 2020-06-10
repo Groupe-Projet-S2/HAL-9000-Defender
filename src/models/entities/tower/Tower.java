@@ -77,6 +77,10 @@ public abstract class Tower extends Entity {
         return target != null;
     }
 
+    public int getPrice(){
+        return this.price;
+    }
+
     public void addRangedVirus(Virus virus){
         if (this.isInRange(virus))
             this.inRangeVirus.add(virus);

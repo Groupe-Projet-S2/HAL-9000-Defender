@@ -2,6 +2,8 @@ package models;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import models.entities.bonus.Bonus;
+import models.entities.bonus.SudVPN;
 import models.environment.Location;
 import models.environment.Tile;
 import models.environment.TileMap;
@@ -32,7 +34,6 @@ public class Game {
     public World getWorld(){
         return env;
     }
-
 
     public void update() {
 

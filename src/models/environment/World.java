@@ -4,11 +4,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import models.entities.bonus.Bonus;
 import models.entities.projectile.Projectile;
 import models.entities.Entity;
 import models.entities.tower.Tower;
 import models.entities.virus.*;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,18 +17,18 @@ public class World {
     private ObservableList<Tower> towers;
     private ObservableList<Virus> viruses;
     private ObservableList<Projectile> projectiles;
-
+    private ObservableList<Bonus> bonuses;
     private ImageView selectedNodePreview;
     private Location selectedNodeLocation;
     private int selectedNode;
-
     private Set<HBox> overlays;
-
     private TileMap tileMap;
+
     public World(TileMap tileMap) {
         this.towers = FXCollections.observableArrayList();
         this.viruses = FXCollections.observableArrayList();
         this.projectiles = FXCollections.observableArrayList();
+        this.bonuses = FXCollections.observableArrayList();
         this.overlays = new HashSet<>();
         this.tileMap = tileMap;
     }
@@ -42,6 +42,9 @@ public class World {
             viruses.add((Virus) e);
     }
 
+    public void addBonus(Bonus bonus) {
+        bonuses.add(bonus);
+    }
 
     /*public ObservableList<Entity> getEntities() {
         return entities;
@@ -70,6 +73,8 @@ public class World {
         this.selectedNodeLocation = selectedNodeLocation;
     }
 
+    public TileMap getTileMap() { return this.tileMap; }
+
     public ObservableList<Tower> getNodeList(){
         return towers;
     }
@@ -84,6 +89,10 @@ public class World {
 
     public ObservableList<Projectile> getProjectileList(){
         return projectiles;
+    }
+
+    public ObservableList<Bonus> getBonusList() {
+        return bonuses;
     }
 
     public Virus getVirus(String id){
@@ -118,19 +127,19 @@ public class World {
         Location loc = new Location(6 * Tile.SIZE + Tile.SIZE / 2, Tile.SIZE / 2);
         switch (virus) {
             case 1:
-                addToList(new Zombie(loc, tileMap.getTile(6, 0)));
+                addToList(new Zombie(loc, tileMap.getTile(6, 0), this));
                 break;
             case 2:
-                addToList(new Adware(loc, tileMap.getTile(6, 0)));
+                addToList(new Adware(loc, tileMap.getTile(6, 0), this));
                 break;
             case 3:
-                addToList(new Ransomware(loc, tileMap.getTile(6, 0), new Location(5, 23)));
+                addToList(new Ransomware(loc, tileMap.getTile(6, 0), new Location(5, 23), this));
                 break;
             case 4:
                 //env.addToList(new Worm(loc, tileMap.getTile(6, 0)));
                 break;
             case 5:
-                addToList(new Trojan(loc, tileMap.getTile(6, 0)));
+                addToList(new Trojan(loc, tileMap.getTile(6, 0), this));
                 break;
             case 6:
                 break;
@@ -143,11 +152,18 @@ public class World {
             virus.act();
         }
         for (Tower tower:getNodeList()) {
-            tower.detection();
+            if (!Tower.isAFirewall(tower)) {
+                tower.detection();
+            }
             tower.act();
         }
         for (Projectile projectile : getProjectileList()) {
             projectile.move();
+        }
+        for (Bonus bonus : getBonusList()) {
+            if (bonus.isActive()) {
+                bonus.act();
+            }
         }
     }
 }

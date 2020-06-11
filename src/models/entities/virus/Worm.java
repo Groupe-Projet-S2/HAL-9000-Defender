@@ -4,12 +4,13 @@ import models.entities.Entity;
 import models.entities.tower.Tower;
 import models.environment.Location;
 import models.environment.Tile;
+import models.environment.World;
 
 public class Worm extends Virus {
 
     private boolean triggered;
-    public Worm(Location location, Tile tile) {
-        super(0, location, tile, 1, 4);
+    public Worm(Location location, Tile tile, World env) {
+        super(0, location, tile, 1, 4, env);
         this.triggered = false;
     }
 

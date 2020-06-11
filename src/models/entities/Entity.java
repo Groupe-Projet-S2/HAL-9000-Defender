@@ -1,5 +1,7 @@
 package models.entities;
 
+import models.entities.bonus.Bonus;
+import models.entities.tower.Firewall;
 import models.entities.projectile.Projectile;
 import models.entities.tower.Tower;
 import models.entities.virus.Virus;
@@ -59,6 +61,8 @@ public class Entity {
     public int getRange(){
         return this.range;
     }
+
+    public void setRange(int newRange) { this.range = newRange; }
 
     public boolean isInRange(Entity entity){
         int deltaX = this.getPosition().getCol() - Math.max(entity.getPosition().getCol(), Math.min(this.getPosition().getCol(),entity.getPosition().getCol()+entity.getSizeW()));

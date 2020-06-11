@@ -17,6 +17,7 @@ public abstract class Tower extends Entity {
     private Virus target;
     private ArrayList<Virus> inRangeVirus;
     protected World env;
+    protected int projectileDamages;
 
     public Tower(int range, Location position, int upgradePrice, int price, int maxCons, int consumption, World env) {
         super(range, position);
@@ -27,11 +28,22 @@ public abstract class Tower extends Entity {
         this.active = true;
         this.env = env;
         this.price = price;
+        this.projectileDamages = 40;
+    }
+
+    public Tower(int range, Location location) {
+        super(0, location);
+    }
+
+    public static boolean isAFirewall(Tower tower) {
+        return (tower instanceof Firewall);
     }
 
     public void setMaxCons(int maxCons) {
         this.maxCons = maxCons;
     }
+
+    public void setProjectileDamages(int damage) { this.projectileDamages = damage; }
 
     public void setConsumption(int consumption) {
         this.consumption = consumption;
@@ -60,6 +72,8 @@ public abstract class Tower extends Entity {
     public int getMaxCons() {
         return maxCons;
     }
+
+    public int getProjectileDamages() { return projectileDamages; }
 
     public int getConsumption() {
         return consumption;

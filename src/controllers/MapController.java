@@ -9,11 +9,14 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import javafx.scene.layout.Pane;
 import javafx.scene.input.MouseEvent;
 import models.Game;
+import models.entities.bonus.AdBlock;
+import models.entities.bonus.Flush;
+import models.entities.tower.Firewall;
+import models.entities.bonus.SudVPN;
 import models.entities.tower.Afast;
 import models.entities.tower.GoodwareBytes;
 import models.entities.tower.KiloBitDefender;
@@ -73,7 +76,6 @@ public class MapController {
         env.getVirusList().addListener(new VirusListener(world));
         env.getNodeList().addListener(new TowerListener(world, env));
         env.getProjectileList().addListener(new ProjectileListener(world));
-
         // Starts the loop
         initLoop();
         gameloop.play();
@@ -121,17 +123,22 @@ public class MapController {
             env.setSelectedNodeLocation(loc);
 
             switch (env.getSelectedNode()) {
-                case 1 :
-                    tower = new Afast(50, loc, 150, 50,150, 150, env);
+                case 1:
+                    tower = new Afast(50, loc, 150, 50, 150, 150, env);
                     break;
-                case 2 :
-                    tower = new GoodwareBytes(50, loc, 150, 50,150, 150, env);
+                case 2:
+                    tower = new GoodwareBytes(50, loc, 150, 50, 150, 150, env);
                     break;
-                case 4 :
-                    tower = new KiloBitDefender(100, loc, 150, 50,150, 150, env);
+                case 4:
+                    tower = new KiloBitDefender(100, loc, 150, 50, 150, 150, env);
+                    break;
+                case 5:
+                    tower = new Firewall(loc, env);
                     break;
             }
 
+            if(Tower.isAFirewall(tower))
+                env.addToList(tower);
             if (! tile.isPath()) {
                 env.addToList(tower);
             }
@@ -160,5 +167,29 @@ public class MapController {
     void setTowerOnKbd() {
         env.setSelectedNodePreview(imageKbd);
         env.setSelectedNode(4);
+    }
+
+    @FXML
+    void setTowerOnFirewall() {
+        env.setSelectedNodePreview(imageAfast);
+        env.setSelectedNode(5);
+    }
+
+    @FXML
+    void useAdblock() {
+        AdBlock adBlock = new AdBlock(env);
+        env.addBonus(adBlock);
+    }
+
+    @FXML
+    void useSudVPN() {
+        SudVPN sudVPN = new SudVPN(env);
+        env.addBonus(sudVPN);
+    }
+
+    @FXML
+    void useFlush() {
+        Flush flush = new Flush(env);
+        env.addBonus(flush);
     }
 }

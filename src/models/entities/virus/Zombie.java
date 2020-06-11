@@ -4,12 +4,13 @@ import models.entities.Entity;
 import models.entities.tower.Tower;
 import models.environment.Location;
 import models.environment.Tile;
+import models.environment.World;
 
 public class Zombie extends Virus {
 
     private int damage;
-    public Zombie(Location location, Tile tile) {
-        super(35, location, tile, 2, 1);
+    public Zombie(Location location, Tile tile, World env) {
+        super(35, location, tile, 2, 1, env);
         this.damage = 10;
     }
 /*

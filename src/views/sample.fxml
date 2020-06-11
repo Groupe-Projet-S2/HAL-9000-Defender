@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1724.0" style="-fx-background-image: url('/utils/fondV2.jpg');" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MapController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1724.0" style="-fx-background-image: url('/utils/fondV2.jpg');" xmlns="http://javafx.com/javafx/8.0.251" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MapController">
    <children>
       <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -108,7 +115,7 @@
                                           <Insets bottom="20.0" />
                                        </VBox.margin>
                                     </Button>
-                                    <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="47.0" prefWidth="99.0" style="-fx-background-color: #454545; -fx-border-color: #20a9aa;" text="Next Wave" textFill="#20a9aa">
+                                    <Button fx:id="nextWave" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#nextWaveChange" prefHeight="47.0" prefWidth="99.0" style="-fx-background-color: #454545; -fx-border-color: #20a9aa;" text="Next Wave" textFill="#20a9aa">
                                        <font>
                                           <Font name="ROGFonts-Regular" size="11.0" />
                                        </font>
@@ -198,7 +205,7 @@
                            <children>
                               <ImageView fx:id="imageGb" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#setTowerOnGb" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../utils/towerGoodwarebytes.jpg" />
+                                    <Image url="@../utils/towerGoodwarebytes.png" />
                                  </image>
                                  <VBox.margin>
                                     <Insets left="88.0" top="20.0" />
@@ -210,7 +217,7 @@
                            <children>
                               <ImageView fx:id="imageIVG" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#setTowerOnIVG" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../utils/towerIVG.jpg" />
+                                    <Image url="@../utils/towerIVG.png" />
                                  </image>
                                  <VBox.margin>
                                     <Insets left="88.0" top="20.0" />
@@ -222,7 +229,7 @@
                            <children>
                               <ImageView fx:id="imageKbd" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#setTowerOnKbd" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../utils/towerKilobitDefender.jpg" />
+                                    <Image url="@../utils/towerKilobitDefender.png" />
                                  </image>
                                  <VBox.margin>
                                     <Insets left="88.0" top="20.0" />
@@ -303,7 +310,7 @@
          <center>
             <Pane fx:id="world" maxHeight="-Infinity" maxWidth="800.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" BorderPane.alignment="CENTER">
                <children>
-                  <TilePane fx:id="grid" alignment="CENTER" onMouseClicked="#createTower" prefHeight="800" prefWidth="800">
+                  <TilePane fx:id="grid" alignment="CENTER" onMouseClicked="#createTower" prefHeight="800" prefWidth="800" style="-fx-background-image: url('/utils/bg-tilePane.jpg');">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>

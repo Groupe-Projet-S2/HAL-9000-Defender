@@ -89,6 +89,6 @@ public abstract class Virus extends Entity {
 
     public abstract void act();
 
-    void die() {}
+    public void die() {}
 
 }

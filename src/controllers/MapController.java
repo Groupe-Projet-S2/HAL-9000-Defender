@@ -5,8 +5,10 @@ import controllers.listeners.TowerListener;
 import controllers.listeners.VirusListener;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Line;
@@ -50,6 +52,9 @@ public class MapController {
     @FXML
     private Pane world;
 
+    @FXML
+    private Button nextWave;
+
     private SpriteSheet tileSet;
 
     private TileMap tileMap;
@@ -69,12 +74,13 @@ public class MapController {
         MapView.draw(grid, COLS, ROWS, tileMap);
 
         game = new Game(tileMap, 5, 24);
-
         env = game.getWorld();
 
         env.getVirusList().addListener(new VirusListener(world));
         env.getNodeList().addListener(new TowerListener(world, env));
         env.getProjectileList().addListener(new ProjectileListener(world));
+
+        env.addToList(game.getCpu());
 
         // Starts the loop
         initLoop();
@@ -163,5 +169,10 @@ public class MapController {
     void setTowerOnKbd() {
         env.setSelectedNodePreview(imageKbd);
         env.setSelectedNode(4);
+    }
+
+    public void nextWaveChange(ActionEvent event){
+        if (!game.nextWave)
+            game.changeNextWave();
     }
 }

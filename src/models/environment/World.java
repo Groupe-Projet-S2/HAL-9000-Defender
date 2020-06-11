@@ -138,9 +138,15 @@ public class World {
     }
 
     public void nextRound() {
-        for (Virus virus:getVirusList()) {
-            virus.move();
-            virus.act();
+        for (int i = getVirusList().size()-1; i>=0; i--) {
+            //if (getVirusList().get(i).isAlive()) {
+                getVirusList().get(i).move();
+                getVirusList().get(i).act();
+            /*}
+            else{
+                getVirusList().get(i).die();
+                getVirusList().remove(i);
+            }*/
         }
         for (Tower tower:getNodeList()) {
             tower.detection();

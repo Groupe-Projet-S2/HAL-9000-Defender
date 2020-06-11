@@ -8,6 +8,9 @@ import javafx.scene.shape.Line;
 import models.entities.tower.Tower;
 import models.environment.Location;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 public class TowerView {
     public static ImageView renderTower(Tower tower, Location location, Image view) {
         ImageView towerView = new ImageView(view);
@@ -17,6 +20,25 @@ public class TowerView {
         towerView.setY(row);
         towerView.setFitHeight(30);
         towerView.setFitWidth(30);
+        towerView.setId("T" + tower.getId());
+        return towerView;
+    }
+
+    public static ImageView renderCPU(Tower tower, Location location) {
+        FileInputStream file = null;
+        try{
+            file = new FileInputStream("src/utils/proco50x50.png");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        System.out.println(file);
+        ImageView towerView = new ImageView(new Image(file));
+        int col = location.getCol()-10;
+        int row = location.getRow()-10;
+        towerView.setX(col);
+        towerView.setY(row);
+        towerView.setFitHeight(50);
+        towerView.setFitWidth(50);
         towerView.setId("T" + tower.getId());
         return towerView;
     }

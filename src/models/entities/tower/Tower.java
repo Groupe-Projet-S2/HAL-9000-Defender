@@ -29,6 +29,13 @@ public abstract class Tower extends Entity {
         this.price = price;
     }
 
+    public Tower(int range, Location pos, World env) {
+        super(range, pos);
+        this.env = env;
+        this.inRangeVirus = new ArrayList<>();
+        this.active = true;
+    }
+
     public void setReloadingTime(int reloadingTime) {
         this.reloadingTime = reloadingTime;
     }
@@ -95,13 +102,13 @@ public abstract class Tower extends Entity {
     public abstract void act();
 
     public void detection() {
+
         for (int j = env.getVirusList().size()-1; j>=0; j--) {  // Browse the virus list
             // Virus j is in range of node i and not yet in its range list so we add it to the list
             if (isInRange(env.getVirusList().get(j)) && !getInRangeVirus().contains(env.getVirusList().get(j))) {
                 addRangedVirus(env.getVirusList().get(j));
             }
         }
-
         for (int i = getInRangeVirus().size()-1; i>=0; i--){
             if (!isInRange(getInRangeVirus().get(i))) {
                 delRangedVirus(getInRangeVirus().get(i));
@@ -110,6 +117,13 @@ public abstract class Tower extends Entity {
             /*if (!env.getVirusList().get(j).isAlive()) {
                 env.getEntities().remove(j);
             }*/
+        }
+
+        if (this instanceof CPU){
+            for (int k = getInRangeVirus().size()-1; k>=0; k--){
+                env.getVirusList().remove(getInRangeVirus().get(k));
+                getInRangeVirus().get(k);
+            }
         }
 
         // Setting node target

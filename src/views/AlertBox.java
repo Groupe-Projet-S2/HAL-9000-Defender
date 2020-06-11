@@ -22,6 +22,7 @@ public class AlertBox {
         VBox layout = new VBox();
         Label title = new Label("It's an ad !");
         layout.setId("P" + virus.getId());
+        System.out.println(layout.getId());
         layout.setAlignment(Pos.CENTER);
         layout.setSpacing(10);
         layout.setPrefWidth(200);
@@ -29,7 +30,7 @@ public class AlertBox {
         layout.setLayoutX(location.getCol() - 100);
         layout.setLayoutY(location.getRow() - 50);
         layout.styleProperty().setValue("-fx-background-color: white");
-        layout.setOpacity(0.5);
+        layout.setOpacity(0.7);
         Button close = new Button("OK");
         close.setOnAction(e -> ((Adware) virus).close(location));
         layout.getChildren().addAll(title, close);

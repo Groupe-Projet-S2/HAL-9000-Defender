@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.listeners.PopUpsListener;
 import controllers.listeners.ProjectileListener;
 import controllers.listeners.TowerListener;
 import controllers.listeners.VirusListener;
@@ -73,6 +74,7 @@ public class MapController {
         env.getVirusList().addListener(new VirusListener(world));
         env.getNodeList().addListener(new TowerListener(world, env));
         env.getProjectileList().addListener(new ProjectileListener(world));
+        env.getBoxes().addListener(new PopUpsListener(world));
 
         // Starts the loop
         initLoop();

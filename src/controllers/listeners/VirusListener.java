@@ -21,7 +21,7 @@ public class VirusListener implements ListChangeListener<Virus> {
                 }
             } else if (c.wasRemoved()) {
                 for (Virus virus : c.getRemoved()) {
-                    world.getChildren().remove(world.lookup("S" + (virus).getId()));
+                    world.getChildren().remove(world.lookup("#S" + (virus).getId()));
                 }
             }
         }

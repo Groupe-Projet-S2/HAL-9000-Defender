@@ -1,16 +1,12 @@
 package models.entities.virus;
 
-import controllers.listeners.PopUpsListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import models.entities.Entity;
 import models.entities.tower.Tower;
 import models.environment.Location;
 import models.environment.Tile;
 import models.environment.World;
-import views.AlertBox;
 
 public class Adware extends Virus {
 
@@ -24,9 +20,19 @@ public class Adware extends Virus {
         return this.popUps;
     }
 
-    public void close(Location popUp) {
-        System.out.println(popUp);
-        popUps.remove(popUp);
+    public void close(Location loc) {
+        popUps.remove(loc);
+    }
+
+    @Override
+    public void addTarget(Entity entity) {
+        if (entity.isActive()) super.addTarget(entity);
+    }
+
+    @Override
+    public void removeTarget(Entity entity) {
+        ((Tower) entity).setActive(true);
+        super.removeTarget(entity);
     }
 
     @Override
@@ -39,8 +45,8 @@ public class Adware extends Virus {
         for (Entity target : targets) {
             if (target.isActive()) {
                 ((Tower) target).setActive(false);
-                for (int i = popUps.size(); i < 1; i++) {
-                    popUps.add(new Location(target.getPosition().getRow() + i * 20, target.getPosition().getCol() + i * 20));
+                for (int i = popUps.size(); i < 5; i++) {
+                    popUps.add(new Location(target.getPosition().getRow() + i * 100, target.getPosition().getCol() + i * 100));
                 }
             }
         }

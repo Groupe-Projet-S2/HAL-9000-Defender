@@ -4,12 +4,13 @@ import models.entities.Entity;
 import models.entities.tower.Tower;
 import models.environment.Location;
 import models.environment.Tile;
+import models.environment.World;
 
 public class Zombie extends Virus {
 
     private int damage;
-    public Zombie(Location location, Tile tile) {
-        super(35, location, tile, 2, 1);
+    public Zombie(Location location, Tile tile, World world) {
+        super(35, location, tile, 2, 1, world);
         this.damage = 10;
     }
 /*
@@ -24,7 +25,6 @@ public class Zombie extends Virus {
         for (Entity target : targets) {
             if (Entity.isNode(target)) {
                 ((Tower) target).setConsumption(((Tower) target).getConsumption() + damage);
-                System.out.println(((Tower) target).getConsumption());
             }
         }
     }

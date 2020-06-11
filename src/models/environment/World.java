@@ -1,35 +1,33 @@
 package models.environment;
 
+import controllers.listeners.PopUpsListener;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import models.entities.projectile.Projectile;
 import models.entities.Entity;
 import models.entities.tower.Tower;
 import models.entities.virus.*;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class World {
 
     private ObservableList<Tower> towers;
     private ObservableList<Virus> viruses;
     private ObservableList<Projectile> projectiles;
+    private ObservableMap<Location, Virus> boxes;
 
     private ImageView selectedNodePreview;
     private Location selectedNodeLocation;
     private int selectedNode;
-
-    private Set<HBox> overlays;
 
     private TileMap tileMap;
     public World(TileMap tileMap) {
         this.towers = FXCollections.observableArrayList();
         this.viruses = FXCollections.observableArrayList();
         this.projectiles = FXCollections.observableArrayList();
-        this.overlays = new HashSet<>();
+        this.boxes = FXCollections.observableHashMap();
         this.tileMap = tileMap;
     }
 
@@ -42,10 +40,6 @@ public class World {
             viruses.add((Virus) e);
     }
 
-
-    /*public ObservableList<Entity> getEntities() {
-        return entities;
-    }*/
     public ImageView getSelectedNodePreview() {
         return selectedNodePreview;
     }
@@ -70,12 +64,12 @@ public class World {
         this.selectedNodeLocation = selectedNodeLocation;
     }
 
-    public ObservableList<Tower> getNodeList(){
-        return towers;
+    public ObservableMap<Location, Virus> getBoxes() {
+        return boxes;
     }
 
-    public Set<HBox> getOverlays() {
-        return this.overlays;
+    public ObservableList<Tower> getNodeList(){
+        return towers;
     }
 
     public ObservableList<Virus> getVirusList() {
@@ -118,19 +112,32 @@ public class World {
         Location loc = new Location(6 * Tile.SIZE + Tile.SIZE / 2, Tile.SIZE / 2);
         switch (virus) {
             case 1:
-                addToList(new Zombie(loc, tileMap.getTile(6, 0)));
+                addToList(new Zombie(loc, tileMap.getTile(6, 0), this));
                 break;
             case 2:
-                addToList(new Adware(loc, tileMap.getTile(6, 0)));
+                Adware adware = new Adware(loc, tileMap.getTile(6, 0), this);
+                adware.getPopUps().addListener((ListChangeListener<? super Location>) c -> {
+                    while (c.next()) {
+                        if (c.wasAdded())
+                            for (Location location : c.getAddedSubList())
+                                boxes.put(location, adware);
+                        if (c.wasRemoved())
+                            for (Location location : c.getRemoved()) {
+                                boxes.remove(location);
+                                System.out.println("Removed " + location);
+                            }
+                    }
+                });
+                addToList(adware);
                 break;
             case 3:
-                addToList(new Ransomware(loc, tileMap.getTile(6, 0), new Location(5, 23)));
+                addToList(new Ransomware(loc, tileMap.getTile(6, 0), new Location(5, 23), this));
                 break;
             case 4:
-                //env.addToList(new Worm(loc, tileMap.getTile(6, 0)));
+                addToList(new Worm(loc, tileMap.getTile(6, 0), this));
                 break;
             case 5:
-                addToList(new Trojan(loc, tileMap.getTile(6, 0)));
+                addToList(new Trojan(loc, tileMap.getTile(6, 0), this));
                 break;
             case 6:
                 break;
@@ -140,6 +147,7 @@ public class World {
     public void nextRound() {
         for (Virus virus:getVirusList()) {
             virus.move();
+            virus.detection();
             virus.act();
         }
         for (Tower tower:getNodeList()) {

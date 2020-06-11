@@ -1,9 +1,12 @@
 package models.entities.virus;
 
+import javafx.scene.layout.Pane;
 import models.entities.Entity;
+import models.entities.tower.Tower;
 import models.environment.Location;
 import models.environment.Tile;
 import models.environment.Vector;
+import models.environment.World;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,9 +19,11 @@ public abstract class Virus extends Entity {
     private int speed;
     public Set<Entity> targets;
     private int virusID;
+    private World world;
 
-    public Virus(int range, Location location, Tile tile, int speed, int virusID) {
+    public Virus(int range, Location location, Tile tile, int speed, int virusID, World world) {
         super(range, location);
+        this.world = world;
         this.virusID = virusID;
         this.direction = new Vector();
         this.current = tile;
@@ -36,20 +41,29 @@ public abstract class Virus extends Entity {
         return currentHP>0;
     }
 
-    public void setMaxHP(int maxHP) {
-        this.maxHP = maxHP;
-    }
-
     public void setCurrentHP(int currentHP) {
         this.currentHP = currentHP;
     }
 
-    public int getMaxHP() {
-        return maxHP;
-    }
-
     public int getCurrentHP() {
         return currentHP;
+    }
+
+    public void detection() {
+        for (Tower tower : world.getNodeList()) {
+            if (this.isInRange(tower))
+                addTarget(tower);
+            else
+                removeTarget(tower);
+        }
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public Tile getCurrent() {
+        return current;
     }
 
     public void move() {

@@ -14,6 +14,7 @@ public class Motionless extends Projectile {
 
     @Override
     public void move() {
+
     }
 
     @Override

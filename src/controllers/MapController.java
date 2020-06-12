@@ -5,8 +5,10 @@ import controllers.listeners.TowerListener;
 import controllers.listeners.VirusListener;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Line;
@@ -14,16 +16,14 @@ import javafx.util.Duration;
 import javafx.scene.layout.Pane;
 import javafx.scene.input.MouseEvent;
 import models.Game;
-import models.entities.bonus.AdBlock;
-import models.entities.bonus.Flush;
-import models.entities.tower.Firewall;
-import models.entities.bonus.SudVPN;
 import models.entities.tower.Afast;
 import models.entities.tower.GoodwareBytes;
 import models.entities.tower.KiloBitDefender;
 import models.entities.tower.Tower;
 import models.environment.*;
 import views.*;
+
+import static views.TowerView.drawTarget;
 
 public class MapController {
 
@@ -52,6 +52,9 @@ public class MapController {
     @FXML
     private Pane world;
 
+    @FXML
+    private Button nextWave;
+
     private SpriteSheet tileSet;
 
     private TileMap tileMap;
@@ -77,6 +80,8 @@ public class MapController {
         env.getVirusList().addListener(new VirusListener(world));
         env.getNodeList().addListener(new TowerListener(world, env));
         env.getProjectileList().addListener(new ProjectileListener(world));
+
+        env.addToList(game.getCpu());
 
         // Starts the loop
         initLoop();
@@ -125,12 +130,18 @@ public class MapController {
             env.setSelectedNodeLocation(loc);
 
             switch (env.getSelectedNode()) {
+                case 1 :
+                    tower = new Afast(loc,env);
                 case 1:
                     tower = new Afast(50, loc, 150, 50, 150, 150, env);
                     break;
+                case 2 :
+                    tower = new GoodwareBytes(loc,env);
                 case 2:
                     tower = new GoodwareBytes(50, loc, 150, 50, 150, 150, env);
                     break;
+                case 4 :
+                    tower = new KiloBitDefender(loc,env);
                 case 4:
                     tower = new KiloBitDefender(100, loc, 150, 50, 150, 150, env);
                     break;
@@ -171,6 +182,11 @@ public class MapController {
     void setTowerOnKbd() {
         env.setSelectedNodePreview(imageKbd);
         env.setSelectedNode(4);
+    }
+
+    public void nextWaveChange(ActionEvent event){
+        if (!game.nextWave)
+            game.changeNextWave();
     }
 
     @FXML

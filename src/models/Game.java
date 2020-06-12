@@ -4,6 +4,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import models.entities.bonus.Bonus;
 import models.entities.bonus.SudVPN;
+import models.entities.tower.CPU;
 import models.environment.Location;
 import models.environment.Tile;
 import models.environment.TileMap;
@@ -20,6 +21,8 @@ public class Game {
     private long startTime;
     private long spawnTime;
     public static int Money = 100;
+    public boolean nextWave;
+    public CPU cpu;
 
     public Game(TileMap tileMap, int row, int col) {
         this.env = new World(tileMap);
@@ -30,30 +33,38 @@ public class Game {
         startTime = System.currentTimeMillis();
         spawnTime = 1000;
         this.end = tileMap.getTile(row, col);
+        nextWave = true;
+        cpu = new CPU(new Location (end.getPos().getRow()*Tile.SIZE,end.getPos().getCol()*Tile.SIZE),env);
     }
 
     public World getWorld(){
         return env;
     }
 
+    public CPU getCpu() {
+        return cpu;
+    }
+
+    public void changeNextWave(){
+        nextWave = !nextWave;
+    }
+
     public void update() {
 
-        long current = System.currentTimeMillis();
-        if (current >= startTime + spawnTime && number > 0) {
-            env.enemySet(decider());
-            startTime = current;
-            number--;
-        }
-        else if (number == 0 && env.getVirusList().isEmpty()) {
-            waveNumber.add(1);
-            if (waveNumber.getValue() % 2 == 0)
-                difficulty.add(1);
-            number = difficulty.getValue() * 5;
-            if (env.getVirusList().isEmpty())
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException ie) {
-                }
+        if (nextWave) {
+            long current = System.currentTimeMillis();
+            if (current >= startTime + spawnTime && number > 0) {
+                env.enemySet(decider());
+                startTime = current;
+                number--;
+            } else if (number == 0 && env.getVirusList().isEmpty()) {
+                waveNumber.setValue(waveNumber.getValue()+1);
+                if (waveNumber.getValue() % 1 == 0)
+                    difficulty.setValue(difficulty.getValue()+1);
+                number = difficulty.getValue() * 5;
+                if (env.getVirusList().isEmpty())
+                    changeNextWave();
+            }
         }
     }
 

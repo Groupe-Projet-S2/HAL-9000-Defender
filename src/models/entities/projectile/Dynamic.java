@@ -14,14 +14,15 @@ public class Dynamic extends Projectile {
     public Dynamic(Tower sender, Virus target, int damage, int range) {
         super(new Location(sender.getPosition().getRow()+10, sender.getPosition().getCol()), target.getPosition(), sender, damage, range);
         this.target = target;
+        speed = 3;
     }
 
     @Override
     public void move() {
         double x = target.getPosition().getCol() - position.getCol();
         double y = target.getPosition().getRow() - position.getRow();
-       // double coef = Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2));
-        double coef = Math.min(Math.abs(x), Math.abs(y));
+        double coef = Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2));
+        //double coef = Math.min(Math.abs(x), Math.abs(y));
 
         x = Math.round(x/coef);
         y = Math.round(y/coef);
@@ -29,8 +30,8 @@ public class Dynamic extends Projectile {
         direction.setRow(y);
         direction.setCol(x);
 
-        position.setRow(position.getRow() + (int) direction.getRow());
-        position.setCol(position.getCol() + (int) direction.getCol());
+        position.setRow(position.getRow() + (int) direction.getRow()*speed);
+        position.setCol(position.getCol() + (int) direction.getCol()*speed);
     }
 
     @Override

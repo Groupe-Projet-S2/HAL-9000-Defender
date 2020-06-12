@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 import javafx.scene.layout.Pane;
 import javafx.scene.input.MouseEvent;
@@ -69,24 +70,30 @@ public class MapController {
 
     private Game game;
     private World env;
-    private LinkedHashMap<Tile,Tile> path;
 
     @FXML void initialize() {
         start();
+        play_audio();
+    }
+
+    private void play_audio() {
+        AudioClip audio = new AudioClip(this.getClass().getResource("/utils/wake-up.mp3").toString());
+        audio.setVolume(0.05);
+        audio.play();
     }
 
     private void start(){
         grid.setAlignment(Pos.CENTER);
-        tileMap = new TileMap(COLS, ROWS);
+        tileMap = new TileMap();
         tileMap.compose();
         grid.setPrefColumns(COLS);
         grid.setPrefRows(ROWS);
         tileSet = new SpriteSheet("src/utils/tileset32.png");
-        path = Graphs.bfs(tileMap, tileMap.getTile(6, 0), tileMap.getTile(5, 24));
+        LinkedHashMap<Tile, Tile> path = Graphs.bfs(tileMap, tileMap.getTile(6, 0), tileMap.getTile(5, 24));
 
         MapView.draw(grid, COLS, ROWS, tileMap);
 
-        game = new Game(tileMap, 5, 24,path);
+        game = new Game(tileMap, 5, 24, path);
 
         env = game.getWorld();
 

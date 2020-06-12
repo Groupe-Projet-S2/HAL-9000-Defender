@@ -1,12 +1,6 @@
 package models.environment;
 
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
-
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
@@ -39,7 +33,7 @@ public class Graphs {
                 for (Tile tile : neighbors) {
                     file.addFirst(tile);
                     tile.setParent(temp);
-                    path.put(tile,temp);
+                    path.put(tile, temp);
                 }
             }
         } while (temp != start);

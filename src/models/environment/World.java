@@ -220,10 +220,8 @@ public class World {
             if (Tower.isACPU(getNodeList().get(i)) && !((Damagable)getNodeList().get(i)).isAlive() )
                 end();
             if (Tower.isAFirewall(getNodeList().get(i))) {
-                System.out.println("Ça marche pas");
                 if (!((Damagable)getNodeList().get(i)).isAlive()){
                     getNodeList().remove(i);
-                    System.out.println("Ah si");
                 }
             }
         }

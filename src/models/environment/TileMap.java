@@ -7,15 +7,9 @@ import java.util.Collection;
 import java.util.HashMap;
 
 public class TileMap {
-    private int cols;
-    private int rows;
-    private int size;
     private ArrayList<Tile> tiles;
 
-    public TileMap(int cols, int rows) {
-        this.cols = cols;
-        this.rows = rows;
-        this.size = Tile.SIZE * Tile.SIZE;
+    public TileMap() {
         this.tiles = new ArrayList<>();
     }
 
@@ -59,7 +53,7 @@ public class TileMap {
         }
     }
 
-    public static Collection<Tile> getAvailableNeighbors(TileMap map, Tile tile) {
+    static Collection<Tile> getAvailableNeighbors(TileMap map, Tile tile) {
         Collection<Tile> neighbors = new ArrayList<>();
         int row = tile.getPos().getRow();
         int col = tile.getPos().getCol();

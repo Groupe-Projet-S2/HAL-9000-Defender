@@ -67,10 +67,6 @@ public abstract class Virus extends Entity {
         return current;
     }
 
-    public static boolean isAnAdware(Virus virus) { return (virus instanceof Adware); }
-
-    public static boolean isARansomware(Virus virus) { return (virus instanceof Ransomware); }
-
     public Tile getSpawnTile() { return this.spawnTile; }
 
     public void setCurrent(Tile tile) { this.current = tile; }
@@ -94,7 +90,7 @@ public abstract class Virus extends Entity {
 
     public void move() {
 
-        Tile parent = current.getParent();
+        Tile parent = world.getPath().get(current);//current.getParent();
 
         if (!lookForFirewall()) {
             if (this.getPosition().getRow() == current.getPos().getRow() * Tile.SIZE + (Tile.SIZE / 2) && this.getPosition().getCol() == current.getPos().getCol() * Tile.SIZE + (Tile.SIZE / 2)) {

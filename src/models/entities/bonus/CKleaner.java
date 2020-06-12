@@ -4,18 +4,18 @@ import models.environment.World;
 
 public class CKleaner implements Bonus {
 
-    private World environment;
+    private final World environment;
     private boolean active;
-    private int price;
+    public static int price = 300;
 
     public CKleaner(World env) {
         this.environment = env;
         this.active = true;
-        this.price = 300;
     }
 
     @Override
     public void act() {
+        environment.killCountProperty().setValue(environment.killCountProperty().getValue()+environment.getVirusList().size());
         environment.getVirusList().clear();
         if (environment.getVirusList().isEmpty()) {
             active = false;

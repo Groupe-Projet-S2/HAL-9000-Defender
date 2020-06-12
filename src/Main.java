@@ -11,8 +11,9 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("/views/sample.fxml"));
         primaryStage.setTitle("HAL 9000 Defender");
-        primaryStage.setScene(new Scene(root, 1724, 1080));
+        primaryStage.setScene(new Scene(root, 1710, 1080));
         primaryStage.show();
+        primaryStage.setResizable(false);
     }
 
 

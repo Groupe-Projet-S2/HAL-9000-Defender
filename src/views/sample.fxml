@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1724.0" style="-fx-background-image: url('/utils/fondV2.jpg');" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MapController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1724.0" style="-fx-background-image: url('/utils/fondV2.jpg');" stylesheets="@sheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MapController">
    <children>
       <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -35,7 +35,7 @@
                <children>
                   <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="191.0" prefWidth="800.0" style="-fx-border-color: #454545; -fx-border-width: 5; -fx-background-image: url('/utils/barreV8H.png');">
                      <children>
-                        <ImageView fitHeight="161.0" fitWidth="152.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="hal9000" fitHeight="161.0" fitWidth="152.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../utils/1200px-HAL9000.svg.png" />
                            </image>
@@ -43,41 +43,20 @@
                               <Insets left="10.0" top="15.0" />
                            </HBox.margin>
                         </ImageView>
-                        <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="185.0" prefWidth="244.0">
+                        <VBox fx:id="under" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="185.0" prefWidth="244.0">
                            <children>
-                              <Label alignment="TOP_LEFT" style="-fx-background-color: #454545;" text="Overheated" textFill="#20a9aa">
+                              <Label alignment="TOP_LEFT" style="-fx-background-color: #454545; -fx-border-color: #20a9aa;" text="CPU Heat" textFill="#20a9aa">
                                  <font>
                                     <Font name="ROGFonts-Regular" size="24.0" />
                                  </font>
                                  <VBox.margin>
                                     <Insets left="18.0" top="30.0" />
                                  </VBox.margin>
+                                 <padding>
+                                    <Insets left="5.0" right="5.0" />
+                                 </padding>
                               </Label>
-                              <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="243.0" style="-fx-border-color: #4e4d4d; -fx-border-width: 5;">
-                                 <VBox.margin>
-                                    <Insets top="20.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="74.0" prefWidth="244.0">
-                                 <children>
-                                    <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="36.0" prefWidth="37.0" style="-fx-background-color: #454545;" text="0 %" textFill="#20a9aa">
-                                       <font>
-                                          <Font name="ROGFonts-Regular" size="18.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets top="20.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="33.0" prefWidth="60.0" style="-fx-background-color: #454545;" text="100 %" textFill="#20a9aa">
-                                       <HBox.margin>
-                                          <Insets left="145.0" top="20.0" />
-                                       </HBox.margin>
-                                       <font>
-                                          <Font name="ROGFonts-Regular" size="18.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </HBox>
+                              <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="74.0" prefWidth="244.0" />
                            </children>
                            <padding>
                               <Insets left="-10.0" />
@@ -87,27 +66,36 @@
                            <children>
                               <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="182.0" prefWidth="176.0">
                                  <children>
-                                    <Label style="-fx-background-color: #454545;" text="Kill count" textFill="#20a9aa">
+                                    <Label style="-fx-background-color: #454545; -fx-border-color: #20a9aa;" text="Kill count" textFill="#20a9aa">
                                        <font>
                                           <Font name="ROGFonts-Regular" size="24.0" />
                                        </font>
                                        <VBox.margin>
                                           <Insets top="-20.0" />
                                        </VBox.margin>
+                                       <padding>
+                                          <Insets left="5.0" right="5.0" />
+                                       </padding>
                                     </Label>
-                                    <Label style="-fx-background-color: #454545;" text="01" textFill="#20a9aa">
+                                    <Label fx:id="kills" alignment="CENTER" prefHeight="55.0" prefWidth="110.0" style="-fx-border-color: #20a9aa; -fx-background-color: #454545;" textFill="#20a9aa">
                                        <font>
                                           <Font name="ROGFonts-Regular" size="36.0" />
                                        </font>
                                        <VBox.margin>
                                           <Insets top="20.0" />
                                        </VBox.margin>
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <padding>
+                                          <Insets left="5.0" right="5.0" />
+                                       </padding>
                                     </Label>
                                  </children>
                               </VBox>
                               <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="182.0" prefWidth="183.0">
                                  <children>
-                                    <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="47.0" prefWidth="99.0" style="-fx-border-color: #20a9aa; -fx-background-color: #454545;" text="Pause" textFill="#20a9aa">
+                                    <Button fx:id="pauseButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#setInPause" prefHeight="50.0" prefWidth="120.0" text="Pause" textFill="#20a9aa">
                                        <font>
                                           <Font name="ROGFonts-Regular" size="11.0" />
                                        </font>
@@ -115,7 +103,7 @@
                                           <Insets bottom="20.0" />
                                        </VBox.margin>
                                     </Button>
-                                    <Button fx:id="nextWave" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#nextWaveChange" prefHeight="47.0" prefWidth="99.0" style="-fx-background-color: #454545; -fx-border-color: #20a9aa;" text="Next Wave" textFill="#20a9aa">
+                                    <Button fx:id="nextWave" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#nextWaveChange" prefHeight="50.0" prefWidth="120.0" text="Next Wave" textFill="#20a9aa">
                                        <font>
                                           <Font name="ROGFonts-Regular" size="11.0" />
                                        </font>
@@ -127,14 +115,17 @@
                      </children></HBox>
                   <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="191.0" prefWidth="191.0" style="-fx-background-image: url('/utils/carréV2.jpg'); -fx-border-width: 5; -fx-border-color: #454545;">
                      <children>
-                        <Label style="-fx-background-color: #454545;" text="Round" textFill="#20a9aa">
+                        <Label style="-fx-background-color: #454545; -fx-border-color: #20a9aa;" text="Round" textFill="#20a9aa">
                            <font>
                               <Font name="ROGFonts-Regular" size="24.0" />
                            </font>
                            <VBox.margin>
                               <Insets bottom="20.0" />
-                           </VBox.margin></Label>
-                        <Label fx:id="round" alignment="CENTER" prefHeight="99.0" prefWidth="156.0" style="-fx-background-color: #454545;" textFill="#20a9aa">
+                           </VBox.margin>
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding></Label>
+                        <Label fx:id="round" alignment="CENTER" prefHeight="99.0" prefWidth="156.0" style="-fx-background-color: #454545; -fx-border-color: #20a9aa;" textFill="#20a9aa">
                            <font>
                               <Font name="ROGFonts-Regular" size="67.0" />
                            </font></Label>
@@ -148,7 +139,7 @@
          <right>
             <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="805.0" prefWidth="191.0" style="-fx-border-color: #454545; -fx-background-image: url('/utils/barreV8.png'); -fx-border-width: 5;" BorderPane.alignment="CENTER">
                <children>
-                  <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="43.0" prefWidth="189.0" style="-fx-background-color: #454545;" text=" H@L 9000" textFill="#20a9aa">
+                  <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="43.0" prefWidth="189.0" style="-fx-background-color: #454545;" text=" H@L 9000" textFill="#20a9aa">
                      <font>
                         <Font name="ROGFonts-Regular" size="25.0" />
                      </font>
@@ -166,13 +157,16 @@
                               <Insets left="30.0" top="20.0" />
                            </HBox.margin>
                         </ImageView>
-                        <Label fx:id="bitcoins" prefHeight="35.0" prefWidth="72.0" style="-fx-background-color: #454545;" textFill="WHITE">
+                        <Label fx:id="bitcoins" prefHeight="35.0" prefWidth="72.0" style="-fx-background-color: #454545; -fx-border-color: #20a9aa;" textFill="WHITE">
                            <font>
                               <Font name="ROGFonts-Regular" size="20.0" />
                            </font>
                            <HBox.margin>
                               <Insets left="30.0" top="20.0" />
                            </HBox.margin>
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
                         </Label>
                      </children>
                      <VBox.margin>

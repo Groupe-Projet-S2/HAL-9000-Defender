@@ -1,5 +1,7 @@
 package models.entities.tower;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import models.entities.Entity;
 import models.entities.virus.Virus;
 import models.environment.Location;
@@ -10,7 +12,6 @@ import java.util.ArrayList;
 public abstract class Tower extends Entity {
 
     private int upgradePrice;
-    private int price;
     protected int reloadingTime;
     protected int spawningTime;
     private boolean active;
@@ -19,7 +20,7 @@ public abstract class Tower extends Entity {
     protected World env;
     protected int projectileDamages;
 
-    public Tower(int range, Location position, int upgradePrice, int price, int reloadingTime, int spawningTime, World env) {
+    public Tower(int range, Location position, int upgradePrice, int reloadingTime, int spawningTime, World env) {
         super(range, position);
         this.upgradePrice = upgradePrice;
         this.reloadingTime = reloadingTime;
@@ -27,15 +28,10 @@ public abstract class Tower extends Entity {
         this.inRangeVirus = new ArrayList<>();
         this.active = true;
         this.env = env;
-        this.price = price;
         this.projectileDamages = 40;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public Tower(int range, Location location) {
+    public Tower(Location location) {
         super(0, location);
     }
 
@@ -60,43 +56,12 @@ public abstract class Tower extends Entity {
         setActive(true);
     }
 
-    public void setReloadingTime(int reloadingTime) {
-        this.reloadingTime = reloadingTime;
-    }
-
-    public void setProjectileDamages(int damage) { this.projectileDamages = damage; }
-
-    public void setSpawningTime(int spawningTime) {
-        this.spawningTime = spawningTime;
-    }
-
     private void setActive(boolean active) {
         this.active = active;
     }
 
-    public void setTarget(Virus target) {
-        this.target = target;
-    }
-
-    public void setUpgradePrice(int upgradePrice){
-        this.upgradePrice = upgradePrice;
-    }
-
     public ArrayList<Virus> getInRangeVirus() {
         return inRangeVirus;
-    }
-
-    public int getUpgradePrice() {
-        return upgradePrice;
-    }
-
-    public int getReloadingTime() {
-        return reloadingTime;
-    }
-    public int getProjectileDamages() { return projectileDamages; }
-
-    public int getSpawningTime() {
-        return spawningTime;
     }
 
     public boolean isActive() {
@@ -111,16 +76,14 @@ public abstract class Tower extends Entity {
         return target != null;
     }
 
-    public int getPrice(){
-        return this.price;
-    }
-
     public void addRangedVirus(Virus virus){
         if (this.isInRange(virus))
             this.inRangeVirus.add(virus);
         else
             throw new Error("This virus is not in range");
     }
+
+    public abstract int getPrice();
 
     public void delRangedVirus(Virus virus){
         this.inRangeVirus.remove(virus);

@@ -5,8 +5,6 @@ import models.entities.virus.Virus;
 import models.environment.Location;
 import models.environment.World;
 
-import java.util.ArrayList;
-
 public class Motionless extends Projectile {
 
     public Motionless(Location location, Tower sender, int damage, int range, World world) {

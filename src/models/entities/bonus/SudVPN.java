@@ -5,13 +5,13 @@ import models.environment.World;
 
 public class SudVPN implements Bonus {
 
-    private World environment;
-    private int cooldown;
+    private final World environment;
+    private final int cooldown;
     private int index;
-    private int numberOfVirus;
+    private final int numberOfVirus;
     private boolean active;
     private long current;
-    private int price;
+    public static int price = 250;
 
     public SudVPN(World env) {
         this.environment = env;
@@ -20,7 +20,6 @@ public class SudVPN implements Bonus {
         this.active = true;
         this.current = System.currentTimeMillis();
         this.numberOfVirus = environment.getVirusList().size();
-        this.price = 250;
     }
 
     public boolean isActive() { return this.active; }

@@ -7,15 +7,21 @@ import models.environment.World;
 
 public class Afast extends Tower {
 
+    public static int price = 50;
     long startTime;
     int spawnTime;
     int number;
 
     public Afast(Location location, World env) {
-        super(100, location, 100, 50, 1000, 500, env);
+        super(100, location, 100, 1000, 500, env);
         startTime = System.currentTimeMillis();
         spawnTime = 1000;
         number = 4;
+    }
+
+    @Override
+    public int getPrice() {
+        return price;
     }
 
     @Override

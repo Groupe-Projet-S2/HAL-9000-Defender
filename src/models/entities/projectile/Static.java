@@ -5,24 +5,13 @@ import models.entities.virus.Virus;
 import models.environment.Location;
 import models.environment.World;
 
-import java.util.ArrayList;
-
 public class Static extends Projectile {
 
-    private Location reach;
+    private final Location reach;
 
     public Static(Location location, Location destination, Tower sender, int damage, int range, World world) {
         super(location, destination, sender, damage, range, world);
         reach = new Location(sender.getTarget().getPosition().getRow(), sender.getTarget().getPosition().getCol());
-    }
-
-    private int isInTheWay() {
-        for (int i = 0 ; i < this.getInRangeVirus().size() ; i++) {
-            if (this.isInRange(this.getInRangeVirus().get(i))) {
-                return i;
-            }
-        }
-        return -1;
     }
 
     @Override

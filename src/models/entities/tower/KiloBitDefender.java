@@ -2,21 +2,26 @@ package models.entities.tower;
 
 import models.entities.projectile.Dynamic;
 import models.entities.projectile.Projectile;
-import models.entities.projectile.Static;
 import models.environment.Location;
 import models.environment.World;
 
-public class KiloBitDefender extends Tower {
+public class KiloBitDefender extends Tower{
 
+    public static int price = 50;
     long startTime;
     int spawnTime;
     int number;
 
     public KiloBitDefender(Location location, World env) {
-        super(100, location, 100, 50, 3000, 500, env);
+        super(100, location, 100, 3000, 500, env);
         startTime = System.currentTimeMillis();
         spawnTime = 500;
         number = 4;
+    }
+
+    @Override
+    public int getPrice() {
+        return price;
     }
 
     @Override
@@ -32,4 +37,5 @@ public class KiloBitDefender extends Tower {
             number = 4;
         }
     }
+
 }

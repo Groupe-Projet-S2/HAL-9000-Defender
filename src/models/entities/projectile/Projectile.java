@@ -13,9 +13,9 @@ public abstract class Projectile extends Entity {
 
     protected Location destination;
     protected Vector direction;
-    private Tower sender;
-    private int damage;
-    private World world;
+    private final Tower sender;
+    private final int damage;
+    private final World world;
     protected int speed;
 
     public Projectile(Location location, Location destination, Tower sender, int damage, int range, World world) {

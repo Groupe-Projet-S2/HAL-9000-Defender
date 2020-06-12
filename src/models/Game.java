@@ -12,6 +12,7 @@ import models.environment.TileMap;
 import models.environment.World;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class Game {
 
@@ -27,7 +28,7 @@ public class Game {
     public boolean nextWave;
     public CPU cpu;
 
-    public Game(TileMap tileMap, int row, int col, HashMap<Tile,Tile> path) {
+    public Game(TileMap tileMap, int row, int col, LinkedHashMap<Tile,Tile> path) {
         this.env = new World(tileMap,path);
         this.tileMap = tileMap;
         difficulty = new SimpleIntegerProperty(1);

@@ -1,5 +1,6 @@
 package models.environment;
 
+import controllers.MapController;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
@@ -16,6 +17,7 @@ import models.entities.virus.*;
 import models.entities.virus.listeners.*;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class World {
 
@@ -31,10 +33,10 @@ public class World {
     private Location selectedNodeLocation;
     private int selectedNode;
     private TileMap tileMap;
-    private IntegerProperty money;
-    private HashMap<Tile,Tile> path;
+    private IntegerProperty money, killCount;
+    private LinkedHashMap<Tile,Tile> path;
 
-    public World(TileMap tileMap, HashMap<Tile,Tile> path) {
+    public World(TileMap tileMap, LinkedHashMap<Tile,Tile> path) {
         this.towers = FXCollections.observableArrayList();
         this.viruses = FXCollections.observableArrayList();
         this.bonuses = FXCollections.observableArrayList();
@@ -43,6 +45,7 @@ public class World {
         this.tileMap = tileMap;
         this.hasRansom = false;
         this.money = new SimpleIntegerProperty(10000);
+        this.killCount = new SimpleIntegerProperty(0);
         this.adblock = false;
         this.path = path;
     }
@@ -73,10 +76,6 @@ public class World {
 
     public void credit(int a){
         money.set(money.getValue() + Math.max(0,a));
-    }
-
-    public void setMoney(int money) {
-        this.money.set(money);
     }
 
     public void addToList(Entity e) {
@@ -120,8 +119,6 @@ public class World {
         return hostileBoxes;
     }
 
-    public TileMap getTileMap() { return this.tileMap; }
-
     public ObservableList<Tower> getNodeList(){
         return towers;
     }
@@ -137,33 +134,9 @@ public class World {
         return bonuses;
     }
 
-    public Virus getVirus(String id){
-        for (Virus virus : viruses){
-            if (virus.getId().equals(id))
-                return virus;
-        }
-        return null;
+    public IntegerProperty killCountProperty() {
+        return killCount;
     }
-
-    public Tower getNode(String id){
-        for (Tower tower : towers){
-            if (tower.getId().equals(id))
-                return tower;
-        }
-        return null;
-    }
-
-    public Projectile getProjectile(String id){
-        for (Projectile projectile : projectiles){
-            if (projectile.getId().equals(id))
-                return projectile;
-        }
-        return null;
-    }
-
-   /* void removeEntity(Entity entity, ObservableList<Entity> liste) {
-        liste.remove(entity);
-    }*/
 
     public void enemySet(int virus) {
         Location loc = new Location(6 * Tile.SIZE + Tile.SIZE / 2, Tile.SIZE / 2);
@@ -197,13 +170,14 @@ public class World {
     }
 
     public void end(){
-
+        MapController.end();
     }
 
     public void nextRound() {
         for (int i = getVirusList().size()-1; i>=0; i--) {
             if (!getVirusList().get(i).isAlive()){
                 getVirusList().remove(getVirusList().get(i));
+                killCount.setValue(killCount.getValue()+1);
                 credit(20);
             }else {
                 getVirusList().get(i).move();

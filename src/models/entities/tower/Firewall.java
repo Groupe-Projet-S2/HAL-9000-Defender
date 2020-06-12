@@ -1,23 +1,20 @@
 package models.entities.tower;
-
-import models.entities.Entity;
 import models.environment.Location;
-import models.environment.World;
 
 public class Firewall extends Tower implements Damagable{
 
-    private World environment;
-
+    public static int price = 200;
     private int hp;
 
-    public Firewall(Location location, World env) {
-        super(0, location);
-        this.environment = env;
+    public Firewall(Location location) {
+        super(location);
         this.hp = 300;
-        setPrice(200);
     }
 
-    private boolean isItNovember1991() { return (hp==0); }
+    @Override
+    public int getPrice() {
+        return price;
+    }
 
     @Override
     public void act() {

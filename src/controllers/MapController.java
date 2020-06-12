@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.media.AudioClip;
@@ -25,6 +26,7 @@ import models.entities.tower.*;
 import models.environment.*;
 import views.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -33,6 +35,8 @@ public class MapController {
     private Timeline gameloop;
     private final int COLS = 25; // columns
     private final int ROWS = 25; // rows
+
+    @FXML BorderPane root;
 
     @FXML
     private ImageView imageAfast;
@@ -72,14 +76,20 @@ public class MapController {
     private World env;
 
     @FXML void initialize() {
+        add_menu();
         start();
-        play_audio();
     }
 
-    private void play_audio() {
-        AudioClip audio = new AudioClip(this.getClass().getResource("/utils/wake-up.mp3").toString());
+    private void add_menu() {
+        HashMap<Integer, AudioClip> files = new HashMap<>();
+        files.put(1, new AudioClip(this.getClass().getResource("/utils/wake-up.mp3").toString()));
+        files.put(2, new AudioClip(this.getClass().getResource("/utils/step-to-space.mp3").toString()));
+        AudioMenu test = new AudioMenu(files);
+        MenuBar audio = test.create();
+        root.setTop(audio);
+        /*AudioClip audio = new AudioClip(this.getClass().getResource("/utils/wake-up.mp3").toString());
         audio.setVolume(0.05);
-        audio.play();
+        audio.play();*/
     }
 
     private void start(){

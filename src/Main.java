@@ -23,6 +23,7 @@ public class Main extends Application {
         primaryStage.setTitle("HAL 9000 Defender");
         primaryStage.setScene(new Scene(root, 1724, 1080));
         primaryStage.show();
+        primaryStage.setResizable(false);
     }
 
     public static void main(String[] args) {

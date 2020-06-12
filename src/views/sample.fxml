@@ -254,9 +254,9 @@
                      <children>
                         <VBox prefHeight="30.0" prefWidth="200.0">
                            <children>
-                              <ImageView fx:id="imageAfast1" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#setTowerOnFirewall" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="firewall" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#setTowerOnFirewall" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../utils/towerAfast.png" />
+                                    <Image url="@../utils/firewall.png" />
                                  </image>
                                  <VBox.margin>
                                     <Insets left="80.0" top="10.0" />

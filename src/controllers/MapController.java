@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Line;
@@ -16,12 +17,15 @@ import javafx.util.Duration;
 import javafx.scene.layout.Pane;
 import javafx.scene.input.MouseEvent;
 import models.Game;
-import models.entities.tower.Afast;
-import models.entities.tower.GoodwareBytes;
-import models.entities.tower.KiloBitDefender;
-import models.entities.tower.Tower;
+import models.entities.bonus.AdBlock;
+import models.entities.bonus.Flush;
+import models.entities.bonus.SudVPN;
+import models.entities.tower.*;
 import models.environment.*;
 import views.*;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import static views.TowerView.drawTarget;
 
@@ -45,6 +49,9 @@ public class MapController {
 
     @FXML
     private ImageView imageIVG;
+
+    @FXML
+    private ImageView firewall;
 
     @FXML
     private TilePane grid;
@@ -130,32 +137,24 @@ public class MapController {
             env.setSelectedNodeLocation(loc);
 
             switch (env.getSelectedNode()) {
-                case 1 :
-                    tower = new Afast(loc,env);
                 case 1:
-                    tower = new Afast(50, loc, 150, 50, 150, 150, env);
+                    tower = new Afast(loc, env);
                     break;
-                case 2 :
-                    tower = new GoodwareBytes(loc,env);
                 case 2:
-                    tower = new GoodwareBytes(50, loc, 150, 50, 150, 150, env);
+                    tower = new GoodwareBytes(loc, env);
                     break;
-                case 4 :
-                    tower = new KiloBitDefender(loc,env);
                 case 4:
-                    tower = new KiloBitDefender(100, loc, 150, 50, 150, 150, env);
+                    tower = new KiloBitDefender(loc, env);
                     break;
                 case 5:
                     tower = new Firewall(loc, env);
                     break;
             }
-
-            if (! tile.isPath() && game.Money - tower.getPrice() >=0) {
-                game.Money -= tower.getPrice();
-            if(Tower.isAFirewall(tower))
-                env.addToList(tower);
-            if (! tile.isPath()) {
-                env.addToList(tower);
+            if (game.Money - tower.getPrice() >= 0) {
+                if ((!tile.isPath() && !Tower.isAFirewall(tower)) || (tile.isPath() && Tower.isAFirewall(tower))) {
+                    game.Money -= tower.getPrice();
+                    env.addToList(tower);
+                }
             }
         }
     }
@@ -191,7 +190,7 @@ public class MapController {
 
     @FXML
     void setTowerOnFirewall() {
-        env.setSelectedNodePreview(imageAfast);
+        env.setSelectedNodePreview(firewall);
         env.setSelectedNode(5);
     }
 

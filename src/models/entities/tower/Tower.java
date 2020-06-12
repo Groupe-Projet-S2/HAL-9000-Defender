@@ -52,8 +52,6 @@ public abstract class Tower extends Entity {
 
     public void setProjectileDamages(int damage) { this.projectileDamages = damage; }
 
-    public void setConsumption(int consumption) {
-        this.consumption = consumption;
     public void setSpawningTime(int spawningTime) {
         this.spawningTime = spawningTime;
     }
@@ -84,8 +82,6 @@ public abstract class Tower extends Entity {
 
     public int getProjectileDamages() { return projectileDamages; }
 
-    public int getConsumption() {
-        return consumption;
     public int getSpawningTime() {
         return spawningTime;
     }

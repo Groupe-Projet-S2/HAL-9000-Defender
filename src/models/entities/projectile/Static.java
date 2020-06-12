@@ -37,15 +37,8 @@ public class Static extends Projectile {
         direction.setRow(y);
         direction.setCol(x);
 
-        position.setRow(position.getRow()+(int)direction.getRow()*5);
-        position.setCol(position.getCol()+(int)direction.getCol()*5);
-    }
-
-    @Override
-    public void hit(ArrayList<Virus> inRangeVirus) {
-        if (this.isInTheWay()!=-1) {
-            this.explode();
-        }
+        position.setRow(position.getRow()+(int)direction.getRow());
+        position.setCol(position.getCol()+(int)direction.getCol());
     }
 
     @Override
@@ -55,6 +48,9 @@ public class Static extends Projectile {
 
     @Override
     public void explode() {
-
+        for (Virus virus:getWorld().getVirusList()){
+            if (this.isInRange(virus))
+                virus.hit(getDamage());
+        }
     }
 }

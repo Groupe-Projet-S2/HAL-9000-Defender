@@ -23,7 +23,6 @@ public class TowerListener implements ListChangeListener<Tower> {
                 for (Tower tower : c.getAddedSubList()) {
                    if (tower instanceof CPU) {
                        pane.getChildren().add(TowerView.renderCPU(tower, tower.getPosition()));
-                       System.out.println("test");
                    }else {
                         pane.getChildren().add(TowerView.drawRadius(tower.getRange(), world.getSelectedNodeLocation(), (tower).getId()));
                         pane.getChildren().add(TowerView.renderTower(tower, world.getSelectedNodeLocation(), world.getSelectedNodePreview().getImage()));

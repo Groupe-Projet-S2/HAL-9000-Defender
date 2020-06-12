@@ -19,21 +19,17 @@ public class Motionless extends Projectile {
     }
 
     @Override
-    public void hit(ArrayList<Virus> inRangeVirus) {
-        for (int i = 0 ; i < this.getInRangeVirus().size() ; i++) {
-            if (this.isInRange(inRangeVirus.get(i))) {
-                this.explode();
-            }
-        }
-    }
-
-    @Override
     public boolean isOnTarget() {
         return false;
     }
 
     @Override
     public void explode() {
-
+        for (Virus virus:getWorld().getVirusList()){
+            if (this.isInRange(virus))
+                virus.setSpeed(virus.getSpeed()-1);
+            if (virus.getSpeed()==0)
+                virus.die();
+        }
     }
 }

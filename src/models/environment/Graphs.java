@@ -6,6 +6,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 public class Graphs {
@@ -19,11 +21,13 @@ public class Graphs {
      * @param start
      * @param end
      */
-    public static void bfs(TileMap tileMap, Tile start, Tile end) {
+    public static LinkedHashMap<Tile,Tile> bfs(TileMap tileMap, Tile start, Tile end) {
         Tile temp = null; // The current tile
         LinkedList<Tile> file = new LinkedList<>();
+        LinkedHashMap<Tile,Tile> path = new LinkedHashMap<>();
         file.addFirst(end);
         end.setParent(end);
+        path.put(end,end);
 
         Collection<Tile> neighbors;
 
@@ -35,9 +39,11 @@ public class Graphs {
                 for (Tile tile : neighbors) {
                     file.addFirst(tile);
                     tile.setParent(temp);
+                    path.put(tile,temp);
                 }
             }
         } while (temp != start);
 
+        return path;
     }
 }

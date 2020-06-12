@@ -6,7 +6,7 @@ import models.entities.Entity;
 import models.environment.Location;
 import models.environment.World;
 
-public class CPU extends Tower {
+public class CPU extends Tower implements Damagable {
 
     private IntegerProperty overHeatedRate;
 
@@ -29,5 +29,20 @@ public class CPU extends Tower {
 
     @Override
     public void act() {
+    }
+
+    @Override
+    public void getDamaged(int a) {
+        overHeatedRate.set(overHeatedRate.getValue()+a);
+    }
+
+    @Override
+    public boolean isAlive() {
+        return overHeatedRate.getValue()<100;
+    }
+
+    @Override
+    public int getHp() {
+        return overHeatedRate.getValue();
     }
 }

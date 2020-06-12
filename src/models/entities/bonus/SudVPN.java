@@ -11,6 +11,7 @@ public class SudVPN implements Bonus {
     private int numberOfVirus;
     private boolean active;
     private long current;
+    private int price;
 
     public SudVPN(World env) {
         this.environment = env;
@@ -19,9 +20,15 @@ public class SudVPN implements Bonus {
         this.active = true;
         this.current = System.currentTimeMillis();
         this.numberOfVirus = environment.getVirusList().size();
+        this.price = 250;
     }
 
     public boolean isActive() { return this.active; }
+
+    @Override
+    public int getPrice() {
+        return price;
+    }
 
     @Override
     public void act() {
@@ -37,8 +44,10 @@ public class SudVPN implements Bonus {
                 environment.getVirusList().get(index).setCurrent(tile);
                 index++;
             }
-            if (index == numberOfVirus)
+            if (index == numberOfVirus) {
                 active = false;
+                environment.getBonusList().remove(this);
             }
         }
+    }
 }

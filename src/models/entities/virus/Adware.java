@@ -11,7 +11,6 @@ import models.environment.World;
 public class Adware extends Virus {
 
     private ObservableMap<String, Virus> popUps;
-    private int cooldown;
     public Adware(Location location, Tile tile, World world) {
         super(35, location, tile, 2, 2, world);
         this.popUps = FXCollections.observableHashMap();
@@ -23,11 +22,17 @@ public class Adware extends Virus {
 
     public void close(String id) {
         popUps.remove(id);
+        if (popUps.isEmpty()){
+            for (Entity tower:targets){
+                ((Tower)tower).enable();
+            }
+            this.die();
+        }
     }
 
     @Override
     public void addTarget(Entity entity) {
-        if (entity.isActive()) super.addTarget(entity);
+        if (entity.isActive() || !Tower.isAFirewall((Tower)entity)) super.addTarget(entity);
     }
 
     @Override
@@ -38,11 +43,11 @@ public class Adware extends Virus {
 
     @Override
     public void die() {
-        targets.forEach(this::removeTarget);
+        for (Entity target:targets){
+            this.removeTarget(target);
+        }
         super.die();
     }
-
-    public void setCooldown() { this.cooldown = 10000; }
 
     @Override
     public void move() {
@@ -51,10 +56,7 @@ public class Adware extends Virus {
 
     @Override
     public void act() {
-        if (cooldown != 0) {
-            cooldown--;
-        }
-        else {
+        if (!world.isAdblock()) {
             for (Entity target : targets) {
                 if (target.isActive()) {
                     ((Tower) target).disable();

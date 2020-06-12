@@ -20,7 +20,6 @@ public abstract class Virus extends Entity {
     private int virusID;
     private Tile spawnTile;
     protected World world;
-    private boolean removable;
 
     public Virus(int range, Location location, Tile tile, int speed, int virusID, World world) {
         super(range, location);
@@ -33,7 +32,6 @@ public abstract class Virus extends Entity {
         this.targets = new HashSet<>();
         this.sizeH = 16;
         this.sizeW = 16;
-        removable = false;
     }
 
     public int getVirusID() {
@@ -61,10 +59,6 @@ public abstract class Virus extends Entity {
         }
     }
 
-    public boolean isRemovable() {
-        return removable;
-    }
-
     public World getWorld() {
         return world;
     }
@@ -80,6 +74,14 @@ public abstract class Virus extends Entity {
     public Tile getSpawnTile() { return this.spawnTile; }
 
     public void setCurrent(Tile tile) { this.current = tile; }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
 
     private boolean lookForFirewall() {
         for (int j = world.getNodeList().size()-1; j>=0; j--) {
@@ -129,12 +131,11 @@ public abstract class Virus extends Entity {
 
     public abstract void act();
 
-    public void die() {
-        removable = true;
+    public void die(){
+        setCurrentHP(0);
     }
 
     public void hit(int damage) {
         if ((currentHP -= damage) < 0) die();
-        System.out.println("hit");
     }
 }

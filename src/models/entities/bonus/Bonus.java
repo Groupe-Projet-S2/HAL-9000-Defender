@@ -2,8 +2,10 @@ package models.entities.bonus;
 
 public interface Bonus {
 
-    public void act();
+    void act();
 
-    public boolean isActive();
+    boolean isActive();
+
+    int getPrice();
 
 }

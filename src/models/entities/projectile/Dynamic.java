@@ -35,22 +35,12 @@ public class Dynamic extends Projectile {
     }
 
     @Override
-    public void hit(ArrayList<Virus> inRangeVirus) {
-        if (isOnTarget()) {
-            System.out.println("inrange");
-            explode();
-        }
-    }
-
-    @Override
     public void explode(){
         target.hit(getDamage());
-        System.out.println("test");
     }
 
     @Override
     public boolean isOnTarget() {
-        System.out.println(this.isInRange(target));
         return this.isInRange(target);
     }
 }

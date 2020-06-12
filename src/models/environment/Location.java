@@ -11,6 +11,10 @@ public class Location {
         this.col = new SimpleIntegerProperty(col);
     }
 
+    public double centerDistance(Location loc){
+        return (Math.sqrt(Math.pow(loc.getCol()-this.col.getValue(),2)+Math.pow(loc.getRow()-this.row.getValue(),2)));
+    }
+
     public void setRow(int row) {
         this.row.setValue(row);
     }

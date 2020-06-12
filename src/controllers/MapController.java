@@ -10,7 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
@@ -18,16 +18,14 @@ import javafx.scene.layout.Pane;
 import javafx.scene.input.MouseEvent;
 import models.Game;
 import models.entities.bonus.AdBlock;
-import models.entities.bonus.Flush;
+import models.entities.bonus.CKleaner;
 import models.entities.bonus.SudVPN;
 import models.entities.tower.*;
 import models.environment.*;
 import views.*;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
-import static views.TowerView.drawTarget;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class MapController {
 
@@ -59,12 +57,19 @@ public class MapController {
     @FXML
     private Button nextWave;
 
+    @FXML
+    private Label bitcoins;
+
+    @FXML
+    private Label round;
+
     private SpriteSheet tileSet;
 
     private TileMap tileMap;
 
     private Game game;
     private World env;
+    private LinkedHashMap<Tile,Tile> path;
 
     @FXML void initialize() {
         start();
@@ -77,13 +82,16 @@ public class MapController {
         grid.setPrefColumns(COLS);
         grid.setPrefRows(ROWS);
         tileSet = new SpriteSheet("src/utils/tileset32.png");
-        Graphs.bfs(tileMap, tileMap.getTile(6, 0), tileMap.getTile(5, 24));
+        path = Graphs.bfs(tileMap, tileMap.getTile(6, 0), tileMap.getTile(5, 24));
 
         MapView.draw(grid, COLS, ROWS, tileMap);
 
-        game = new Game(tileMap, 5, 24);
+        game = new Game(tileMap, 5, 24,path);
 
         env = game.getWorld();
+
+        bitcoins.textProperty().bind(env.moneyProperty().asString());
+        round.textProperty().bind(game.getWaveNumber().asString());
 
         env.getVirusList().addListener(new VirusListener(world));
         env.getNodeList().addListener(new TowerListener(world, env));
@@ -148,6 +156,9 @@ public class MapController {
                 case 2:
                     tower = new GoodwareBytes(loc, env);
                     break;
+                case 3:
+                    tower = new IVG(loc, env);
+                    break;
                 case 4:
                     tower = new KiloBitDefender(loc, env);
                     break;
@@ -155,9 +166,9 @@ public class MapController {
                     tower = new Firewall(loc, env);
                     break;
             }
-            if (game.Money - tower.getPrice() >= 0) {
+            if (env.getMoney() - tower.getPrice() >= 0) {
+                env.debit(tower.getPrice());
                 if ((!tile.isPath() && !Tower.isAFirewall(tower)) || (tile.isPath() && Tower.isAFirewall(tower))) {
-                    game.Money -= tower.getPrice();
                     env.addToList(tower);
                 }
             }
@@ -202,18 +213,27 @@ public class MapController {
     @FXML
     void useAdblock() {
         AdBlock adBlock = new AdBlock(env);
-        env.addBonus(adBlock);
+        if (env.getMoney() - adBlock.getPrice() >= 0 && env.getBonusList().isEmpty()) {
+            env.debit(adBlock.getPrice());
+            env.addBonus(adBlock);
+        }
     }
 
     @FXML
     void useSudVPN() {
         SudVPN sudVPN = new SudVPN(env);
-        env.addBonus(sudVPN);
+        if (env.getMoney() - sudVPN.getPrice() >= 0 && env.getBonusList().isEmpty()) {
+            env.debit(sudVPN.getPrice());
+            env.addBonus(sudVPN);
+        }
     }
 
     @FXML
     void useFlush() {
-        Flush flush = new Flush(env);
-        env.addBonus(flush);
+        CKleaner CKleaner = new CKleaner(env);
+        if (env.getMoney() - CKleaner.getPrice() >= 0 && env.getBonusList().isEmpty()) {
+            env.debit(CKleaner.getPrice());
+            env.addBonus(CKleaner);
+        }
     }
 }

@@ -31,7 +31,6 @@ public class TowerView {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        System.out.println(file);
         ImageView towerView = new ImageView(new Image(file));
         int col = location.getCol()-10;
         int row = location.getRow()-10;

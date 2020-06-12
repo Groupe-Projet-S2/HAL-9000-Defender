@@ -13,35 +13,31 @@ public class AdBlock implements Bonus {
     private ArrayList<Adware> adwares;
     private ArrayList<Ransomware> ransomwares;
     private boolean active;
+    private int price;
+    private long current;
 
     public AdBlock(World env) {
         this.environment = env;
         this.adwares = new ArrayList<>();
         this.ransomwares = new ArrayList<>();
         this.active = true;
+        this.price = 100;
+        this.current = System.currentTimeMillis();
+        environment.setAdblock(true);
     }
-
-    private void setTargets() {
-        for (int i = 0 ; i < environment.getVirusList().size() ; i++) {
-            if (Virus.isAnAdware(environment.getVirusList().get(i)))
-                adwares.add((Adware) environment.getVirusList().get(i));
-            else if (Virus.isARansomware(environment.getVirusList().get(i)))
-                ransomwares.add((Ransomware) environment.getVirusList().get(i));
-        }
-    }
-
     @Override
     public void act() {
-        this.setTargets();
-        for (int i = 0 ; i < adwares.size() ; i++) {
-            adwares.get(i).setCooldown();
+        if (System.currentTimeMillis()-current>=10000 && environment.isAdblock()){
+            environment.setAdblock(false);
+            environment.getBonusList().remove(this);
         }
-        for (int i = 0 ; i < ransomwares.size() ; i++) {
-            ransomwares.get(i).setCooldown();
-        }
-        this.active = false;
     }
 
     @Override
     public boolean isActive() { return this.active; }
+
+    @Override
+    public int getPrice() {
+        return price;
+    }
 }

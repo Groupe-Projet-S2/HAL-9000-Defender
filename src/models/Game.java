@@ -11,6 +11,8 @@ import models.environment.Tile;
 import models.environment.TileMap;
 import models.environment.World;
 
+import java.util.HashMap;
+
 public class Game {
 
     private int number;
@@ -25,8 +27,8 @@ public class Game {
     public boolean nextWave;
     public CPU cpu;
 
-    public Game(TileMap tileMap, int row, int col) {
-        this.env = new World(tileMap);
+    public Game(TileMap tileMap, int row, int col, HashMap<Tile,Tile> path) {
+        this.env = new World(tileMap,path);
         this.tileMap = tileMap;
         difficulty = new SimpleIntegerProperty(1);
         waveNumber = new SimpleIntegerProperty(1);
@@ -48,6 +50,10 @@ public class Game {
 
     public void changeNextWave(){
         nextWave = !nextWave;
+    }
+
+    public IntegerProperty getWaveNumber(){
+        return waveNumber;
     }
 
     public void update() {

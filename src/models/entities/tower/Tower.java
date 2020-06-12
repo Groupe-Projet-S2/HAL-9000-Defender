@@ -31,6 +31,10 @@ public abstract class Tower extends Entity {
         this.projectileDamages = 40;
     }
 
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
     public Tower(int range, Location location) {
         super(0, location);
     }
@@ -46,13 +50,13 @@ public abstract class Tower extends Entity {
         return (tower instanceof Firewall);
     }
 
+    public static boolean isACPU(Tower tower){ return tower instanceof CPU;}
+
     public void disable() {
-        System.out.println("Disabled");
         setActive(false);
     }
 
     public void enable() {
-        System.out.println("Enabled");
         setActive(true);
     }
 
@@ -133,13 +137,9 @@ public abstract class Tower extends Entity {
             }
         }
         for (int i = getInRangeVirus().size()-1; i>=0; i--){
-            if (!isInRange(getInRangeVirus().get(i))) {
+            if (!isInRange(getInRangeVirus().get(i)) || !getInRangeVirus().get(i).isAlive() || !env.getVirusList().contains(getInRangeVirus().get(i))) {
                 delRangedVirus(getInRangeVirus().get(i));
-
             }
-            /*if (!env.getVirusList().get(j).isAlive()) {
-                env.getEntities().remove(j);
-            }*/
         }
 
         if (this instanceof CPU){

@@ -134,7 +134,7 @@
                            <VBox.margin>
                               <Insets bottom="20.0" />
                            </VBox.margin></Label>
-                        <Label alignment="CENTER" prefHeight="99.0" prefWidth="156.0" style="-fx-background-color: #454545;" text="01" textFill="#20a9aa">
+                        <Label fx:id="round" alignment="CENTER" prefHeight="99.0" prefWidth="156.0" style="-fx-background-color: #454545;" textFill="#20a9aa">
                            <font>
                               <Font name="ROGFonts-Regular" size="67.0" />
                            </font></Label>
@@ -166,7 +166,7 @@
                               <Insets left="30.0" top="20.0" />
                            </HBox.margin>
                         </ImageView>
-                        <Label prefHeight="35.0" prefWidth="72.0" style="-fx-background-color: #454545;" text=" 1000" textFill="WHITE">
+                        <Label fx:id="bitcoins" prefHeight="35.0" prefWidth="72.0" style="-fx-background-color: #454545;" textFill="WHITE">
                            <font>
                               <Font name="ROGFonts-Regular" size="20.0" />
                            </font>
@@ -266,9 +266,9 @@
                         </VBox>
                         <VBox prefHeight="42.0" prefWidth="200.0">
                            <children>
-                              <ImageView fx:id="imageGb1" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#useAdblock" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="adblock" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#useAdblock" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../utils/towerGoodwarebytes.jpg" />
+                                    <Image url="@../utils/adblock.png" />
                                  </image>
                                  <VBox.margin>
                                     <Insets left="80.0" top="20.0" />
@@ -278,9 +278,9 @@
                         </VBox>
                         <VBox prefHeight="17.0" prefWidth="200.0">
                            <children>
-                              <ImageView fx:id="imageIVG1" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#useSudVPN" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="sudvpn" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#useSudVPN" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../utils/towerIVG.jpg" />
+                                    <Image url="@../utils/sudvpn.png" />
                                  </image>
                                  <VBox.margin>
                                     <Insets left="80.0" top="20.0" />
@@ -290,9 +290,9 @@
                         </VBox>
                         <VBox prefHeight="51.0" prefWidth="200.0">
                            <children>
-                              <ImageView fx:id="imageKbd1" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#useFlush" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="ckleaner" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#useFlush" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../utils/towerKilobitDefender.jpg" />
+                                    <Image url="@../utils/ckleaner.png" />
                                  </image>
                                  <VBox.margin>
                                     <Insets left="80.0" top="20.0" />

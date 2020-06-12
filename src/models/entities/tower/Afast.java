@@ -3,7 +3,6 @@ package models.entities.tower;
 import models.entities.projectile.Projectile;
 import models.entities.projectile.Static;
 import models.environment.Location;
-import models.environment.Vector;
 import models.environment.World;
 
 public class Afast extends Tower {
@@ -15,6 +14,7 @@ public class Afast extends Tower {
     public Afast(Location location, World env) {
         super(100, location, 100, 50, 1000, 500, env);
         startTime = System.currentTimeMillis();
+        spawnTime = 1000;
         number = 4;
     }
 
@@ -25,7 +25,7 @@ public class Afast extends Tower {
         if (current - startTime >= spawningTime && number> 0 && this.hasTarget()) {
             startTime = current;
             number--;
-            Projectile projectile = new Static(new Location(this.getPosition().getRow()+10, this.getPosition().getCol()), this.getTarget().getPosition(), this, this.projectileDamages, 5);
+            Projectile projectile = new Static(new Location(this.getPosition().getRow()+10, this.getPosition().getCol()), this.getTarget().getPosition(), this, 40, 5, env);
             env.addToList(projectile);
         }
         else if (number == 0 && current - startTime>= reloadingTime) {

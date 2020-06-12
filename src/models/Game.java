@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import models.entities.bonus.Bonus;
 import models.entities.bonus.SudVPN;
 import models.entities.tower.CPU;
+import models.entities.tower.Tower;
 import models.environment.Location;
 import models.environment.Tile;
 import models.environment.TileMap;
@@ -70,17 +71,18 @@ public class Game {
 
     public int decider(){
         double decider = Math.random();
-        if (decider <= 0.5){
+        if (decider <= 0.2) { // Zombie
             return 1;
         }
-        else if (decider <= 0.75){
+        else if (decider <= 0.4) { // Adware
             return 2;
         }
-        else if (decider <= 0.90){
+        else if (decider <= 0.6) { // Ransomware
             return 3;
         }
-        else{
+        else if (decider <= 0.8) { // Worm
             return 4;
         }
+        else return 5; // Trojan
     }
 }

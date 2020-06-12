@@ -2,35 +2,38 @@ package models.environment;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import models.entities.bonus.Bonus;
 import models.entities.projectile.Projectile;
 import models.entities.Entity;
 import models.entities.tower.Tower;
 import models.entities.virus.*;
-import java.util.HashSet;
-import java.util.Set;
+import models.entities.virus.listeners.AdwareListener;
+import models.entities.virus.listeners.RansomwareListener;
 
 public class World {
 
     private ObservableList<Tower> towers;
     private ObservableList<Virus> viruses;
     private ObservableList<Projectile> projectiles;
+    private ObservableMap<String, Virus> hostileBoxes;
+    private boolean hasRansom;
+
     private ObservableList<Bonus> bonuses;
     private ImageView selectedNodePreview;
     private Location selectedNodeLocation;
     private int selectedNode;
-    private Set<HBox> overlays;
     private TileMap tileMap;
 
     public World(TileMap tileMap) {
         this.towers = FXCollections.observableArrayList();
         this.viruses = FXCollections.observableArrayList();
-        this.projectiles = FXCollections.observableArrayList();
         this.bonuses = FXCollections.observableArrayList();
-        this.overlays = new HashSet<>();
+        this.projectiles = FXCollections.observableArrayList();
+        this.hostileBoxes = FXCollections.observableHashMap();
         this.tileMap = tileMap;
+        this.hasRansom = false;
     }
 
     public void addToList(Entity e) {
@@ -46,9 +49,6 @@ public class World {
         bonuses.add(bonus);
     }
 
-    /*public ObservableList<Entity> getEntities() {
-        return entities;
-    }*/
     public ImageView getSelectedNodePreview() {
         return selectedNodePreview;
     }
@@ -73,16 +73,15 @@ public class World {
         this.selectedNodeLocation = selectedNodeLocation;
     }
 
+    public ObservableMap<String, Virus> getHostileBoxes() {
+        return hostileBoxes;
+    }
+
     public TileMap getTileMap() { return this.tileMap; }
 
     public ObservableList<Tower> getNodeList(){
         return towers;
     }
-
-    public Set<HBox> getOverlays() {
-        return this.overlays;
-    }
-
     public ObservableList<Virus> getVirusList() {
         return viruses;
     }
@@ -130,13 +129,17 @@ public class World {
                 addToList(new Zombie(loc, tileMap.getTile(6, 0), this));
                 break;
             case 2:
-                addToList(new Adware(loc, tileMap.getTile(6, 0), this));
+                Adware adware = new Adware(loc, tileMap.getTile(6, 0), this);
+                adware.getPopUps().addListener(new AdwareListener(hostileBoxes, adware));
+                addToList(adware);
                 break;
             case 3:
-                addToList(new Ransomware(loc, tileMap.getTile(6, 0), new Location(5, 23), this));
+                Ransomware ransomware = new Ransomware(loc, tileMap.getTile(6, 0), new Location(6, 2), this);
+                ransomware.isTriggered().addListener(new RansomwareListener(hostileBoxes, hasRansom, ransomware));
+                addToList(ransomware);
                 break;
             case 4:
-                //env.addToList(new Worm(loc, tileMap.getTile(6, 0)));
+                addToList(new Worm(loc, tileMap.getTile(6, 0), this));
                 break;
             case 5:
                 addToList(new Trojan(loc, tileMap.getTile(6, 0), this));
@@ -148,27 +151,27 @@ public class World {
 
     public void nextRound() {
         for (int i = getVirusList().size()-1; i>=0; i--) {
-            //if (getVirusList().get(i).isAlive()) {
-                getVirusList().get(i).move();
-                getVirusList().get(i).act();
-            /*}
-            else{
-                getVirusList().get(i).die();
-                getVirusList().remove(i);
-            }*/
+            getVirusList().get(i).move();
+            getVirusList().get(i).detection();
+            getVirusList().get(i).act();
         }
         for (Tower tower:getNodeList()) {
-            if (!Tower.isAFirewall(tower)) {
+            if (tower.isActive()) {
                 tower.detection();
+                tower.act();
             }
-            tower.act();
         }
-        for (int i = getProjectileList().size()-1; i>=0; i--) {
+        for (int i = getProjectileList().size() - 1; i >= 0; i--) {
+            getProjectileList().get(i).move();
+        }
+
+        /*for (int i = getProjectileList().size()-1; i>=0; i--) {
             projectiles.get(i).move();
             if (projectiles.get(i).isOnTarget()){
                 projectiles.remove(projectiles.get(i));
             }
-        }
+        }*/
+
         for (Bonus bonus : getBonusList()) {
             if (bonus.isActive()) {
                 bonus.act();

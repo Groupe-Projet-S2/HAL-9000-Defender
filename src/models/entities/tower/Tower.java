@@ -35,15 +35,25 @@ public abstract class Tower extends Entity {
         super(0, location);
     }
 
-    public static boolean isAFirewall(Tower tower) {
-        return (tower instanceof Firewall);
-    }
-
     public Tower(int range, Location pos, World env) {
         super(range, pos);
         this.env = env;
         this.inRangeVirus = new ArrayList<>();
         this.active = true;
+    }
+
+    public static boolean isAFirewall(Tower tower) {
+        return (tower instanceof Firewall);
+    }
+
+    public void disable() {
+        System.out.println("Disabled");
+        setActive(false);
+    }
+
+    public void enable() {
+        System.out.println("Enabled");
+        setActive(true);
     }
 
     public void setReloadingTime(int reloadingTime) {
@@ -56,7 +66,7 @@ public abstract class Tower extends Entity {
         this.spawningTime = spawningTime;
     }
 
-    public void setActive(boolean active) {
+    private void setActive(boolean active) {
         this.active = active;
     }
 
@@ -79,7 +89,6 @@ public abstract class Tower extends Entity {
     public int getReloadingTime() {
         return reloadingTime;
     }
-
     public int getProjectileDamages() { return projectileDamages; }
 
     public int getSpawningTime() {

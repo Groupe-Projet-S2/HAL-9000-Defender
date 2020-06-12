@@ -17,11 +17,9 @@ public class ProjectileListener implements ListChangeListener<Projectile> {
         while (c.next()) {
             for (Projectile projectile : c.getAddedSubList()) {
                 world.getChildren().add(ProjectileView.renderProjectile(projectile));
-                System.out.println("Added: " + projectile.getId() + projectile.getPosition());
             }
             for (Projectile projectile : c.getRemoved()) {
                 world.getChildren().remove(world.lookup("#P" + (projectile).getId()));
-                System.out.println("Removed");
             }
         }
     }

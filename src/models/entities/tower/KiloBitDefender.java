@@ -9,11 +9,13 @@ import models.environment.World;
 public class KiloBitDefender extends Tower {
 
     long startTime;
+    int spawnTime;
     int number;
 
     public KiloBitDefender(Location location, World env) {
         super(100, location, 100, 50, 3000, 500, env);
         startTime = System.currentTimeMillis();
+        spawnTime = 500;
         number = 4;
     }
 
@@ -23,7 +25,7 @@ public class KiloBitDefender extends Tower {
         if (current - startTime>= spawningTime && number> 0 && this.hasTarget()) {
             startTime = current;
             number--;
-            Projectile projectile = new Dynamic(this, this.getTarget(), 40, 1);
+            Projectile projectile = new Dynamic(this, this.getTarget(), 40, 5, env);
             env.addToList(projectile);
         }
         else if (number == 0 && current - startTime >= reloadingTime) {

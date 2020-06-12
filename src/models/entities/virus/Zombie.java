@@ -9,15 +9,16 @@ import models.environment.World;
 public class Zombie extends Virus {
 
     private int damage;
-    public Zombie(Location location, Tile tile, World env) {
-        super(35, location, tile, 2, 1, env);
+
+    public Zombie(Location location, Tile tile, World world, int id) {
+        super(35, location, tile, 2, id, world);
         this.damage = 10;
     }
-/*
-    @Override
-    public void move() {
-        if ()
-    }*/
+
+    public Zombie(Location location, Tile tile, World world) {
+        super(35, location, tile, 2, 1, world);
+        this.damage = 10;
+    }
 
     @Override
     public void act() {
@@ -25,7 +26,6 @@ public class Zombie extends Virus {
         for (Entity target : targets) {
             if (Entity.isNode(target)) {
                 ((Tower) target).setSpawningTime(((Tower) target).getSpawningTime() + damage);
-                System.out.println(((Tower) target).getSpawningTime());
             }
         }
     }

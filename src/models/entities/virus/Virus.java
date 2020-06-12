@@ -1,6 +1,7 @@
 package models.entities.virus;
 
 import models.entities.Entity;
+import models.entities.tower.Tower;
 import models.entities.tower.Firewall;
 import models.entities.tower.Tower;
 import models.environment.Location;
@@ -13,17 +14,18 @@ import java.util.Set;
 
 public abstract class Virus extends Entity {
 
-    private int sizeW, sizeH, maxHP, currentHP = 0;
-    private Tile current;
+    protected int sizeW, sizeH, maxHP, currentHP = 100;
+    protected Tile current;
     private Vector direction;
     private int speed;
-    public Set<Entity> targets;
+    protected Set<Entity> targets;
     private int virusID;
     private Tile spawnTile;
-    private World environment;
+    protected World world;
 
-    public Virus(int range, Location location, Tile tile, int speed, int virusID, World env) {
+    public Virus(int range, Location location, Tile tile, int speed, int virusID, World world) {
         super(range, location);
+        this.world = world;
         this.virusID = virusID;
         this.direction = new Vector();
         this.current = tile;
@@ -32,7 +34,6 @@ public abstract class Virus extends Entity {
         this.targets = new HashSet<>();
         this.sizeH = 16;
         this.sizeW = 16;
-        this.environment = env;
     }
 
     public int getVirusID() {
@@ -43,20 +44,25 @@ public abstract class Virus extends Entity {
         return currentHP>0;
     }
 
-    public void setMaxHP(int maxHP) {
-        this.maxHP = maxHP;
-    }
-
-    public void setCurrentHP(int currentHP) {
+    private void setCurrentHP(int currentHP) {
         this.currentHP = currentHP;
     }
 
-    public int getMaxHP() {
-        return maxHP;
+    public void detection() {
+        for (Tower tower : world.getNodeList()) {
+            if (this.isInRange(tower))
+                addTarget(tower);
+            else if (targets.contains(tower))
+                removeTarget(tower);
+        }
     }
 
-    public int getCurrentHP() {
-        return currentHP;
+    public World getWorld() {
+        return world;
+    }
+
+    public Tile getCurrent() {
+        return current;
     }
 
     public static boolean isAnAdware(Virus virus) { return (virus instanceof Adware); }
@@ -115,6 +121,11 @@ public abstract class Virus extends Entity {
 
     public abstract void act();
 
-    public void die() {}
+    public void die() {
+        world.getVirusList().remove(this);
+    }
 
+    public void hit(int damage) {
+        if ((currentHP -= damage) < 0) die();
+    }
 }

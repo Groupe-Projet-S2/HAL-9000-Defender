@@ -1,32 +1,45 @@
 package models.entities.virus;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.layout.VBox;
+import javafx.collections.ObservableMap;
 import models.entities.Entity;
 import models.entities.tower.Tower;
 import models.environment.Location;
 import models.environment.Tile;
 import models.environment.World;
-import views.AlertBox;
 
 public class Adware extends Virus {
 
-    private ObservableList<VBox> popUps;
-    private AlertBox alertBox;
+    private ObservableMap<String, Virus> popUps;
     private int cooldown;
-    public Adware(Location location, Tile tile, World env) {
-        super(35, location, tile, 2, 2, env);
-        this.popUps = FXCollections.observableArrayList();
-        this.alertBox = new AlertBox(this);
+    public Adware(Location location, Tile tile, World world) {
+        super(35, location, tile, 2, 2, world);
+        this.popUps = FXCollections.observableHashMap();
     }
 
-    public ObservableList<VBox> getPopUps() {
+    public ObservableMap<String, Virus> getPopUps() {
         return this.popUps;
     }
 
-    public void close(VBox popUp) {
-        popUps.remove(popUp);
+    public void close(String id) {
+        popUps.remove(id);
+    }
+
+    @Override
+    public void addTarget(Entity entity) {
+        if (entity.isActive()) super.addTarget(entity);
+    }
+
+    @Override
+    public void removeTarget(Entity entity) {
+        ((Tower) entity).enable();
+        super.removeTarget(entity);
+    }
+
+    @Override
+    public void die() {
+        targets.forEach(this::removeTarget);
+        super.die();
     }
 
     public void setCooldown() { this.cooldown = 10000; }
@@ -44,9 +57,9 @@ public class Adware extends Virus {
         else {
             for (Entity target : targets) {
                 if (target.isActive()) {
-                    ((Tower) target).setActive(false);
+                    ((Tower) target).disable();
                     for (int i = popUps.size(); i < 5; i++) {
-                        popUps.add(alertBox.popUp(new Location(target.getPosition().getRow() + i * 20, target.getPosition().getCol() + i * 20)));
+                        popUps.put(getId() + i, this);
                     }
                 }
             }

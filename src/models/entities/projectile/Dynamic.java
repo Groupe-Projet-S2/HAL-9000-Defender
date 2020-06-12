@@ -37,7 +37,7 @@ public class Dynamic extends Projectile {
     @Override
     public void hit(ArrayList<Virus> inRangeVirus) {
         if (this.isInRange(target)) {
-            this.explode(target);
+            this.act();
         }
     }
 

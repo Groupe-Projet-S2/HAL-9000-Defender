@@ -16,7 +16,7 @@ public class Ransomware extends Virus {
     private int cooldown;
 
     public Ransomware(Location location, Tile tile, Location target, World env) {
-        super(0, location, tile, 2, 3, env);
+        super(35, location, tile, 2, 3, env);
         this.target = target;
         this.triggered = false;
         this.ransoms = FXCollections.observableArrayList();
@@ -34,7 +34,7 @@ public class Ransomware extends Virus {
 
     @Override
     public void move() {
-            if (! position.match(target))
+            if (!position.match(target))
                 super.move();
     }
 

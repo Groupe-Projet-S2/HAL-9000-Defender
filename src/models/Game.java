@@ -19,6 +19,7 @@ public class Game {
     private Tile end;
     private long startTime;
     private long spawnTime;
+    public static int Money = 100;
 
     public Game(TileMap tileMap, int row, int col) {
         this.env = new World(tileMap);

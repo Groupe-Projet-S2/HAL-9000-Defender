@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import javafx.scene.layout.Pane;
 import javafx.scene.input.MouseEvent;
@@ -76,6 +77,7 @@ public class MapController {
         env.getVirusList().addListener(new VirusListener(world));
         env.getNodeList().addListener(new TowerListener(world, env));
         env.getProjectileList().addListener(new ProjectileListener(world));
+
         // Starts the loop
         initLoop();
         gameloop.play();
@@ -137,6 +139,8 @@ public class MapController {
                     break;
             }
 
+            if (! tile.isPath() && game.Money - tower.getPrice() >=0) {
+                game.Money -= tower.getPrice();
             if(Tower.isAFirewall(tower))
                 env.addToList(tower);
             if (! tile.isPath()) {

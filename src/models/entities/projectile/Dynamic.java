@@ -39,5 +39,10 @@ public class Dynamic extends Projectile {
             this.explode(target);
         }
     }
+
+    @Override
+    public boolean isOnTarget() {
+        return this.isInRange(target);
+    }
 }
 

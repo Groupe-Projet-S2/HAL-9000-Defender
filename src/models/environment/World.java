@@ -157,8 +157,11 @@ public class World {
             }
             tower.act();
         }
-        for (Projectile projectile : getProjectileList()) {
-            projectile.move();
+        for (int i = getProjectileList().size()-1; i>=0; i--) {
+            projectiles.get(i).move();
+            if (projectiles.get(i).isOnTarget()){
+                projectiles.remove(projectiles.get(i));
+            }
         }
         for (Bonus bonus : getBonusList()) {
             if (bonus.isActive()) {

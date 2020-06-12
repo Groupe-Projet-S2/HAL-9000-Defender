@@ -24,4 +24,9 @@ public class Motionless extends Projectile {
             }
         }
     }
+
+    @Override
+    public boolean isOnTarget() {
+        return false;
+    }
 }

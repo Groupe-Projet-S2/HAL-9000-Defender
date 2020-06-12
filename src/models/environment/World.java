@@ -1,6 +1,5 @@
 package models.environment;
 
-import controllers.MapController;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
@@ -11,7 +10,6 @@ import models.entities.bonus.Bonus;
 import models.entities.projectile.Projectile;
 import models.entities.Entity;
 import models.entities.tower.Damagable;
-import models.entities.tower.Firewall;
 import models.entities.tower.Tower;
 import models.entities.virus.*;
 import models.entities.virus.listeners.*;
@@ -21,20 +19,21 @@ import java.util.LinkedHashMap;
 
 public class World {
 
-    private ObservableList<Tower> towers;
-    private ObservableList<Virus> viruses;
-    private ObservableList<Projectile> projectiles;
-    private ObservableMap<String, Virus> hostileBoxes;
-    private boolean hasRansom;
+    private final ObservableList<Tower> towers;
+    private final ObservableList<Virus> viruses;
+    private final ObservableList<Projectile> projectiles;
+    private final ObservableMap<String, Virus> hostileBoxes;
+    private final boolean hasRansom;
     private boolean adblock;
 
-    private ObservableList<Bonus> bonuses;
+    private final ObservableList<Bonus> bonuses;
     private ImageView selectedNodePreview;
     private Location selectedNodeLocation;
     private int selectedNode;
-    private TileMap tileMap;
-    private IntegerProperty money, killCount;
-    private LinkedHashMap<Tile,Tile> path;
+    private final TileMap tileMap;
+    private final IntegerProperty money;
+    private final IntegerProperty killCount;
+    private final LinkedHashMap<Tile,Tile> path;
 
     public World(TileMap tileMap, LinkedHashMap<Tile,Tile> path) {
         this.towers = FXCollections.observableArrayList();
@@ -44,7 +43,7 @@ public class World {
         this.hostileBoxes = FXCollections.observableHashMap();
         this.tileMap = tileMap;
         this.hasRansom = false;
-        this.money = new SimpleIntegerProperty(10000);
+        this.money = new SimpleIntegerProperty(5000);
         this.killCount = new SimpleIntegerProperty(0);
         this.adblock = false;
         this.path = path;
@@ -169,10 +168,6 @@ public class World {
         this.adblock = adblock;
     }
 
-    public void end(){
-        MapController.end();
-    }
-
     public void nextRound() {
         for (int i = getVirusList().size()-1; i>=0; i--) {
             if (!getVirusList().get(i).isAlive()){
@@ -191,13 +186,9 @@ public class World {
                     getNodeList().get(i).detection();
                 getNodeList().get(i).act();
             }
-            if (Tower.isACPU(getNodeList().get(i)) && !((Damagable)getNodeList().get(i)).isAlive() )
-                end();
             if (Tower.isAFirewall(getNodeList().get(i))) {
-                System.out.println("Ça marche pas");
                 if (!((Damagable)getNodeList().get(i)).isAlive()){
                     getNodeList().remove(i);
-                    System.out.println("Ah si");
                 }
             }
         }

@@ -4,19 +4,14 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 
 public class TileMap {
-    private int cols;
-    private int rows;
-    private int size;
-    private ArrayList<Tile> tiles;
+    private final ArrayList<Tile> tiles;
+    private final int level;
 
-    public TileMap(int cols, int rows) {
-        this.cols = cols;
-        this.rows = rows;
-        this.size = Tile.SIZE * Tile.SIZE;
+    public TileMap(int level) {
         this.tiles = new ArrayList<>();
+        this.level = level;
     }
 
     /**
@@ -41,7 +36,7 @@ public class TileMap {
      */
     public void compose() {
         try {
-            BufferedReader csvReader = new BufferedReader(new FileReader("src/utils/map32.csv"));
+            BufferedReader csvReader = new BufferedReader(new FileReader("src/utils/map"+level+".csv"));
             String line;
             int row = 0;
             while ((line = csvReader.readLine()) != null) {
@@ -59,7 +54,7 @@ public class TileMap {
         }
     }
 
-    public static Collection<Tile> getAvailableNeighbors(TileMap map, Tile tile) {
+    static Collection<Tile> getAvailableNeighbors(TileMap map, Tile tile) {
         Collection<Tile> neighbors = new ArrayList<>();
         int row = tile.getPos().getRow();
         int col = tile.getPos().getCol();

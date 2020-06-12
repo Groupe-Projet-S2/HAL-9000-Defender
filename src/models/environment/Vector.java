@@ -6,11 +6,6 @@ public class Vector {
 
     public Vector(){}
 
-    public Vector(double row, double col) {
-        this.row = row;
-        this.col = col;
-    }
-
     public void setRow(double row) {
         this.row = row;
     }

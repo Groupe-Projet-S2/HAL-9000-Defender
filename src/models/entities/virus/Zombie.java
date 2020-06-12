@@ -2,14 +2,13 @@ package models.entities.virus;
 
 import models.entities.Entity;
 import models.entities.tower.Damagable;
-import models.entities.tower.Tower;
 import models.environment.Location;
 import models.environment.Tile;
 import models.environment.World;
 
 public class Zombie extends Virus {
 
-    private int damage;
+    private final int damage;
     private long startTime;
 
     public Zombie(Location location, Tile tile, World world, int id) {
@@ -31,7 +30,6 @@ public class Zombie extends Virus {
             if (Entity.isNode(target) && System.currentTimeMillis()-startTime>=1000) {
                 startTime = System.currentTimeMillis();
                 ((Damagable) target).getDamaged(damage);
-                System.out.println(((Damagable) target).getHp());
             }
         }
     }

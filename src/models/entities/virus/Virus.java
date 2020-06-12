@@ -12,7 +12,7 @@ import java.util.Set;
 
 public abstract class Virus extends Entity {
 
-    protected int sizeW, sizeH, maxHP, currentHP = 100;
+    protected int sizeW, sizeH, currentHP = 100;
     protected Tile current;
     private Vector direction;
     private int speed;
@@ -46,10 +46,6 @@ public abstract class Virus extends Entity {
         this.currentHP = currentHP;
     }
 
-    public int getCurrentHP() {
-        return currentHP;
-    }
-
     public void detection() {
         for (Tower tower : world.getNodeList()) {
             if (this.isInRange(tower))
@@ -66,10 +62,6 @@ public abstract class Virus extends Entity {
     public Tile getCurrent() {
         return current;
     }
-
-    public static boolean isAnAdware(Virus virus) { return (virus instanceof Adware); }
-
-    public static boolean isARansomware(Virus virus) { return (virus instanceof Ransomware); }
 
     public Tile getSpawnTile() { return this.spawnTile; }
 
@@ -94,7 +86,7 @@ public abstract class Virus extends Entity {
 
     public void move() {
 
-        Tile parent = current.getParent();
+        Tile parent = world.getPath().get(current);//current.getParent();
 
         if (!lookForFirewall()) {
             if (this.getPosition().getRow() == current.getPos().getRow() * Tile.SIZE + (Tile.SIZE / 2) && this.getPosition().getCol() == current.getPos().getCol() * Tile.SIZE + (Tile.SIZE / 2)) {

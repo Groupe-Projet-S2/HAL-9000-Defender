@@ -2,16 +2,11 @@ package models;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import models.entities.bonus.Bonus;
-import models.entities.bonus.SudVPN;
 import models.entities.tower.CPU;
-import models.entities.tower.Tower;
 import models.environment.Location;
 import models.environment.Tile;
 import models.environment.TileMap;
 import models.environment.World;
-
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class Game {
@@ -24,7 +19,6 @@ public class Game {
     private Tile end;
     private long startTime;
     private long spawnTime;
-    public int Money = 100;
     public boolean nextWave;
     public CPU cpu;
 

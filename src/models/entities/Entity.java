@@ -1,7 +1,5 @@
 package models.entities;
 
-import models.entities.bonus.Bonus;
-import models.entities.tower.Firewall;
 import models.entities.projectile.Projectile;
 import models.entities.tower.Tower;
 import models.entities.virus.Virus;
@@ -12,9 +10,10 @@ public class Entity {
     private int range;
     protected Location position;
     private Location target;
-    private boolean isActive;
-    private int sizeW, sizeH;
-    private String id;
+    private final boolean isActive;
+    private final int sizeW;
+    private final int sizeH;
+    private final String id;
     public static int count = 0;
 
     public Entity(int range, Location position) {
@@ -61,8 +60,6 @@ public class Entity {
     public int getRange(){
         return this.range;
     }
-
-    public void setRange(int newRange) { this.range = newRange; }
 
     public boolean isInRange(Entity entity){
         int deltaX = this.getPosition().getCol() - Math.max(entity.getPosition().getCol(), Math.min(this.getPosition().getCol(),entity.getPosition().getCol()+entity.getSizeW()));

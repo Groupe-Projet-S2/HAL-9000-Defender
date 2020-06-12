@@ -10,7 +10,7 @@ import models.environment.World;
 
 public class Adware extends Virus {
 
-    private ObservableMap<String, Virus> popUps;
+    private final ObservableMap<String, Virus> popUps;
     public Adware(Location location, Tile tile, World world) {
         super(35, location, tile, 2, 2, world);
         this.popUps = FXCollections.observableHashMap();

@@ -1,7 +1,5 @@
 package models.entities.tower;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import models.entities.Entity;
 import models.entities.virus.Virus;
 import models.environment.Location;
@@ -107,6 +105,7 @@ public abstract class Tower extends Entity {
 
         if (this instanceof CPU){
             for (int k = getInRangeVirus().size()-1; k>=0; k--){
+                ((CPU) this).getOverHeatedRateProperty().setValue(((CPU) this).getOverHeatedRate()+10);
                 env.getVirusList().remove(getInRangeVirus().get(k));
                 getInRangeVirus().get(k);
             }

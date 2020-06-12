@@ -6,8 +6,8 @@ import models.entities.virus.Virus;
 
 public class AdwareListener implements MapChangeListener<String, Virus> {
 
-    private ObservableMap<String, Virus> boxes;
-    private Virus virus;
+    private final ObservableMap<String, Virus> boxes;
+    private final Virus virus;
 
     public AdwareListener(ObservableMap<String, Virus> boxes, Virus virus) {
         this.boxes = boxes;

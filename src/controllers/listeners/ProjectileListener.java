@@ -7,7 +7,7 @@ import views.ProjectileView;
 
 public class ProjectileListener implements ListChangeListener<Projectile> {
 
-    private Pane world;
+    private final Pane world;
     public ProjectileListener(Pane world) {
         this.world = world;
     }

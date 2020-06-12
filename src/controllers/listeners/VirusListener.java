@@ -7,7 +7,7 @@ import views.VirusView;
 
 public class VirusListener implements ListChangeListener<Virus> {
 
-    private Pane world;
+    private final Pane world;
     public VirusListener(Pane world) {
         this.world = world;
     }

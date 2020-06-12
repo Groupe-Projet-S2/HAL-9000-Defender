@@ -10,8 +10,8 @@ import views.AlertBox;
 
 public class HostileBoxesListener implements MapChangeListener<String, Virus> {
 
-    private Pane environment;
-    private AlertBox alertBox;
+    private final Pane environment;
+    private final AlertBox alertBox;
     public HostileBoxesListener(Pane environment) {
         this.environment = environment;
         this.alertBox = new AlertBox();

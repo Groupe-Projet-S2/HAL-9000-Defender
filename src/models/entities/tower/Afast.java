@@ -26,7 +26,6 @@ public class Afast extends Tower {
 
     @Override
     public void act() {
-        System.out.println(position);
         long current = System.currentTimeMillis();
         if (current - startTime >= spawningTime && number> 0 && this.hasTarget()) {
             startTime = current;

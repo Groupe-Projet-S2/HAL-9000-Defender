@@ -30,9 +30,4 @@ public class Firewall extends Tower implements Damagable{
     public boolean isAlive() {
         return hp>0;
     }
-
-    @Override
-    public int getHp() {
-        return hp;
-    }
 }

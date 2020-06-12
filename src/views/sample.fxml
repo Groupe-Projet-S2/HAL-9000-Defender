@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1724.0" style="-fx-background-image: url('/utils/fondV2.jpg');" stylesheets="@sheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MapController">
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1724.0" style="-fx-background-image: url('/utils/fondV2.jpg');" stylesheets="@sheet.css" xmlns="http://javafx.com/javafx/8.0.251" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MapController">
    <children>
       <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -56,7 +56,13 @@
                                     <Insets left="5.0" right="5.0" />
                                  </padding>
                               </Label>
-                              <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="74.0" prefWidth="244.0" />
+                              <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="74.0" prefWidth="244.0">
+                                 <children>
+                                    <Label fx:id="heat" prefHeight="20.0" prefWidth="0.0" style="-fx-background-color: #C10E0E;">
+                                       <HBox.margin>
+                                          <Insets left="10.0" top="10.0" />
+                                       </HBox.margin></Label>
+                                 </children></HBox>
                            </children>
                            <padding>
                               <Insets left="-10.0" />
@@ -95,7 +101,7 @@
                               </VBox>
                               <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="182.0" prefWidth="183.0">
                                  <children>
-                                    <Button fx:id="pauseButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#setInPause" prefHeight="50.0" prefWidth="120.0" text="Pause" textFill="#20a9aa">
+                                    <Button fx:id="pauseButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#setInPause" prefHeight="50.0" prefWidth="120.0" stylesheets="@sheet.css" text="Pause" textFill="#20a9aa">
                                        <font>
                                           <Font name="ROGFonts-Regular" size="11.0" />
                                        </font>
@@ -103,7 +109,7 @@
                                           <Insets bottom="20.0" />
                                        </VBox.margin>
                                     </Button>
-                                    <Button fx:id="nextWave" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#nextWaveChange" prefHeight="50.0" prefWidth="120.0" text="Next Wave" textFill="#20a9aa">
+                                    <Button fx:id="nextWave" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#nextWaveChange" prefHeight="50.0" prefWidth="120.0" stylesheets="@sheet.css" text="Next Wave" textFill="#20a9aa">
                                        <font>
                                           <Font name="ROGFonts-Regular" size="11.0" />
                                        </font>
@@ -325,4 +331,4 @@
          </top>
       </BorderPane>
    </children>
-</Pane>
+</BorderPane>

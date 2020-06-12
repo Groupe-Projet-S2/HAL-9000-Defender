@@ -11,7 +11,7 @@ public class CPU extends Tower implements Damagable {
 
     public CPU(Location pos, World env) {
         super(25,pos,env);
-        this.overHeatedRate = new SimpleIntegerProperty(60);
+        this.overHeatedRate = new SimpleIntegerProperty(90);
     }
 
     public int getOverHeatedRate() {
@@ -39,10 +39,5 @@ public class CPU extends Tower implements Damagable {
     @Override
     public boolean isAlive() {
         return overHeatedRate.getValue()<100;
-    }
-
-    @Override
-    public int getHp() {
-        return overHeatedRate.getValue();
     }
 }

@@ -4,7 +4,8 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Location {
-    private IntegerProperty row, col;
+    private final IntegerProperty row;
+    private final IntegerProperty col;
 
     public Location(int row, int col) {
         this.row = new SimpleIntegerProperty(row);

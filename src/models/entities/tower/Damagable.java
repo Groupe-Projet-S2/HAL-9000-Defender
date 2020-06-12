@@ -5,6 +5,4 @@ public interface Damagable {
     void getDamaged(int a);
 
     boolean isAlive();
-
-    int getHp();
 }

@@ -8,12 +8,12 @@ import models.environment.World;
 
 public class Ransomware extends Virus {
 
-    private Location target;
-    private BooleanProperty triggered;
+    private final Location target;
+    private final BooleanProperty triggered;
 
     public Ransomware(Location location, Tile tile, Location target, World world) {
         super(35, location, tile, 2, 3, world);
-        this.target = target;
+        this.target = world.getPath().get(world.getPath().keySet().toArray()[(int)(Math.random()*world.getPath().size())]).getPos();
         this.triggered = new SimpleBooleanProperty(false);
     }
 

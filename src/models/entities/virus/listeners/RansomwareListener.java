@@ -8,9 +8,9 @@ import models.entities.virus.Virus;
 
 public class RansomwareListener implements ChangeListener {
 
-    private ObservableMap<String, Virus> boxes;
+    private final ObservableMap<String, Virus> boxes;
     private boolean hasRansom;
-    private Virus virus;
+    private final Virus virus;
 
     public RansomwareListener(ObservableMap<String, Virus> boxes, boolean hasRansom, Virus virus) {
         this.boxes = boxes;

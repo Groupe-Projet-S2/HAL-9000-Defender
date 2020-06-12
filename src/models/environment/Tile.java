@@ -1,11 +1,11 @@
 package models.environment;
 
 public class Tile {
-    private Location pos;
-    private int type;
-    private int ID;
+    private final Location pos;
+    private final int type;
+    private final int ID;
     private Tile parent;
-    private boolean isAvailable;
+    private final boolean isAvailable;
 
     private static int count = 0;
     public final static int SIZE = 32; // tile's size

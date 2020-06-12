@@ -61,6 +61,8 @@ public class Entity {
         return this.range;
     }
 
+    public void setRange(int range)  { this.range = range; }
+
     public boolean isInRange(Entity entity){
         int deltaX = this.getPosition().getCol() - Math.max(entity.getPosition().getCol(), Math.min(this.getPosition().getCol(),entity.getPosition().getCol()+entity.getSizeW()));
         int deltaY = this.getPosition().getRow() - Math.max(entity.getPosition().getRow(), Math.min(this.getPosition().getRow(),entity.getPosition().getRow()+entity.getSizeH()));

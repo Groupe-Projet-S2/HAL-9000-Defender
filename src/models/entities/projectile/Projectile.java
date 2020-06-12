@@ -55,4 +55,5 @@ public abstract class Projectile extends Entity {
     void die() {
         world.getProjectileList().remove(this);
     }
+
 }

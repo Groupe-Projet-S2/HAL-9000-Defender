@@ -20,12 +20,11 @@ public class KiloBitDefender extends Tower {
 
     @Override
     public void act() {
-        System.out.println(position);
         long current = System.currentTimeMillis();
         if (current >= startTime + spawnTime && number > 0 && this.hasTarget()) {
             startTime = current;
             number--;
-            Projectile projectile = new Dynamic(this, this.getTarget(), 40, 5);
+            Projectile projectile = new Dynamic(this, this.getTarget(), 40, 5, env);
             env.addToList(projectile);
         }
         else if (number == 0) {

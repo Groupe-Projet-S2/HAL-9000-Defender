@@ -9,15 +9,16 @@ import models.environment.World;
 public class Zombie extends Virus {
 
     private int damage;
+
+    public Zombie(Location location, Tile tile, World world, int id) {
+        super(35, location, tile, 2, id, world);
+        this.damage = 10;
+    }
+
     public Zombie(Location location, Tile tile, World world) {
         super(35, location, tile, 2, 1, world);
         this.damage = 10;
     }
-/*
-    @Override
-    public void move() {
-        if ()
-    }*/
 
     @Override
     public void act() {

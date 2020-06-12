@@ -7,9 +7,9 @@ import models.environment.World;
 
 public class GoodwareBytes extends Tower {
 
-    long startTime;
-    int spawnTime;
-    int number;
+    private long startTime;
+    private int spawnTime;
+    private int number;
 
     public GoodwareBytes(int range, Location location, int upgradePrice, int price, int maxCons, int consumption, World env) {
         super(range, location, upgradePrice, price, maxCons, consumption, env);
@@ -20,12 +20,11 @@ public class GoodwareBytes extends Tower {
 
     @Override
     public void act() {
-        System.out.println(position);
         long current = System.currentTimeMillis();
         if (current >= startTime + spawnTime && number > 0 && this.hasTarget()) {
             startTime = current;
             number--;
-            Projectile projectile = new Motionless(new Location(this.getPosition().getRow()+10, this.getPosition().getCol()), this, 40, 5);
+            Projectile projectile = new Motionless(new Location(this.getPosition().getRow()+10, this.getPosition().getCol()), this, 40, 5, env);
             env.addToList(projectile);
         }
         else if (number == 0) {

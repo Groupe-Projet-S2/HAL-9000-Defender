@@ -2,6 +2,7 @@ package models.entities.virus;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import models.entities.Entity;
 import models.entities.tower.Tower;
 import models.environment.Location;
@@ -10,18 +11,18 @@ import models.environment.World;
 
 public class Adware extends Virus {
 
-    private ObservableList<Location> popUps;
+    private ObservableMap<String, Virus> popUps;
     public Adware(Location location, Tile tile, World world) {
         super(35, location, tile, 2, 2, world);
-        this.popUps = FXCollections.observableArrayList();
+        this.popUps = FXCollections.observableHashMap();
     }
 
-    public ObservableList<Location> getPopUps() {
+    public ObservableMap<String, Virus> getPopUps() {
         return this.popUps;
     }
 
-    public void close(Location loc) {
-        popUps.remove(loc);
+    public void close(String id) {
+        popUps.remove(id);
     }
 
     @Override
@@ -31,8 +32,14 @@ public class Adware extends Virus {
 
     @Override
     public void removeTarget(Entity entity) {
-        ((Tower) entity).setActive(true);
+        ((Tower) entity).enable();
         super.removeTarget(entity);
+    }
+
+    @Override
+    public void die() {
+        targets.forEach(this::removeTarget);
+        super.die();
     }
 
     @Override
@@ -44,9 +51,9 @@ public class Adware extends Virus {
     public void act() {
         for (Entity target : targets) {
             if (target.isActive()) {
-                ((Tower) target).setActive(false);
+                ((Tower) target).disable();
                 for (int i = popUps.size(); i < 5; i++) {
-                    popUps.add(new Location(target.getPosition().getRow() + i * 100, target.getPosition().getCol() + i * 100));
+                    popUps.put(getId() + i, this);
                 }
             }
         }

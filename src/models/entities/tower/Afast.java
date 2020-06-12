@@ -21,12 +21,11 @@ public class Afast extends Tower {
 
     @Override
     public void act() {
-        System.out.println(position);
         long current = System.currentTimeMillis();
         if (current >= startTime + spawnTime && number> 0 && this.hasTarget()) {
             startTime = current;
             number--;
-            Projectile projectile = new Static(new Location(this.getPosition().getRow()+10, this.getPosition().getCol()), this.getTarget().getPosition(), this, 40, 5);
+            Projectile projectile = new Static(new Location(this.getPosition().getRow()+10, this.getPosition().getCol()), this.getTarget().getPosition(), this, 40, 5, env);
             env.addToList(projectile);
         }
         else if (number == 0) {

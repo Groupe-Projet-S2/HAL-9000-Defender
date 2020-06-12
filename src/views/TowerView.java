@@ -23,6 +23,7 @@ public class TowerView {
 
     public static Circle drawRadius(int range, Location location, String id) {
         Circle radius = new Circle(range);
+        radius.toBack();
         radius.setStroke(Color.web("#000000"));
         radius.setFill(Color.rgb(0, 0, 0, 0.25));
         radius.setCenterX(location.getCol());

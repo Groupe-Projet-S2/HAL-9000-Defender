@@ -29,6 +29,16 @@ public abstract class Tower extends Entity {
         this.price = price;
     }
 
+    public void disable() {
+        System.out.println("Disabled");
+        setActive(false);
+    }
+
+    public void enable() {
+        System.out.println("Enabled");
+        setActive(true);
+    }
+
     public void setMaxCons(int maxCons) {
         this.maxCons = maxCons;
     }
@@ -37,7 +47,7 @@ public abstract class Tower extends Entity {
         this.consumption = consumption;
     }
 
-    public void setActive(boolean active) {
+    private void setActive(boolean active) {
         this.active = active;
     }
 

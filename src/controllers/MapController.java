@@ -1,6 +1,6 @@
 package controllers;
 
-import controllers.listeners.PopUpsListener;
+import controllers.listeners.HostileBoxesListener;
 import controllers.listeners.ProjectileListener;
 import controllers.listeners.TowerListener;
 import controllers.listeners.VirusListener;
@@ -10,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import javafx.scene.layout.Pane;
 import javafx.scene.input.MouseEvent;
@@ -25,9 +24,6 @@ import views.*;
 public class MapController {
 
     private Timeline gameloop;
-    private ImageView selectedNode;
-    private Location placedNodeLoc;
-    private Tower tower;
     private final int COLS = 25; // columns
     private final int ROWS = 25; // rows
 
@@ -63,7 +59,7 @@ public class MapController {
         grid.setPrefColumns(COLS);
         grid.setPrefRows(ROWS);
         tileSet = new SpriteSheet("src/utils/tileset32.png");
-        Graphs.bfs(world, tileMap, tileMap.getTile(6, 0), tileMap.getTile(5, 24));
+        Graphs.bfs(tileMap, tileMap.getTile(6, 0), tileMap.getTile(5, 24));
 
         MapView.draw(grid, COLS, ROWS, tileMap);
 
@@ -74,7 +70,7 @@ public class MapController {
         env.getVirusList().addListener(new VirusListener(world));
         env.getNodeList().addListener(new TowerListener(world, env));
         env.getProjectileList().addListener(new ProjectileListener(world));
-        env.getBoxes().addListener(new PopUpsListener(world));
+        env.getHostileBoxes().addListener(new HostileBoxesListener(world));
 
         // Starts the loop
         initLoop();
@@ -86,6 +82,9 @@ public class MapController {
     This is where we code what will happen during a tick. It will happen at a certain number of times per framerate (ideally 60).
     */
     private void tick() {
+        for (Tower tower : env.getNodeList())
+            world.lookup("#T" + tower.getId()).toFront();
+        env.getHostileBoxes().forEach((k, v) -> world.lookup("#P" + k).toFront());
         env.nextRound();
         game.update();
     }
@@ -100,10 +99,9 @@ public class MapController {
 
         KeyFrame kf = new KeyFrame(
                 Duration.seconds(0.034), // FPS Number
-                (event -> {tick();
-                    //System.out.println("A tick has been run");
-                })
+                event -> tick()
         );
+
         gameloop.getKeyFrames().add(kf);
     }
 
@@ -114,6 +112,7 @@ public class MapController {
 
     @FXML
     public void createTower(MouseEvent event) {
+        Tower tower = null;
         if (env.getSelectedNodePreview() != null) {
             double y = event.getY();
             double x = event.getX();

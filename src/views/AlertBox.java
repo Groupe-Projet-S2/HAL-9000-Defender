@@ -11,45 +11,43 @@ import models.environment.Location;
 
 public class AlertBox {
 
-    private Virus virus;
     public AlertBox() {}
 
-    public void setVirus(Virus virus) {
-        this.virus = virus;
-    }
-
-    public VBox popUp(Location location) {
+    public VBox popUp(Adware virus, String id) {
         VBox layout = new VBox();
-        Label title = new Label("It's an ad !");
-        layout.setId("P" + virus.getId());
-        System.out.println(layout.getId());
+        Label title = new Label("It's an ad ! - #P" + id);
+        layout.setId("P" + id);
+
+        layout.toFront();
         layout.setAlignment(Pos.CENTER);
         layout.setSpacing(10);
         layout.setPrefWidth(200);
         layout.setPrefHeight(100);
-        layout.setLayoutX(location.getCol() - 100);
-        layout.setLayoutY(location.getRow() - 50);
+        layout.setLayoutX((int) (Math.random() * 500));
+        layout.setLayoutY((int) (Math.random() * 700));
         layout.styleProperty().setValue("-fx-background-color: white");
         layout.setOpacity(0.7);
+
         Button close = new Button("OK");
-        close.setOnAction(e -> ((Adware) virus).close(location));
+        close.setOnAction(e -> virus.close(id));
         layout.getChildren().addAll(title, close);
         return layout;
     }
 
-    public VBox ransom() {
+    public VBox ransom(Ransomware virus, String id) {
         VBox layout = new VBox();
         Label title = new Label("Pay now if you want to live.");
         title.styleProperty().setValue("-fx-text-fill: #ffffff");
+
+        layout.setId("P" + id);
         layout.setAlignment(Pos.CENTER);
-        layout.setLayoutX(0);
-        layout.setLayoutY(0);
         layout.setPrefHeight(800);
         layout.setPrefWidth(800);
         layout.styleProperty().setValue("-fx-background-color: #0000FF");
         layout.setOpacity(0.7);
+
         Button pay = new Button("Pay");
-        pay.setOnAction(e -> ((Ransomware) virus).close());
+        pay.setOnAction(e -> virus.close());
         layout.getChildren().addAll(title, pay);
         return layout;
     }

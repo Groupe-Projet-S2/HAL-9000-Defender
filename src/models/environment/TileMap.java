@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 public class TileMap {
     private int cols;
@@ -31,10 +32,6 @@ public class TileMap {
             if (tile.getPos().match(loc))
                 return tile;
         return null;
-    }
-
-    public ArrayList<Tile> getTiles() {
-        return tiles;
     }
 
     /**

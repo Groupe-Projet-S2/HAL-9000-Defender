@@ -1,6 +1,5 @@
 package models.entities.virus;
 
-import javafx.scene.layout.Pane;
 import models.entities.Entity;
 import models.entities.tower.Tower;
 import models.environment.Location;
@@ -13,13 +12,13 @@ import java.util.Set;
 
 public abstract class Virus extends Entity {
 
-    private int sizeW, sizeH, maxHP, currentHP = 0;
-    private Tile current;
+    protected int maxHP, currentHP = 100;
+    protected Tile current;
     private Vector direction;
     private int speed;
-    public Set<Entity> targets;
+    protected Set<Entity> targets;
     private int virusID;
-    private World world;
+    protected World world;
 
     public Virus(int range, Location location, Tile tile, int speed, int virusID, World world) {
         super(range, location);
@@ -29,8 +28,6 @@ public abstract class Virus extends Entity {
         this.current = tile;
         this.speed = speed;
         this.targets = new HashSet<>();
-        this.sizeH = 16;
-        this.sizeW = 16;
     }
 
     public int getVirusID() {
@@ -41,19 +38,15 @@ public abstract class Virus extends Entity {
         return currentHP>0;
     }
 
-    public void setCurrentHP(int currentHP) {
+    private void setCurrentHP(int currentHP) {
         this.currentHP = currentHP;
-    }
-
-    public int getCurrentHP() {
-        return currentHP;
     }
 
     public void detection() {
         for (Tower tower : world.getNodeList()) {
             if (this.isInRange(tower))
                 addTarget(tower);
-            else
+            else if (targets.contains(tower))
                 removeTarget(tower);
         }
     }
@@ -103,6 +96,11 @@ public abstract class Virus extends Entity {
 
     public abstract void act();
 
-    void die() {}
+    public void die() {
+        world.getVirusList().remove(this);
+    }
 
+    public void hit(int damage) {
+        if ((currentHP -= damage) < 0) die();
+    }
 }

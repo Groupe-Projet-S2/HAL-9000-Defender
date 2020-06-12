@@ -1,8 +1,6 @@
 package models.environment;
 
-import controllers.listeners.PopUpsListener;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.scene.image.ImageView;
@@ -10,13 +8,16 @@ import models.entities.projectile.Projectile;
 import models.entities.Entity;
 import models.entities.tower.Tower;
 import models.entities.virus.*;
+import models.entities.virus.listeners.AdwareListener;
+import models.entities.virus.listeners.RansomwareListener;
 
 public class World {
 
     private ObservableList<Tower> towers;
     private ObservableList<Virus> viruses;
     private ObservableList<Projectile> projectiles;
-    private ObservableMap<Location, Virus> boxes;
+    private ObservableMap<String, Virus> hostileBoxes;
+    private boolean hasRansom;
 
     private ImageView selectedNodePreview;
     private Location selectedNodeLocation;
@@ -27,8 +28,9 @@ public class World {
         this.towers = FXCollections.observableArrayList();
         this.viruses = FXCollections.observableArrayList();
         this.projectiles = FXCollections.observableArrayList();
-        this.boxes = FXCollections.observableHashMap();
+        this.hostileBoxes = FXCollections.observableHashMap();
         this.tileMap = tileMap;
+        this.hasRansom = false;
     }
 
     public void addToList(Entity e) {
@@ -64,8 +66,8 @@ public class World {
         this.selectedNodeLocation = selectedNodeLocation;
     }
 
-    public ObservableMap<Location, Virus> getBoxes() {
-        return boxes;
+    public ObservableMap<String, Virus> getHostileBoxes() {
+        return hostileBoxes;
     }
 
     public ObservableList<Tower> getNodeList(){
@@ -80,34 +82,6 @@ public class World {
         return projectiles;
     }
 
-    public Virus getVirus(String id){
-        for (Virus virus : viruses){
-            if (virus.getId().equals(id))
-                return virus;
-        }
-        return null;
-    }
-
-    public Tower getNode(String id){
-        for (Tower tower : towers){
-            if (tower.getId().equals(id))
-                return tower;
-        }
-        return null;
-    }
-
-    public Projectile getProjectile(String id){
-        for (Projectile projectile : projectiles){
-            if (projectile.getId().equals(id))
-                return projectile;
-        }
-        return null;
-    }
-
-   /* void removeEntity(Entity entity, ObservableList<Entity> liste) {
-        liste.remove(entity);
-    }*/
-
     public void enemySet(int virus) {
         Location loc = new Location(6 * Tile.SIZE + Tile.SIZE / 2, Tile.SIZE / 2);
         switch (virus) {
@@ -116,22 +90,13 @@ public class World {
                 break;
             case 2:
                 Adware adware = new Adware(loc, tileMap.getTile(6, 0), this);
-                adware.getPopUps().addListener((ListChangeListener<? super Location>) c -> {
-                    while (c.next()) {
-                        if (c.wasAdded())
-                            for (Location location : c.getAddedSubList())
-                                boxes.put(location, adware);
-                        if (c.wasRemoved())
-                            for (Location location : c.getRemoved()) {
-                                boxes.remove(location);
-                                System.out.println("Removed " + location);
-                            }
-                    }
-                });
+                adware.getPopUps().addListener(new AdwareListener(hostileBoxes, adware));
                 addToList(adware);
                 break;
             case 3:
-                addToList(new Ransomware(loc, tileMap.getTile(6, 0), new Location(5, 23), this));
+                Ransomware ransomware = new Ransomware(loc, tileMap.getTile(6, 0), new Location(6, 2), this);
+                ransomware.isTriggered().addListener(new RansomwareListener(hostileBoxes, hasRansom, ransomware));
+                addToList(ransomware);
                 break;
             case 4:
                 addToList(new Worm(loc, tileMap.getTile(6, 0), this));
@@ -145,17 +110,19 @@ public class World {
     }
 
     public void nextRound() {
-        for (Virus virus:getVirusList()) {
-            virus.move();
-            virus.detection();
-            virus.act();
+        for (int i = getVirusList().size() - 1; i >= 0; i--) {
+            getVirusList().get(i).move();
+            getVirusList().get(i).detection();
+            getVirusList().get(i).act();
         }
         for (Tower tower:getNodeList()) {
-            tower.detection();
-            tower.act();
+            if (tower.isActive()) {
+                tower.detection();
+                tower.act();
+            }
         }
-        for (Projectile projectile : getProjectileList()) {
-            projectile.move();
+        for (int i = getProjectileList().size() - 1; i >= 0; i--) {
+            getProjectileList().get(i).move();
         }
     }
 }

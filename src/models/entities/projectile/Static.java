@@ -11,12 +11,9 @@ public class Static extends Projectile {
 
     private Location reach;
 
-    public Static(Location location, Location destination, Tower sender, int damage, int range) {
-        super(location, destination, sender, damage, range);
-        reach = new Location(sender.getTarget().getPosition().getRow(), sender.getTarget().getPosition().getCol());
-    }
     public Static(Location location, Location destination, Tower sender, int damage, int range, World world) {
         super(location, destination, sender, damage, range, world);
+        reach = new Location(sender.getTarget().getPosition().getRow(), sender.getTarget().getPosition().getCol());
     }
 
     private int isInTheWay() {
@@ -40,19 +37,24 @@ public class Static extends Projectile {
         direction.setRow(y);
         direction.setCol(x);
 
-        position.setRow(position.getRow()+(int)direction.getRow());
-        position.setCol(position.getCol()+(int)direction.getCol());
+        position.setRow(position.getRow()+(int)direction.getRow()*5);
+        position.setCol(position.getCol()+(int)direction.getCol()*5);
     }
 
     @Override
     public void hit(ArrayList<Virus> inRangeVirus) {
         if (this.isInTheWay()!=-1) {
-            this.act();
+            this.explode();
         }
     }
 
     @Override
     public boolean isOnTarget(){
         return getPosition().match(reach);
+    }
+
+    @Override
+    public void explode() {
+
     }
 }

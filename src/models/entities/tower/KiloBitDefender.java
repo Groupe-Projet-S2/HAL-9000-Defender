@@ -25,7 +25,7 @@ public class KiloBitDefender extends Tower {
         if (current - startTime>= spawningTime && number> 0 && this.hasTarget()) {
             startTime = current;
             number--;
-            Projectile projectile = new Dynamic(this, this.getTarget(), 40, 5, env);
+            Projectile projectile = new Dynamic(this, this.getTarget(), 40, 10, env);
             env.addToList(projectile);
         }
         else if (number == 0 && current - startTime >= reloadingTime) {

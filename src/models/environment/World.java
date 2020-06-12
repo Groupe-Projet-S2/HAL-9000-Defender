@@ -9,8 +9,7 @@ import models.entities.projectile.Projectile;
 import models.entities.Entity;
 import models.entities.tower.Tower;
 import models.entities.virus.*;
-import models.entities.virus.listeners.AdwareListener;
-import models.entities.virus.listeners.RansomwareListener;
+import models.entities.virus.listeners.*;
 
 public class World {
 
@@ -154,6 +153,9 @@ public class World {
             getVirusList().get(i).move();
             getVirusList().get(i).detection();
             getVirusList().get(i).act();
+            if (getVirusList().get(i).isRemovable()){
+                getVirusList().remove(this);
+            }
         }
         for (Tower tower:getNodeList()) {
             if (tower.isActive()) {
@@ -161,16 +163,12 @@ public class World {
                 tower.act();
             }
         }
-        for (int i = getProjectileList().size() - 1; i >= 0; i--) {
-            getProjectileList().get(i).move();
-        }
-
-        /*for (int i = getProjectileList().size()-1; i>=0; i--) {
+        for (int i = getProjectileList().size()-1; i>=0; i--) {
             projectiles.get(i).move();
             if (projectiles.get(i).isOnTarget()){
                 projectiles.remove(projectiles.get(i));
             }
-        }*/
+        }
 
         for (Bonus bonus : getBonusList()) {
             if (bonus.isActive()) {

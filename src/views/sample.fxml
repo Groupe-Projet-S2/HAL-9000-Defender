@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1724.0" style="-fx-background-image: url('/utils/fondV2.jpg');" xmlns="http://javafx.com/javafx/8.0.251" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MapController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1724.0" style="-fx-background-image: url('/utils/fondV2.jpg');" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MapController">
    <children>
       <ImageView fitHeight="1080.0" fitWidth="1920.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -83,7 +83,7 @@
                               <Insets left="-10.0" />
                            </padding>
                         </VBox>
-                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="181.0" prefWidth="384.0">
+                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="181.0" prefWidth="800.0">
                            <children>
                               <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="182.0" prefWidth="176.0">
                                  <children>
@@ -146,7 +146,7 @@
                </children></HBox>
          </bottom>
          <right>
-            <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="803.0" prefWidth="191.0" style="-fx-border-color: #454545; -fx-background-image: url('/utils/barreV8.png'); -fx-border-width: 5;" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="805.0" prefWidth="191.0" style="-fx-border-color: #454545; -fx-background-image: url('/utils/barreV8.png'); -fx-border-width: 5;" BorderPane.alignment="CENTER">
                <children>
                   <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="43.0" prefWidth="189.0" style="-fx-background-color: #454545;" text=" H@L 9000" textFill="#20a9aa">
                      <font>
@@ -303,7 +303,7 @@
                      </children></VBox>
                </children>
                <BorderPane.margin>
-                  <Insets right="270.0" top="-100.0" />
+                  <Insets right="270.0" />
                </BorderPane.margin>
             </VBox>
          </right>
@@ -320,7 +320,7 @@
                   <Insets />
                </opaqueInsets>
                <BorderPane.margin>
-                  <Insets left="340.0" top="-100.0" />
+                  <Insets left="340.0" />
                </BorderPane.margin>
             </Pane>
          </center>
@@ -328,10 +328,6 @@
             <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
          </left>
          <top>
-            <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <BorderPane.margin>
-                  <Insets />
-               </BorderPane.margin></HBox>
          </top>
       </BorderPane>
    </children>

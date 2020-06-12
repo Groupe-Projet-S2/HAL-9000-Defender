@@ -21,7 +21,7 @@ public class Game {
     private Tile end;
     private long startTime;
     private long spawnTime;
-    public static int Money = 100;
+    public int Money = 100;
     public boolean nextWave;
     public CPU cpu;
 

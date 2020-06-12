@@ -40,6 +40,10 @@ public abstract class Projectile extends Entity {
 
     public abstract boolean isOnTarget();
 
+    public World getWorld(){
+        return world;
+    }
+
     public int getDamage() {
         return this.damage;
     }
@@ -48,13 +52,13 @@ public abstract class Projectile extends Entity {
         return this.sender.getInRangeVirus();
     }
 
-    public void act() {
+    public abstract void explode(); /*{
         if (! getInRangeVirus().isEmpty()) {
             getInRangeVirus().removeIf(v -> ! this.isInRange(v));
             getInRangeVirus().forEach(v -> v.hit(damage));
             die();
         } else die();
-    }
+    }*/
 
     void die() {
         world.getProjectileList().remove(this);

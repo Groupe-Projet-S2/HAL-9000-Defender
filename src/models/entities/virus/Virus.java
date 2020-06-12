@@ -2,8 +2,6 @@ package models.entities.virus;
 
 import models.entities.Entity;
 import models.entities.tower.Tower;
-import models.entities.tower.Firewall;
-import models.entities.tower.Tower;
 import models.environment.Location;
 import models.environment.Tile;
 import models.environment.Vector;
@@ -22,6 +20,7 @@ public abstract class Virus extends Entity {
     private int virusID;
     private Tile spawnTile;
     protected World world;
+    private boolean removable;
 
     public Virus(int range, Location location, Tile tile, int speed, int virusID, World world) {
         super(range, location);
@@ -34,6 +33,7 @@ public abstract class Virus extends Entity {
         this.targets = new HashSet<>();
         this.sizeH = 16;
         this.sizeW = 16;
+        removable = false;
     }
 
     public int getVirusID() {
@@ -44,8 +44,12 @@ public abstract class Virus extends Entity {
         return currentHP>0;
     }
 
-    private void setCurrentHP(int currentHP) {
+    public void setCurrentHP(int currentHP) {
         this.currentHP = currentHP;
+    }
+
+    public int getCurrentHP() {
+        return currentHP;
     }
 
     public void detection() {
@@ -55,6 +59,10 @@ public abstract class Virus extends Entity {
             else if (targets.contains(tower))
                 removeTarget(tower);
         }
+    }
+
+    public boolean isRemovable() {
+        return removable;
     }
 
     public World getWorld() {
@@ -73,10 +81,10 @@ public abstract class Virus extends Entity {
 
     public void setCurrent(Tile tile) { this.current = tile; }
 
-    public boolean detection() {
-        for (int j = environment.getNodeList().size()-1; j>=0; j--) {
-            if (isInRange(environment.getNodeList().get(j))) {
-                return(Tower.isAFirewall(environment.getNodeList().get(j)));
+    private boolean lookForFirewall() {
+        for (int j = world.getNodeList().size()-1; j>=0; j--) {
+            if (isInRange(world.getNodeList().get(j))) {
+                return(Tower.isAFirewall(world.getNodeList().get(j)));
             }
         }
         return false;
@@ -86,7 +94,7 @@ public abstract class Virus extends Entity {
 
         Tile parent = current.getParent();
 
-        if (!detection()) {
+        if (!lookForFirewall()) {
             if (this.getPosition().getRow() == current.getPos().getRow() * Tile.SIZE + (Tile.SIZE / 2) && this.getPosition().getCol() == current.getPos().getCol() * Tile.SIZE + (Tile.SIZE / 2)) {
 
                 if (this.getPosition().getRow() < parent.getPos().getRow() * Tile.SIZE + (Tile.SIZE / 2))
@@ -122,10 +130,11 @@ public abstract class Virus extends Entity {
     public abstract void act();
 
     public void die() {
-        world.getVirusList().remove(this);
+        removable = true;
     }
 
     public void hit(int damage) {
         if ((currentHP -= damage) < 0) die();
+        System.out.println("hit");
     }
 }

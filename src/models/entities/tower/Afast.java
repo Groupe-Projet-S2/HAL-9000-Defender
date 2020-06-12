@@ -25,7 +25,7 @@ public class Afast extends Tower {
         if (current - startTime >= spawningTime && number> 0 && this.hasTarget()) {
             startTime = current;
             number--;
-            Projectile projectile = new Static(new Location(this.getPosition().getRow()+10, this.getPosition().getCol()), this.getTarget().getPosition(), this, 40, 5, env);
+            Projectile projectile = new Static(new Location(this.getPosition().getRow()+10, this.getPosition().getCol()), this.getTarget().getPosition(), this, 40, 10, env);
             env.addToList(projectile);
         }
         else if (number == 0 && current - startTime>= reloadingTime) {

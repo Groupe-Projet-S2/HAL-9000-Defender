@@ -3,7 +3,7 @@ package models.entities.projectile;
 import models.entities.tower.Tower;
 import models.entities.virus.Virus;
 import models.environment.Location;
-import models.environment.Vector;
+import models.environment.World;
 
 import java.util.ArrayList;
 
@@ -11,8 +11,8 @@ public class Dynamic extends Projectile {
 
     private Virus target;
 
-    public Dynamic(Tower sender, Virus target, int damage, int range) {
-        super(new Location(sender.getPosition().getRow()+10, sender.getPosition().getCol()), target.getPosition(), sender, damage, range);
+    public Dynamic(Tower sender, Virus target, int damage, int range, World world) {
+        super(new Location(sender.getPosition().getRow()+10, sender.getPosition().getCol()), target.getPosition(), sender, damage, range, world);
         this.target = target;
         speed = 3;
     }
@@ -36,13 +36,21 @@ public class Dynamic extends Projectile {
 
     @Override
     public void hit(ArrayList<Virus> inRangeVirus) {
-        if (this.isInRange(target)) {
-            this.act();
+        if (isOnTarget()) {
+            System.out.println("inrange");
+            explode();
         }
     }
 
     @Override
+    public void explode(){
+        target.hit(getDamage());
+        System.out.println("test");
+    }
+
+    @Override
     public boolean isOnTarget() {
+        System.out.println(this.isInRange(target));
         return this.isInRange(target);
     }
 }

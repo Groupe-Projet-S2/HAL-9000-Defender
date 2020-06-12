@@ -16,13 +16,9 @@ public class Ransomware extends Virus {
     private Location target;
     private BooleanProperty triggered;
     private int cooldown;
+
     public Ransomware(Location location, Tile tile, Location target, World world) {
         super(35, location, tile, 2, 3, world);
-    }
-
-
-    public Ransomware(Location location, Tile tile, Location target, World env) {
-        super(35, location, tile, 2, 3, env);
         this.target = target;
         this.triggered = new SimpleBooleanProperty(false);
     }

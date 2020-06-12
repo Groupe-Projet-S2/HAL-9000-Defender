@@ -67,6 +67,10 @@ public class MapController {
     private World env;
 
     @FXML void initialize() {
+        start();
+    }
+
+    private void start(){
         grid.setAlignment(Pos.CENTER);
         tileMap = new TileMap(COLS, ROWS);
         tileMap.compose();

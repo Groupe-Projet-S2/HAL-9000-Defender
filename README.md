@@ -91,6 +91,8 @@ None.
 * BitDefender
 * AVG Antivirus
 * MalwareBytes
+* NordVPN
+* CCleaner
 
 **Developpers**
 * [Cedric-F](https://github.com/Cedric-F)

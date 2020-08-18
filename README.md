@@ -2,6 +2,8 @@
 
 A Tower Defence game made with JavaFX as a school project.
 
+![](https://i.imgur.com/rivLUfi.jpeg)
+
 ## Getting started
 
 **Installation**
